@@ -1,0 +1,39 @@
+@import "../styles/colors.css";
+@import "./field-errors.css";
+
+:root {
+  --borderWidth: 1px;
+  --inputHeight: 40px;
+  --inputMarginBottom: 7px;
+}
+
+.labelText {
+  composes: screenreader-only from "../styles/accessibility.css";
+}
+.input {
+  display: block;
+  width: 100%;
+  height: var(--inputHeight);
+  line-height: var(--inputHeight);
+  padding: 0 15px;
+  margin-bottom: var(--inputMarginBottom);
+  background: var(--colorBrandPrimaryLight);
+  border: none;
+  border-radius: 2px;
+  color: var(--colorLightest);
+  font-size: 14px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+.input::-webkit-datetime-edit {
+  color: var(--colorLightest);
+}
+.input::placeholder {
+  color: var(--colorLightest);
+}
+.inputTextarea {
+  composes: input;
+  padding: 15px;
+  height: calc((3 * (var(--inputHeight) + var(--inputMarginBottom) - (2 * var(--borderWidth)))) + (2 * var(--fieldErrorsMinHeight)));
+  line-height: 1.4em;
+}

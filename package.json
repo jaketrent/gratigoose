@@ -22,6 +22,7 @@
     "webpack-dashboard": "0.0.1-alpha.1"
   },
   "dependencies": {
+    "axios": "^0.13.1",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.13.0",
@@ -46,6 +47,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
+    "react-styleable": "^2.2.4",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",

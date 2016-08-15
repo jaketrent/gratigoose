@@ -5,7 +5,8 @@ import * as alertsUtils from '../alerts/utils'
 export const TYPES = types('trans',
   'CREATE',
   'CREATE_SUCCESS',
-  'CREATE_ERROR'
+  'CREATE_ERROR',
+  'SET_CREATE_TRANS_FIELD'
 )
 
 export function create(trans) {
@@ -30,3 +31,9 @@ export function createError(errors) {
   }
 }
 
+export function setCreateTransField(args) {
+  return {
+    type: TYPES.SET_CREATE_TRANS_FIELD,
+    ...args
+  }
+}

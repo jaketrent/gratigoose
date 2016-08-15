@@ -25,4 +25,4 @@ function* list() {
   this.body = result
 }
 
-app.use(route.get('/'), list)
+app.use(route.post('/'), list)

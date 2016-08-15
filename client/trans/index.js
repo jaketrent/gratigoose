@@ -1,10 +1,14 @@
 import React from 'react'
 
+import CreateForm from './create-form'
 import renderWithState from '../common/store/render'
 
-function Trans() {
+function Trans(props) {
   return (
-    <h1>Transactions</h1>
+    <div>
+      <h1>Transactions</h1>
+      <CreateForm />
+    </div>
   )
 }
 

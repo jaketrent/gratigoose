@@ -1,0 +1,18 @@
+@import "../styles/colors.css";
+
+:root {
+  --fieldErrorsMinHeight: 15px;
+}
+
+.container {
+  min-height: var(--fieldErrorsMinHeight);
+}
+.errors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.error {
+  color: var(--colorError);
+  font-size: 12px;
+}
