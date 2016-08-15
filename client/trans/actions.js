@@ -6,6 +6,8 @@ export const TYPES = types('trans',
   'CREATE',
   'CREATE_SUCCESS',
   'CREATE_ERROR',
+  'FIND_ALL',
+  'FIND_ALL_SUCCESS',
   'SET_CREATE_TRANS_FIELD'
 )
 
@@ -28,6 +30,19 @@ export function createError(errors) {
   return {
     type: TYPES.CREATE_ERROR,
     alerts: alertsUtils.createFromErrors(errors)
+  }
+}
+
+export function findAll() {
+  return {
+    type: TYPES.FIND_ALL
+  }
+}
+
+export function findAllSuccess(transs) {
+  return {
+    type: TYPES.FIND_ALL_SUCCESS,
+    transs
   }
 }
 

@@ -1,31 +1,43 @@
 const debug = require('debug')('gg')
+const { graphql, GraphQLList, GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } = require('graphql')
+const graphqlHTTP = require('koa-graphql')
 const koa = require('koa')
-const { graphql, GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql')
-const route = require('koa-route')
+const mount = require('koa-mount')
+
+const transRepo = require('../trans/repo')
 
 const app = koa()
+
+const transType = new GraphQLObjectType({
+  name: 'trans',
+  fields: {
+    id: { type: GraphQLInt },
+    name: { type: GraphQLString }
+  }
+})
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return 'world'
+      trans: {
+        type: new GraphQLList(transType),
+        args: {
+          id: { type: GraphQLInt }
+        },
+        resolve(_, args) {
+          return args.id
+            ? transRepo.find(args.id)
+            : transRepo.findAll()
         }
       }
     }
   })
 })
 
-function* list() {
-  debug('graphql list')
-  const result = yield graphql(schema, this.query)
-  debug('graphql list result', result)
-  this.body = result
-}
-
-app.use(route.post('/', list))
+app.use(mount('/', graphqlHTTP({
+  schema,
+  graphiql: true
+})))
 
 module.exports = app

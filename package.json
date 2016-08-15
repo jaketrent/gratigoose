@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env DEBUG=* node server/index",
+    "start": "cross-env DEBUG=gg node server/index",
     "start:watch": "nodemon server/index"
   },
   "repository": {
@@ -35,6 +35,7 @@
     "graphql": "^0.6.2",
     "koa": "^1.2.1",
     "koa-bodyparser": "^2.2.0",
+    "koa-graphql": "^0.5.5",
     "koa-logger": "^1.3.0",
     "koa-mount": "^1.3.0",
     "koa-route": "^2.4.2",
