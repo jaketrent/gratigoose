@@ -20,9 +20,12 @@ const schema = new GraphQLSchema({
 })
 
 function* list() {
+  debug('graphql list')
   const result = yield graphql(schema, this.query)
   debug('graphql list result', result)
   this.body = result
 }
 
-app.use(route.post('/'), list)
+app.use(route.post('/', list))
+
+module.exports = app

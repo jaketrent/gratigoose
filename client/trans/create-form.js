@@ -13,6 +13,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    create(trans) { dispatch(actions.create(trans)) },
     setCreateTransField(name, value) {
       dispatch(actions.setCreateTransField({ name, value }))
     }
@@ -23,18 +24,24 @@ class CreateForm extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(evt) {
     this.props.setCreateTransField(evt.target.name, evt.target.value)
   }
+  handleSubmit(evt) {
+    evt.preventDefault()
+    this.props.create(this.props.createTrans)
+  }
   render() {
     return (
-      <form onChange={this.handleChange}>
+      <form onSubmit={this.handleSubmit}>
         <Field errors={this.props.errors}
                label="Name"
                name="name"
                onFieldChange={this.handleChange}
                value={this.props.createTrans.name} />
+        <input type="submit" value="Create" />
       </form>
     )
   }
