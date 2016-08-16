@@ -1,5 +1,14 @@
 const debug = require('debug')('gg')
-const { graphql, GraphQLList, GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } = require('graphql')
+const {
+  graphql,
+  GraphQLID,
+  GraphQLInputObjectType,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString
+} = require('graphql')
 const graphqlHTTP = require('koa-graphql')
 const koa = require('koa')
 const mount = require('koa-mount')
@@ -11,28 +20,61 @@ const app = koa()
 const transType = new GraphQLObjectType({
   name: 'trans',
   fields: {
-    id: { type: GraphQLInt },
+    id: { type: GraphQLID },
+    name: { type: new GraphQLNonNull(GraphQLString) }
+  }
+})
+
+const transInputType = new GraphQLInputObjectType({
+  name: 'transInput',
+  fields: {
     name: { type: GraphQLString }
   }
 })
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      trans: {
-        type: new GraphQLList(transType),
-        args: {
-          id: { type: GraphQLInt }
-        },
-        resolve(_, args) {
-          return args.id
-            ? transRepo.find(args.id)
-            : transRepo.findAll()
-        }
-      }
+const transMutationFieldConfig = {
+  createTrans: {
+    type: transType,
+    args: {
+      trans: { type: transInputType }
+    },
+    resolve(_, { trans }) {
+      return transRepo.create(trans)
     }
-  })
+  }
+}
+
+const transQueryFieldConfig = {
+  trans: {
+    type: new GraphQLList(transType),
+    args: {
+      id: { type: GraphQLID }
+    },
+    resolve(_, args) {
+      return args.id
+        ? transRepo.find(args.id)
+        : transRepo.findAll()
+    }
+  }
+}
+
+const rootQueryType = new GraphQLObjectType({
+  name: 'rootQuery',
+  fields: Object.assign({},
+    transQueryFieldConfig
+  )
+})
+
+const rootMutationType = new GraphQLObjectType({
+  name: 'rootMutation',
+  fields: Object.assign({},
+    transMutationFieldConfig
+  )
+})
+
+const schema = new GraphQLSchema({
+  mutation: rootMutationType,
+  query: rootQueryType
 })
 
 app.use(mount('/', graphqlHTTP({

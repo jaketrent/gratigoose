@@ -8,7 +8,7 @@ export function* create({ trans }) {
   const des = yield call(request, { api: api.create, trans })
 
   yield put(actions.createSuccess(des))
-  // TODO: impl
+  // TODO: error check
 }
 
 export function* findAll() {

@@ -9,6 +9,13 @@ const initialState = {
   transs: []
 }
 
+function createSuccess(state, action) {
+  return {
+    ...state,
+    transs: [action.trans].concat(state.transs)
+  }
+}
+
 function findAllSuccess(state, action) {
   return {
     ...state,
@@ -27,6 +34,7 @@ function setCreateTransField(state, action) {
 }
 
 export default createWithHandlers({
-  [TYPES.SET_CREATE_TRANS_FIELD]: setCreateTransField,
-  [TYPES.FIND_ALL_SUCCESS]: findAllSuccess
+  [TYPES.CREATE_SUCCESS]: createSuccess,
+  [TYPES.FIND_ALL_SUCCESS]: findAllSuccess,
+  [TYPES.SET_CREATE_TRANS_FIELD]: setCreateTransField
 }, initialState)

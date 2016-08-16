@@ -1,26 +1,26 @@
 import axios from 'axios'
 
-// TODO: fix to mutate
 export const create = {
   formatUrl() {
-    const query = `
-      {
-        trans {
-          name
-        }
-      }
-    `
-    return `/api/v1/graphql?query=${encodeURIComponent(query)}`
+    return `/api/v1/graphql`
   },
-  // serialize({ trans }) {
-  //   return { super: 'todo' }
-  // },
+  serialize({ trans }) {
+    const query = `mutation newTrans {
+      createTrans(trans: {
+        name: "${trans.name}"
+      }) {
+        id,
+        name
+      }
+    }`
+    return { query }
+  },
   request(args) {
     const { api } = args
-    return axios.get(api.formatUrl()) // , api.serialize(args))
+    return axios.post(api.formatUrl(), api.serialize(args))
   },
   deserializeSuccess(res) {
-    return res.data.data.trans
+    return res.data.data.createTrans
   },
   deserializeError(res) {
     // TODO: generalize
