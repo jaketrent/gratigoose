@@ -1,50 +1,50 @@
-import { connect } from 'react-redux'
 import React from 'react'
+import styleable from 'react-styleable'
 
-import * as actions from './actions'
+import css from './create-form.css'
 import Field from '../common/components/field'
-import renderWithState from '../common/store/render'
-
-function mapStateToProps(state) {
-  return {
-    createTrans: state.trans.createTrans
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    create(trans) { dispatch(actions.create(trans)) },
-    setCreateTransField(name, value) {
-      dispatch(actions.setCreateTransField({ name, value }))
-    }
-  }
-}
 
 class CreateForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  handleChange(evt) {
-    this.props.setCreateTransField(evt.target.name, evt.target.value)
-  }
-  handleSubmit(evt) {
-    evt.preventDefault()
-    this.props.create(this.props.createTrans)
-  }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Field errors={this.props.errors}
-               label="Name"
-               name="name"
-               onFieldChange={this.handleChange}
-               value={this.props.createTrans.name} />
-        <input type="submit" value="Create" />
+      <form className={this.props.css.root} onSubmit={this.props.onSubmit}>
+        <div className={this.props.css.fields}>
+          <Field css={{ field: this.props.css.field }}
+                 errors={this.props.errors}
+                 isFocused={true}
+                 label="Date"
+                 name="date"
+                 onFieldChange={this.props.onFieldChange}
+                 value={this.props.trans.date} />
+          <Field css={{ field: this.props.css.field }}
+                 errors={this.props.errors}
+                 label="Description"
+                 name="desc"
+                 onFieldChange={this.props.onFieldChange}
+                 value={this.props.trans.desc} />
+          <Field css={{ field: this.props.css.field }}
+                 errors={this.props.errors}
+                 label="Amount"
+                 name="amt"
+                 onFieldChange={this.props.onFieldChange}
+                 value={this.props.trans.amt} />
+          <Field css={{ field: this.props.css.field }}
+                 errors={this.props.errors}
+                 label="Account"
+                 name="acct"
+                 onFieldChange={this.props.onFieldChange}
+                 value={this.props.trans.acct} />
+          <Field css={{ field: this.props.css.field }}
+                 errors={this.props.errors}
+                 label="Category"
+                 name="cat"
+                 onFieldChange={this.props.onFieldChange}
+                 value={this.props.trans.cat} />
+        </div>
+        <input className={this.props.css.btn} type="submit" value="Create" />
       </form>
     )
   }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(CreateForm)
+export default styleable(css)(CreateForm)

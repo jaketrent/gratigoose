@@ -1,5 +1,18 @@
 import axios from 'axios'
 
+const frags = {
+  trans: {
+    view: `
+      id,
+      date,
+      desc,
+      amt,
+      acct,
+      cat
+    `
+  }
+}
+
 export const create = {
   formatUrl() {
     return `/api/v1/graphql`
@@ -7,10 +20,13 @@ export const create = {
   serialize({ trans }) {
     const query = `mutation newTrans {
       createTrans(trans: {
-        name: "${trans.name}"
+        date: "${trans.date}",
+        desc: "${trans.desc}",
+        amt: ${trans.amt},
+        acct: "${trans.acct}",
+        cat: "${trans.cat}"
       }) {
-        id,
-        name
+        ${frags.trans.view}
       }
     }`
     return { query }
@@ -33,8 +49,7 @@ export const findAll = {
     const query = `
       {
         trans {
-          id,
-          name
+          ${frags.trans.view}
         }
       }
     `
@@ -57,8 +72,7 @@ export const find = {
     const query = `
       {
         trans(id: ${id}) {
-          id,
-          name
+          ${frags.trans.view}
         }
       }
     `

@@ -1,6 +1,7 @@
 const debug = require('debug')('gg')
 const {
   graphql,
+  GraphQLFloat,
   GraphQLID,
   GraphQLInputObjectType,
   GraphQLList,
@@ -21,14 +22,22 @@ const transType = new GraphQLObjectType({
   name: 'trans',
   fields: {
     id: { type: GraphQLID },
-    name: { type: new GraphQLNonNull(GraphQLString) }
+    date: { type: new GraphQLNonNull(GraphQLString) },
+    desc: { type: new GraphQLNonNull(GraphQLString) },
+    amt: { type: new GraphQLNonNull(GraphQLFloat) },
+    acct: { type: new GraphQLNonNull(GraphQLString) },
+    cat: { type: new GraphQLNonNull(GraphQLString) }
   }
 })
 
 const transInputType = new GraphQLInputObjectType({
   name: 'transInput',
   fields: {
-    name: { type: GraphQLString }
+    date: { type: GraphQLString },
+    desc: { type: GraphQLString },
+    amt: { type: GraphQLFloat },
+    acct: { type: GraphQLString },
+    cat: { type: GraphQLString }
   }
 })
 

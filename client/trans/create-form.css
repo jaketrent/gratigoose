@@ -1,0 +1,13 @@
+.root {
+}
+.fields {
+  display: flex;
+  justify-content: space-between;
+}
+.field + .field {
+  flex: 1;
+  margin-left: 10px;
+}
+.btn {
+  composes: screenreader-only from "../common/styles/accessibility.css";
+}

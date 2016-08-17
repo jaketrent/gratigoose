@@ -6,7 +6,7 @@ function Row(props) {
   return (
     <tr>
       <td>
-        {props.trans.name}
+        {props.trans.desc}
       </td>
     </tr>
   )
@@ -29,7 +29,7 @@ function List(props) {
       <thead>
         <tr>
           <th>
-            Name
+            Description
           </th>
         </tr>
       </thead>

@@ -16,6 +16,7 @@ class Field extends React.Component {
     label: string.isRequired,
     name: string.isRequired,
     onFieldChange: func.isRequired,
+    onFieldKeyUp: func,
     type: string,
     value: node
   }
@@ -42,6 +43,7 @@ class Field extends React.Component {
              placeholder={this.props.label}
              value={this.props.value}
              onChange={this.props.onFieldChange}
+             onKeyUp={this.props.onFieldKeyUp}
              ref="input" />
     )
   }

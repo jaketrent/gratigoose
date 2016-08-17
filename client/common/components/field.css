@@ -7,6 +7,7 @@
   --inputMarginBottom: 7px;
 }
 
+.field {}
 .labelText {
   composes: screenreader-only from "../styles/accessibility.css";
 }

@@ -4,7 +4,11 @@ import { createWithHandlers } from '../common/reducer'
 
 const initialState = {
   createTrans: {
-    name: ''
+    date: '2016-',
+    desc: '',
+    amt: '',
+    acct: '',
+    cat: ''
   },
   transs: []
 }
