@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "db:migrate": "node server/db/migrate",
     "start": "cross-env DEBUG=gg node server/index",
     "start:watch": "nodemon server/index"
   },
@@ -32,6 +33,7 @@
     "cross-env": "^2.0.0",
     "css-loader": "^0.23.1",
     "debug": "^2.2.0",
+    "dotenv": "^2.0.0",
     "graphql": "^0.6.2",
     "koa": "^1.2.1",
     "koa-bodyparser": "^2.2.0",
@@ -41,6 +43,8 @@
     "koa-route": "^2.4.2",
     "koa-webpack-dev-middleware": "^1.2.1",
     "koa-webpack-hot-middleware": "^1.0.3",
+    "massive": "^2.5.0",
+    "massive-migrate": "^0.10.0",
     "node-uuid": "^1.4.7",
     "page": "^1.7.1",
     "postcss-cssnext": "^2.7.0",

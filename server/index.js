@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const bodyParser = require('koa-bodyparser')
 const debug = require('debug')('mm')
 const fs = require('fs')
@@ -6,6 +8,7 @@ const koa = require('koa')
 const mount = require('koa-mount')
 const route = require('koa-route')
 
+const db = require('./db')
 const graphql = require('./graphql')
 const static = require('./static')
 // const trans = require('./trans')
@@ -24,5 +27,10 @@ function* index() {
   this.body = fs.readFileSync('./client/index.html', 'utf8')
 }
 
-app.listen(port)
-debug(`Listening on port ${port}...`)
+db.connect((err, db) => {
+  if (err) throw err
+
+  app.context.db = db
+  app.listen(port)
+  debug(`Listening on port ${port}...`)
+})
