@@ -16,6 +16,8 @@ const graphqlHTTP = require('koa-graphql')
 const koa = require('koa')
 const mount = require('koa-mount')
 
+const acctRepo = require('../acct/repo')
+const catRepo = require('../cat/repo')
 const transRepo = require('../trans/repo')
 
 const app = koa()
@@ -113,6 +115,34 @@ const transMutationFieldConfig = {
   }
 }
 
+const acctQueryFieldConfig = {
+  acct: {
+    type: new GraphQLList(acctType),
+    args: {
+      id: { type: GraphQLID }
+    },
+    resolve(_, args, app) {
+      return args.id
+        ? acctRepo.find(app.db, args.id)
+        : acctRepo.findAll(app.db)
+    }
+  }
+}
+
+const catQueryFieldConfig = {
+  cat: {
+    type: new GraphQLList(acctType),
+    args: {
+      id: { type: GraphQLID }
+    },
+    resolve(_, args, app) {
+      return args.id
+        ? catRepo.find(app.db, args.id)
+        : catRepo.findAll(app.db)
+    }
+  }
+}
+
 const transQueryFieldConfig = {
   trans: {
     type: new GraphQLList(transType),
@@ -130,9 +160,12 @@ const transQueryFieldConfig = {
 const rootQueryType = new GraphQLObjectType({
   name: 'rootQuery',
   fields: Object.assign({},
+    acctQueryFieldConfig,
+    catQueryFieldConfig,
     transQueryFieldConfig
   )
 })
+console.log('root', rootQueryType)
 
 const rootMutationType = new GraphQLObjectType({
   name: 'rootMutation',
