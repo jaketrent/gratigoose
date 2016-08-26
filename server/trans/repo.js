@@ -1,40 +1,69 @@
-// TODO: impl with massivejs
+const acctRepo = require('../acct/repo')
+const catRepo = require('../cat/repo')
+const { pickPrefix } = require('../common/repo')
 
-function create(trans) {
-  return Promise.resolve({
-    id: 3,
-    date: trans.date,
-    desc: trans.desc,
+function serialize(trans) {
+  return {
+    trans_date: trans.date,
+    description: trans.desc,
     amt: trans.amt,
     acct: trans.acct,
     cat: trans.cat
+  }
+}
+
+function deserialize(doc) {
+  console.log('trans doc', doc)
+  return {
+    id: doc.id,
+    date: doc.trans_date,
+    desc: doc.description,
+    amt: doc.amt,
+    acct: doc.acct,
+    cat: doc.cat
+  }
+}
+
+function create(db, trans) {
+  return new Promise((resolve, reject) => {
+    db.trans.save(serialize(trans), (err, newDoc) => {
+      if (err) return reject(err)
+
+      resolve(deserialize(newDoc))
+    })
   })
 }
 
-const fakes = [{
-  id: 1,
-  date: '2016-01-02',
-  desc: 'somethingFound',
-  amt: 12.12,
-  acct: 'mach',
-  cat: 'gft'
-}, {
-  id: 2,
-  date: '2016-04-01',
-  desc: 'somethingElse Found',
-  amt: 124.13,
-  acct: 'mas',
-  cat: 'el'
-}]
+function find(db, id) {
+  return new Promise((resolve, reject) => {
+    db.trans.findFull(id, (err, doc) => {
+      if (err) return reject(err)
 
-function find(id) {
-  return [fakes[0]]
+      resolve([deserialize(doc)])
+    })
+  })
 }
 
-function findAll() {
-  return fakes
+function findAll(db) {
+  return new Promise((resolve, reject) => {
+    db.queries.transFullFindAll((err, docs) => {
+      if (err) return reject(err)
+      console.log('docs', docs)
+
+      const des = docs.map(doc => {
+        return Object.assign(
+          deserialize(pickPrefix(doc, 'trans_')),
+          { acct: acctRepo.deserialize(pickPrefix(doc, 'acct_')) },
+          { cat: catRepo.deserialize(pickPrefix(doc, 'cat_')) }
+        )
+      })
+      resolve(des)
+    })
+  })
 }
 
 exports.create = create
+exports.deserialize = deserialize
 exports.find = find
 exports.findAll = findAll
+exports.serialize = serialize

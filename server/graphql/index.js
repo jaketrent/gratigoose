@@ -1,9 +1,11 @@
 const debug = require('debug')('gg')
 const {
   graphql,
+  GraphQLBoolean,
   GraphQLFloat,
   GraphQLID,
   GraphQLInputObjectType,
+  GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -18,26 +20,84 @@ const transRepo = require('../trans/repo')
 
 const app = koa()
 
+const acctType = new GraphQLObjectType({
+  name: 'acct',
+  fields: {
+    id: { type: GraphQLID },
+
+    abbrev: { type: new GraphQLNonNull(GraphQLString) },
+    liquidable: { type: GraphQLBoolean },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+
+    created: { type: GraphQLString },
+    updated: { type: GraphQLString }
+  }
+})
+
+const acctInputType = new GraphQLInputObjectType({
+  name: 'acctInput',
+  fields: {
+    abbrev: { type: GraphQLString },
+    liquidable: { type: GraphQLBoolean },
+    name: { type: GraphQLString }
+  }
+})
+
+const catType = new GraphQLObjectType({
+  name: 'cat',
+  fields: {
+    id: { type: GraphQLID },
+
+    abbrev: { type: new GraphQLNonNull(GraphQLString) },
+    type: { type: GraphQLString },
+    desc: { type: GraphQLBoolean },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+
+    created: { type: GraphQLString },
+    updated: { type: GraphQLString }
+  }
+})
+
+const catInputType = new GraphQLInputObjectType({
+  name: 'catInput',
+  fields: {
+    abbrev: { type: GraphQLString },
+    type: { type: GraphQLString },
+    desc: { type: GraphQLBoolean },
+    name: { type: GraphQLString }
+  }
+})
+
 const transType = new GraphQLObjectType({
   name: 'trans',
   fields: {
     id: { type: GraphQLID },
-    date: { type: new GraphQLNonNull(GraphQLString) },
-    desc: { type: new GraphQLNonNull(GraphQLString) },
+
+    acct: { type: acctType },
     amt: { type: new GraphQLNonNull(GraphQLFloat) },
-    acct: { type: new GraphQLNonNull(GraphQLString) },
-    cat: { type: new GraphQLNonNull(GraphQLString) }
+    cat: { type: catType },
+    checkNum: { type: GraphQLInt },
+    clearedDate: { type: GraphQLString },
+    date: { type: new GraphQLNonNull(GraphQLString) },
+    desc: { type: GraphQLString },
+    location: { type: GraphQLString },
+
+    created: { type: GraphQLString },
+    updated: { type: GraphQLString }
   }
 })
 
 const transInputType = new GraphQLInputObjectType({
   name: 'transInput',
   fields: {
+    acct: { type: GraphQLID },
+    amt: { type: GraphQLFloat },
+    cat: { type: GraphQLID },
+    checkNum: { type: GraphQLInt },
+    clearedDate: { type: GraphQLString },
     date: { type: GraphQLString },
     desc: { type: GraphQLString },
-    amt: { type: GraphQLFloat },
-    acct: { type: GraphQLString },
-    cat: { type: GraphQLString }
+    location: { type: GraphQLString }
   }
 })
 
@@ -47,8 +107,8 @@ const transMutationFieldConfig = {
     args: {
       trans: { type: transInputType }
     },
-    resolve(_, { trans }) {
-      return transRepo.create(trans)
+    resolve(_, { trans }, app) {
+      return transRepo.create(app.db, trans)
     }
   }
 }
@@ -59,10 +119,10 @@ const transQueryFieldConfig = {
     args: {
       id: { type: GraphQLID }
     },
-    resolve(_, args) {
+    resolve(_, args, app) {
       return args.id
-        ? transRepo.find(args.id)
-        : transRepo.findAll()
+        ? transRepo.find(app.db, args.id)
+        : transRepo.findAll(app.db)
     }
   }
 }
@@ -86,9 +146,10 @@ const schema = new GraphQLSchema({
   query: rootQueryType
 })
 
-app.use(mount('/', graphqlHTTP({
+app.use(mount('/', graphqlHTTP((req, context) => ({
+  context,
   schema,
   graphiql: true
-})))
+}))))
 
 module.exports = app
