@@ -1,0 +1,22 @@
+.root {
+  width: 100%;
+}
+.body {
+  
+}
+.row {
+  display: flex;
+}
+.cell {
+  flex: 1;
+  text-align: left;
+}
+.head {
+
+}
+.headRow {
+  composes: row;
+}
+.headCell {
+  composes: cell;
+}

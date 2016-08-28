@@ -4,8 +4,10 @@
   display: flex;
   justify-content: space-between;
 }
-.field + .field {
+.field {
   flex: 1;
+}
+.field + .field {
   margin-left: 10px;
 }
 .btn {

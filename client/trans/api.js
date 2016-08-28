@@ -7,8 +7,14 @@ const frags = {
       date,
       desc,
       amt,
-      acct,
-      cat
+      acct {
+        id,
+        abbrev
+      },
+      cat {
+        id,
+        abbrev
+      }
     `
   }
 }

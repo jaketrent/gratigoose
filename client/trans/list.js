@@ -1,12 +1,35 @@
 import React from 'react'
+import styleable from 'react-styleable'
+
+import css from './list.css'
 
 const { arrayOf, object } = React.PropTypes
 
+function formatDate(dateStr) {
+  const date = new Date(dateStr)
+  const day = date.getDate()
+  const month = date.getMonth()
+  const year = date.getFullYear()
+  return `${year}-${month + 1}-${day}`
+}
+
 function Row(props) {
   return (
-    <tr>
-      <td>
+    <tr className={props.css.row}>
+      <td className={props.css.cell}>
+        {formatDate(props.trans.date)}
+      </td>
+      <td className={props.css.cell}>
         {props.trans.desc}
+      </td>
+      <td className={props.css.cell}>
+        {props.trans.amt}
+      </td>
+      <td className={props.css.cell}>
+        {props.trans.acct.abbrev}
+      </td>
+      <td className={props.css.cell}>
+        {props.trans.cat.abbrev}
       </td>
     </tr>
   )
@@ -18,22 +41,35 @@ Row.PropTypes = {
 
 function renderRows(props) {
   return props.transs.map(t =>
-    <Row key={t.id}
+    <Row css={props.css}
+         key={t.id}
          trans={t} />
   )
 }
 
 function List(props) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>
-            Description
+    <table className={props.css.root}>
+      <thead className={props.css.head}>
+        <tr className={props.css.headRow}>
+          <th className={props.css.headCell}>
+            Date
+          </th>
+          <th className={props.css.headCell}>
+            Desc
+          </th>
+          <th className={props.css.headCell}>
+            Amt
+          </th>
+          <th className={props.css.headCell}>
+            Acct
+          </th>
+          <th className={props.css.headCell}>
+            Cat
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={props.css.body}>
         {renderRows(props)}
       </tbody>
     </table>
@@ -43,4 +79,4 @@ List.PropTypes = {
   transs: arrayOf(object)
 }
 
-export default List
+export default styleable(css)(List)
