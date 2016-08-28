@@ -35,7 +35,24 @@ function findAll(db) {
   })
 }
 
+function search(db, term) {
+  const fuzzyTerm = '%' + term + '%'
+  return new Promise((resolve, reject) => {
+    db.acct.find({
+      or: [
+        { 'name ilike': fuzzyTerm },
+        { 'abbrev ilike': fuzzyTerm }
+      ]
+    }, (err, docs) => {
+      if (err) return reject(err)
+
+      resolve(docs.map(deserialize))
+    })
+  })
+}
+
 exports.deserialize = deserialize
 exports.find = find
 exports.findAll = findAll
+exports.search = search
 exports.serialize = serialize

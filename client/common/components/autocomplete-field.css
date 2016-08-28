@@ -1,0 +1,62 @@
+@import "../styles/colors.css";
+@import "./field-errors.css";
+
+:root {
+  --borderWidth: 1px;
+  --inputHeight: 40px;
+  --inputMarginBottom: 7px;
+}
+
+.field {}
+.labelText {
+  composes: screenreader-only from "../styles/accessibility.css";
+}
+.input {
+  display: block;
+  width: 100%;
+  height: var(--inputHeight);
+  line-height: var(--inputHeight);
+  padding: 0 15px;
+  margin-bottom: var(--inputMarginBottom);
+  background: var(--colorBrandPrimaryLight);
+  border: none;
+  border-radius: 2px;
+  color: var(--colorLightest);
+  font-size: 14px;
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+.input::-webkit-datetime-edit {
+  color: var(--colorLightest);
+}
+.input::placeholder {
+  color: var(--colorLightest);
+}
+.dropdownContainer {
+  position: relative;
+}
+.dropdown {
+  position: absolute;
+  top: var(--inputHeight);
+  left: 0;
+  width: 100%;
+  max-height: 40vh;
+  border: 1px solid #ababab;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .3);
+}
+.dropdownItem {
+  display: block;
+  width: 100%;
+  height: var(--inputHeight);
+  line-height: var(--inputHeight);
+  background: white;
+  border: 0;
+  padding: 0 15px;
+  text-align: left;
+  font-size: 14px;
+}
+.dropdownItem:focus {
+  background: blue;
+  color: white;
+}

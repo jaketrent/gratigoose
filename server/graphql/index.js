@@ -119,12 +119,16 @@ const acctQueryFieldConfig = {
   acct: {
     type: new GraphQLList(acctType),
     args: {
-      id: { type: GraphQLID }
+      id: { type: GraphQLID },
+      search: { type: GraphQLString }
     },
     resolve(_, args, app) {
-      return args.id
-        ? acctRepo.find(app.db, args.id)
-        : acctRepo.findAll(app.db)
+      if (args.id)
+        return acctRepo.find(app.db, args.id)
+      else if (args.search)
+        return acctRepo.search(app.db, args.search)
+      else
+        return acctRepo.findAll(app.db)
     }
   }
 }
@@ -165,7 +169,6 @@ const rootQueryType = new GraphQLObjectType({
     transQueryFieldConfig
   )
 })
-console.log('root', rootQueryType)
 
 const rootMutationType = new GraphQLObjectType({
   name: 'rootMutation',
