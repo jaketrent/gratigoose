@@ -11,6 +11,9 @@
   flex: 1;
   text-align: left;
 }
+.cell + .cell {
+  margin-left: 10px;
+}
 .head {
 
 }

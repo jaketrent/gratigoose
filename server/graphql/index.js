@@ -51,8 +51,8 @@ const catType = new GraphQLObjectType({
     id: { type: GraphQLID },
 
     abbrev: { type: new GraphQLNonNull(GraphQLString) },
-    type: { type: GraphQLString },
     desc: { type: GraphQLBoolean },
+    type: { type: GraphQLString },
     name: { type: new GraphQLNonNull(GraphQLString) },
 
     created: { type: GraphQLString },
@@ -64,8 +64,8 @@ const catInputType = new GraphQLInputObjectType({
   name: 'catInput',
   fields: {
     abbrev: { type: GraphQLString },
-    type: { type: GraphQLString },
     desc: { type: GraphQLBoolean },
+    type: { type: GraphQLString },
     name: { type: GraphQLString }
   }
 })
@@ -135,14 +135,18 @@ const acctQueryFieldConfig = {
 
 const catQueryFieldConfig = {
   cat: {
-    type: new GraphQLList(acctType),
+    type: new GraphQLList(catType),
     args: {
-      id: { type: GraphQLID }
+      id: { type: GraphQLID },
+      search: { type: GraphQLString }
     },
     resolve(_, args, app) {
-      return args.id
-        ? catRepo.find(app.db, args.id)
-        : catRepo.findAll(app.db)
+      if (args.id)
+        return catRepo.find(app.db, args.id)
+      else if (args.search)
+        return catRepo.search(app.db, args.search)
+      else
+        return catRepo.findAll(app.db)
     }
   }
 }

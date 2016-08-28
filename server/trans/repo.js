@@ -13,7 +13,6 @@ function serialize(trans) {
 }
 
 function deserialize(doc) {
-  console.log('trans doc', doc)
   return {
     id: doc.id,
     date: doc.trans_date,
@@ -48,7 +47,6 @@ function findAll(db) {
   return new Promise((resolve, reject) => {
     db.queries.transFullFindAll((err, docs) => {
       if (err) return reject(err)
-      console.log('docs', docs)
 
       const des = docs.map(doc => {
         return Object.assign(
