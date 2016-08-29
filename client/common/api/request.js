@@ -3,12 +3,13 @@ export default function request(args) {
   return new Promise((resolve, reject) => {
     api.request(args)
       .then(res => {
-        resolve(api.deserializeSuccess(res, args))
+        if (Array.isArray(res.errors) && res.errors.length > 0)
+          reject(api.deserializeError(res, args))
+        else 
+          resolve(api.deserializeSuccess(res, args))
       })
-      .catch(res => {
-        if (res instanceof Error) throw res
-
-        reject(api.deserializeError(res, args))
+      .catch(err => {
+        reject(api.deserializeError(err.response, args))
       })
   })
 }

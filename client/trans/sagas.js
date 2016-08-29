@@ -5,10 +5,13 @@ import * as api from './api'
 import request from '../common/api/request'
 
 export function* create({ trans }) {
-  const des = yield call(request, { api: api.create, trans })
+  try {
+    const des = yield call(request, { api: api.create, trans })
 
-  yield put(actions.createSuccess(des))
-  // TODO: error check
+    yield put(actions.createSuccess(des))
+  } catch (errors) {
+    yield put(actions.createError(errors))
+  }
 }
 
 export function* findAll() {

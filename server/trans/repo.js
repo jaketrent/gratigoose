@@ -38,6 +38,7 @@ function find(db, id) {
     db.trans.findFull(id, (err, doc) => {
       if (err) return reject(err)
 
+      // TODO: "full" deserialization
       resolve([deserialize(doc)])
     })
   })

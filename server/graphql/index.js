@@ -186,8 +186,17 @@ const schema = new GraphQLSchema({
   query: rootQueryType
 })
 
+function formatError(err) {
+  return {
+    title: err.message,
+    locations: err.locations,
+    stack: err.stack
+  }
+}
+
 app.use(mount('/', graphqlHTTP((req, context) => ({
   context,
+  formatError,
   schema,
   graphiql: true
 }))))

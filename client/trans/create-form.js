@@ -65,8 +65,9 @@ class CreateForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (utils.hasRequiredFields(this.state.trans))
+    if (utils.hasRequiredFields(this.state.trans)) {
       this.props.create(this.state.trans)
+    }
   }
   handleAcctSelect(evt, id) {
     evt.preventDefault()
@@ -122,7 +123,7 @@ class CreateForm extends React.Component {
   }
   render() {
     return (
-      <form className={this.props.css.root} onSubmit={this.props.onSubmit}>
+      <form className={this.props.css.root} onSubmit={this.handleSubmit}>
         <div className={this.props.css.fields}>
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}

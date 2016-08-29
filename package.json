@@ -6,7 +6,8 @@
   "scripts": {
     "db:migrate": "node server/db/migrate",
     "start": "cross-env DEBUG=gg node server/index",
-    "start:watch": "nodemon server/index"
+    "start:watch": "nodemon server/index",
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/jaketrent/gratigoose#readme",
   "devDependencies": {
+    "ava": "^0.16.0",
     "nodemon": "^1.10.0",
     "webpack-dashboard": "0.0.1-alpha.1"
   },
@@ -62,5 +64,16 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dashboard": "0.0.1-alpha.1"
+  },
+  "ava": {
+    "babel": "inherit",
+    "files": [
+      "client/**/*.spec.js",
+      "server/**/*.spec.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ]
   }
 }

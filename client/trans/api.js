@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import deserializeError from '../common/api/deserialize-error'
+
 const frags = {
   trans: {
     view: `
@@ -29,8 +31,8 @@ export const create = {
         date: "${trans.date}",
         desc: "${trans.desc}",
         amt: ${trans.amt},
-        acct: "${trans.acct}",
-        cat: "${trans.cat}"
+        acct: ${trans.acct.id}
+        cat: ${trans.cat.id}
       }) {
         ${frags.trans.view}
       }
@@ -41,13 +43,10 @@ export const create = {
     const { api } = args
     return axios.post(api.formatUrl(), api.serialize(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data.createTrans
+  deserializeSuccess(res, { trans }) {
+    return { ...trans, id: res.data.data.createTrans.id }
   },
-  deserializeError(res) {
-    // TODO: generalize
-    return res.data
-  }
+  deserializeError
 }
 
 export const findAll = {
@@ -68,9 +67,7 @@ export const findAll = {
   deserializeSuccess(res) {
     return res.data.data.trans
   },
-  deserializeError(res) {
-    return res.data
-  }
+  deserializeError
 }
 
 export const find = {
@@ -91,7 +88,5 @@ export const find = {
   deserializeSuccess(res) {
     return res.data.data.trans[0]
   },
-  deserializeError(res) {
-    return res.data
-  }
+  deserializeError
 }
