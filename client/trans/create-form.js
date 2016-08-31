@@ -10,6 +10,18 @@ import css from './create-form.css'
 import Field from '../common/components/field'
 import * as utils from './utils'
 
+const initialState = {
+  acctSearch: '',
+  catSearch: '',
+  trans: {
+    date: '2016-',
+    desc: '',
+    amt: '',
+    acct: {},
+    cat: {}
+  }
+}
+
 function formatCompletion(obj) {
   return {
     value: obj.id,
@@ -22,7 +34,8 @@ function mapStateToProps(state) {
     accts: state.acct.searchedAccts,
     acctCompletions: state.acct.searchedAccts.map(formatCompletion),
     cats: state.cat.searchedCats,
-    catCompletions: state.cat.searchedCats.map(formatCompletion)
+    catCompletions: state.cat.searchedCats.map(formatCompletion),
+    isCreateSuccess: state.trans.isCreateSuccess
   }
 }
 
@@ -37,23 +50,18 @@ function mapDispatchToProps(dispatch) {
 class CreateForm extends React.Component {
   constructor() {
     super()
-    this.state = {
-      acctSearch: '',
-      catSearch: '',
-      trans: {
-        date: '2016-',
-        desc: '',
-        amt: '',
-        acct: {},
-        cat: ''
-      }
-    }
+    this.state = initialState
     this.handleAcctChange = this.handleAcctChange.bind(this)
     this.handleAcctSelect = this.handleAcctSelect.bind(this)
     this.handleCatChange = this.handleCatChange.bind(this)
     this.handleCatSelect = this.handleCatSelect.bind(this)
     this.handleFieldChange = this.handleFieldChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isCreateSuccess) {
+      this.setState({ ...initialState })
+    }
   }
   handleFieldChange(evt) {
     this.setState({

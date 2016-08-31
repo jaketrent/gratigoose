@@ -31,10 +31,10 @@ export const create = {
         date: "${trans.date}",
         desc: "${trans.desc}",
         amt: ${trans.amt},
-        acct: ${trans.acct.id}
-        cat: ${trans.cat.id}
+        acctId: ${trans.acct.id}
+        catId: ${trans.cat.id}
       }) {
-        ${frags.trans.view}
+        id
       }
     }`
     return { query }

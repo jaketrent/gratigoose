@@ -4,6 +4,7 @@ import * as alertsUtils from '../alerts/utils'
 
 export const TYPES = types('trans',
   'CREATE',
+  'CREATE_RESET',
   'CREATE_SUCCESS',
   'CREATE_ERROR',
   'FIND_ALL',
@@ -23,6 +24,12 @@ export function createSuccess(trans) {
     type: TYPES.CREATE_SUCCESS,
     trans,
     alerts: alertsUtils.createSuccess('Transaction created')
+  }
+}
+
+export function createReset() {
+  return {
+    type: TYPES.CREATE_RESET
   }
 }
 

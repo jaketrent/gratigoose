@@ -10,7 +10,8 @@ const {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLString
+  GraphQLString,
+  GraphQLUnionType
 } = require('graphql')
 const graphqlHTTP = require('koa-graphql')
 const koa = require('koa')
@@ -76,8 +77,10 @@ const transType = new GraphQLObjectType({
     id: { type: GraphQLID },
 
     acct: { type: acctType },
+    acctId: { type: GraphQLID },
     amt: { type: new GraphQLNonNull(GraphQLFloat) },
     cat: { type: catType },
+    catId: { type: GraphQLID },
     checkNum: { type: GraphQLInt },
     clearedDate: { type: GraphQLString },
     date: { type: new GraphQLNonNull(GraphQLString) },
@@ -92,9 +95,9 @@ const transType = new GraphQLObjectType({
 const transInputType = new GraphQLInputObjectType({
   name: 'transInput',
   fields: {
-    acct: { type: GraphQLID },
+    acctId: { type: GraphQLID },
     amt: { type: GraphQLFloat },
-    cat: { type: GraphQLID },
+    catId: { type: GraphQLID },
     checkNum: { type: GraphQLInt },
     clearedDate: { type: GraphQLString },
     date: { type: GraphQLString },

@@ -15,10 +15,10 @@ function mapStateToProps(state) {
 function Trans(props) {
   return (
     <div>
-      <Alerts />
       <h1>Transactions</h1>
       <CreateForm />
       <List transs={props.transs} />
+      <Alerts />
     </div>
   )
 }

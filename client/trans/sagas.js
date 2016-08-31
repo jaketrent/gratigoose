@@ -14,6 +14,11 @@ export function* create({ trans }) {
   }
 }
 
+export function* createSuccess(successPayload) {
+  put(successPayload)
+  put(actions.createReset())
+}
+
 export function* findAll() {
   const des = yield call(request, { api: api.findAll })
 

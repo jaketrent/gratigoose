@@ -7,8 +7,8 @@ function serialize(trans) {
     trans_date: trans.date,
     description: trans.desc,
     amt: trans.amt,
-    acct: trans.acct,
-    cat: trans.cat
+    acct: trans.acctId,
+    cat: trans.catId
   }
 }
 
@@ -18,8 +18,8 @@ function deserialize(doc) {
     date: doc.trans_date,
     desc: doc.description,
     amt: doc.amt,
-    acct: doc.acct,
-    cat: doc.cat
+    acctId: doc.acct,
+    catId: doc.cat
   }
 }
 
