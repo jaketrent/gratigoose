@@ -44,7 +44,7 @@ export const create = {
     return axios.post(api.formatUrl(), api.serialize(args))
   },
   deserializeSuccess(res, { trans }) {
-    return { ...trans, id: res.data.data.createTrans.id }
+    return { ...trans, id: res.data.id }
   },
   deserializeError
 }

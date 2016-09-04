@@ -1,18 +1,34 @@
-const debug = require('debug')('gg')
 const koa = require('koa')
 const route = require('koa-route')
 
-// const store = require('./store')
+const repo = require('./repo')
 
 const app = koa()
 
 function* create() {
-  debug('creating')
+  const trans = yield repo.create(this.db, this.request.body)
+  // TODO: generalize serialize
   this.body = {
-    yay: 'query'
+    data: trans
   }
 }
 
-app.use(route.post('/'), create)
+function* list() {
+  const transs = yield repo.findAll(this.db)
+  this.body = {
+    data: transs
+  }
+}
+
+function* show(id) {
+  const transs = yield repo.find(this.db, id)
+  this.body = {
+    data: transs
+  }
+}
+
+app.use(route.post('/', create))
+app.use(route.get('/', list))
+app.use(route.get('/:id', show))
 
 module.exports = app

@@ -17,10 +17,10 @@ function deserialize(doc, prefix) {
 
 function find(db, id) {
   return new Promise((resolve, reject) => {
-    db.acct.find(id, (err, doc) => {
+    db.acct.find({ id }, (err, docs) => {
       if (err) return reject(err)
 
-      resolve([deserialize(doc)])
+      resolve(docs.map(deserialize))
     })
   })
 }

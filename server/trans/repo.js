@@ -23,6 +23,14 @@ function deserialize(doc) {
   }
 }
 
+function deserializeFull(doc) {
+  return Object.assign(
+    deserialize(pickPrefix(doc, 'trans_')),
+    { acct: acctRepo.deserialize(pickPrefix(doc, 'acct_')) },
+    { cat: catRepo.deserialize(pickPrefix(doc, 'cat_')) }
+  )
+}
+
 function create(db, trans) {
   return new Promise((resolve, reject) => {
     db.trans.save(serialize(trans), (err, newDoc) => {
@@ -35,11 +43,10 @@ function create(db, trans) {
 
 function find(db, id) {
   return new Promise((resolve, reject) => {
-    db.trans.findFull(id, (err, doc) => {
+    db.queries.transFullFind(id, (err, docs) => {
       if (err) return reject(err)
 
-      // TODO: "full" deserialization
-      resolve([deserialize(doc)])
+      resolve(docs.map(deserializeFull))
     })
   })
 }
@@ -49,14 +56,7 @@ function findAll(db) {
     db.queries.transFullFindAll((err, docs) => {
       if (err) return reject(err)
 
-      const des = docs.map(doc => {
-        return Object.assign(
-          deserialize(pickPrefix(doc, 'trans_')),
-          { acct: acctRepo.deserialize(pickPrefix(doc, 'acct_')) },
-          { cat: catRepo.deserialize(pickPrefix(doc, 'cat_')) }
-        )
-      })
-      resolve(des)
+      resolve(docs.map(deserializeFull))
     })
   })
 }

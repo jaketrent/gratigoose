@@ -19,10 +19,10 @@ function deserialize(doc, prefix) {
 
 function find(db, id) {
   return new Promise((resolve, reject) => {
-    db.cat.find(id, (err, doc) => {
+    db.cat.find({ id }, (err, docs) => {
       if (err) return reject(err)
 
-      resolve([deserialize(doc)])
+      resolve(docs.map(deserialize))
     })
   })
 }
