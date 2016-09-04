@@ -41,7 +41,7 @@ export const findAll = {
 
 export const find = {
   formatUrl({ id }) {
-    return `/api/v1/graphql${id}`
+    return `/api/v1/trans/${id}`
   },
   request(args) {
     const { api } = args
