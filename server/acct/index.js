@@ -6,7 +6,7 @@ const repo = require('./repo')
 const app = koa()
 
 function* list() {
-  const term = this.query.search
+  const term = this.query.term
   const accts = term
     ? yield repo.search(this.db, term)
     : yield repo.findAll(this.db)

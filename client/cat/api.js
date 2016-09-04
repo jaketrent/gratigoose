@@ -1,37 +1,17 @@
 import axios from 'axios'
 
-const frags = {
-  cat: {
-    view: `
-      id,
-
-      abbrev,
-      desc,
-      name,
-      type
-    `
-  }
-}
+import deserializeError from '../common/api/deserialize-error'
 
 export const search = {
   formatUrl({ term }) {
-    const query = `
-      {
-        cat(search: "${term}") {
-          ${frags.cat.view}
-        }
-      }
-    `
-    return `/api/v1/graphql?query=${encodeURIComponent(query)}`
+    return `/api/v1/cat?term=${encodeURIComponent(term)}`
   },
   request(args) {
     const { api } = args
     return axios.get(api.formatUrl(args))
   },
   deserializeSuccess(res) {
-    return res.data.data.cat
+    return res.data.data
   },
-  deserializeError(res) {
-    return res.data
-  }
+  deserializeError
 }
