@@ -1,9 +1,11 @@
+import MediaQuery from 'react-responsive'
 import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './list.css'
+import media from '../common/styles/media'
 
-const { arrayOf, object } = React.PropTypes
+const { arrayOf, bool, object } = React.PropTypes
 
 function formatDate(dateStr) {
   const date = new Date(dateStr)
@@ -25,12 +27,16 @@ function Row(props) {
       <td className={props.css.cell}>
         {props.trans.amt}
       </td>
-      <td className={props.css.cell}>
-        {props.trans.acct.abbrev}
-      </td>
-      <td className={props.css.cell}>
-        {props.trans.cat.abbrev}
-      </td>
+      <MediaQuery query={media.smallWidth}>
+        <td className={props.css.cell}>
+          {props.trans.acct.abbrev}
+        </td>
+      </MediaQuery>
+      <MediaQuery query={media.smallWidth}>
+        <td className={props.css.cell}>
+          {props.trans.cat.abbrev}
+        </td>
+      </MediaQuery>
     </tr>
   )
 }
@@ -47,27 +53,37 @@ function renderRows(props) {
   )
 }
 
+function renderHeader(props) {
+  return (
+    <tr className={props.css.headRow}>
+      <th className={props.css.headCell}>
+        Date
+      </th>
+      <th className={props.css.headCell}>
+        Desc
+      </th>
+      <th className={props.css.headCell}>
+        Amt
+      </th>
+      <MediaQuery query={media.smallWidth}>
+        <th className={props.css.headCell}>
+          Acct
+        </th>
+      </MediaQuery>
+      <MediaQuery query={media.smallWidth}>
+        <th className={props.css.headCell}>
+          Cat
+        </th>
+      </MediaQuery>
+    </tr>
+  )
+}
+
 function List(props) {
   return (
     <table className={props.css.root}>
       <thead className={props.css.head}>
-        <tr className={props.css.headRow}>
-          <th className={props.css.headCell}>
-            Date
-          </th>
-          <th className={props.css.headCell}>
-            Desc
-          </th>
-          <th className={props.css.headCell}>
-            Amt
-          </th>
-          <th className={props.css.headCell}>
-            Acct
-          </th>
-          <th className={props.css.headCell}>
-            Cat
-          </th>
-        </tr>
+        {renderHeader(props)}
       </thead>
       <tbody className={props.css.body}>
         {renderRows(props)}

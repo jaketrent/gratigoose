@@ -1,5 +1,6 @@
 const cssnext = require('postcss-cssnext')
 const path = require('path')
+const postcssImport = require('postcss-import')
 
 module.exports = {
   entry: [
@@ -19,6 +20,7 @@ module.exports = {
     ]
   },
   postcss: [
+    postcssImport,
     cssnext
   ]
 }

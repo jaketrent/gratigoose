@@ -1,3 +1,5 @@
+@import "../common/styles/media.css";
+
 .root {
 }
 .fields {
@@ -12,4 +14,10 @@
 }
 .btn {
   composes: screenreader-only from "../common/styles/accessibility.css";
+}
+
+@media (--small) {
+  .fields {
+    display: block;
+  }
 }
