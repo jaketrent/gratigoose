@@ -34,9 +34,17 @@ function* year(year) {
   }
 }
 
+function* yearMonth(year, month) {
+  const transs = yield repo.findInYearMonth(this.db, year, month)
+  this.body = {
+    data: transs
+  }
+}
+
 app.use(route.post('/', create))
 app.use(route.get('/', list))
 app.use(route.get('/year/:year', year))
+app.use(route.get('/year/:year/month/:month', yearMonth))
 app.use(route.get('/:id', show))
 
 module.exports = app

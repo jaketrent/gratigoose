@@ -11,6 +11,8 @@ export const TYPES = types('trans',
   'FIND_ALL_SUCCESS',
   'FIND_IN_YEAR',
   'FIND_IN_YEAR_SUCCESS',
+  'FIND_IN_YEAR_MONTH',
+  'FIND_IN_YEAR_MONTH_SUCCESS',
   'SET_CREATE_TRANS_FIELD'
 )
 
@@ -65,6 +67,23 @@ export function findInYear({ year }) {
 export function findInYearSuccess({ year, transs }) {
   return {
     type: TYPES.FIND_IN_YEAR_SUCCESS,
+    year,
+    transs
+  }
+}
+
+export function findInYearMonth({ month, year }) {
+  return {
+    type: TYPES.FIND_IN_YEAR_MONTH,
+    month,
+    year
+  }
+}
+
+export function findInYearMonthSuccess({ month, transs, year }) {
+  return {
+    type: TYPES.FIND_IN_YEAR_SUCCESS,
+    month,
     year,
     transs
   }

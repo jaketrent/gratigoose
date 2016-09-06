@@ -61,6 +61,16 @@ function findInYear(db, year) {
   })
 }
 
+function findInYearMonth(db, year, month) {
+  return new Promise((resolve, reject) => {
+    db.queries.transFullFindInYearMonth(year, month, (err, docs) => {
+      if (err) return reject(err)
+
+      resolve(docs.map(deserializeFull))
+    })
+  })
+}
+
 function findAll(db) {
   return new Promise((resolve, reject) => {
     db.queries.transFullFindAll((err, docs) => {
@@ -75,5 +85,6 @@ exports.create = create
 exports.deserialize = deserialize
 exports.find = find
 exports.findInYear = findInYear
+exports.findInYearMonth = findInYearMonth
 exports.findAll = findAll
 exports.serialize = serialize

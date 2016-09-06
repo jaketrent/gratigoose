@@ -32,3 +32,10 @@ export function* findInYear({ year }) {
   yield put(actions.findInYearSuccess({ transs, year }))
   // TODO: impl and error check 
 }
+
+export function* findInYearMonth({ month, year }) {
+  const transs = yield call(request, { api: api.findInYearMonth, month, year })
+
+  yield put(actions.findInYearMonthSuccess({ month, transs, year }))
+  // TODO: impl and error check 
+}
