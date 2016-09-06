@@ -23,7 +23,7 @@ app.use(bodyParser())
 app.use(mount('/api/v1/acct', acct))
 app.use(mount('/api/v1/cat', cat))
 app.use(mount('/api/v1/trans', trans))
-app.use(route.get('/', index))
+app.use(route.get('*', index))
 
 function* index() {
   this.body = fs.readFileSync('./client/index.html', 'utf8')

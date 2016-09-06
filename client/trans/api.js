@@ -39,6 +39,20 @@ export const findAll = {
   deserializeError
 }
 
+export const findInYear = {
+  formatUrl({ year }) {
+    return `/api/v1/trans/year/${year}`
+  },
+  request(args) {
+    const { api } = args
+    return axios.get(api.formatUrl(args))
+  },
+  deserializeSuccess(res) {
+    return res.data.data
+  },
+  deserializeError
+}
+
 export const find = {
   formatUrl({ id }) {
     return `/api/v1/trans/${id}`

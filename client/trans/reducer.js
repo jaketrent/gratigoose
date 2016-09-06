@@ -22,7 +22,7 @@ function createSuccess(state, action) {
   }
 }
 
-function findAllSuccess(state, action) {
+function findSuccess(state, action) {
   return {
     ...state,
     transs: action.transs
@@ -42,6 +42,7 @@ function setCreateTransField(state, action) {
 export default createWithHandlers({
   [TYPES.CREATE_RESET]: createReset,
   [TYPES.CREATE_SUCCESS]: createSuccess,
-  [TYPES.FIND_ALL_SUCCESS]: findAllSuccess,
+  [TYPES.FIND_ALL_SUCCESS]: findSuccess,
+  [TYPES.FIND_IN_YEAR_SUCCESS]: findSuccess,
   [TYPES.SET_CREATE_TRANS_FIELD]: setCreateTransField
 }, initialState)

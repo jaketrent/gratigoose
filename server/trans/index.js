@@ -27,8 +27,16 @@ function* show(id) {
   }
 }
 
+function* year(year) {
+  const transs = yield repo.findInYear(this.db, year)
+  this.body = {
+    data: transs
+  }
+}
+
 app.use(route.post('/', create))
 app.use(route.get('/', list))
+app.use(route.get('/year/:year', year))
 app.use(route.get('/:id', show))
 
 module.exports = app

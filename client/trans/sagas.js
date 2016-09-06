@@ -25,3 +25,10 @@ export function* findAll() {
   yield put(actions.findAllSuccess(des))
   // TODO: impl and error check 
 }
+
+export function* findInYear({ year }) {
+  const transs = yield call(request, { api: api.findInYear, year })
+
+  yield put(actions.findInYearSuccess({ transs, year }))
+  // TODO: impl and error check 
+}
