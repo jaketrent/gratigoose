@@ -1,3 +1,7 @@
+export function formatUsd(amt) {
+  return amt.toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
+}
+
 function findExpectedForCat(catId, expecteds) {
   return expecteds.find(ex => ex.cat.id === catId)
 }
@@ -25,4 +29,28 @@ export function formatBudgetLines({ cats, expecteds, transs }) {
       diff
     }
   })
+}
+
+export function sumForCatType(catType, objs) {
+  return objs.reduce((sum, obj) => {
+    if (obj.cat.type === catType)
+      sum += obj.amt
+    return sum
+  }, 0)
+}
+
+export function sumWhereAmt(objs, predicate) {
+  return objs.reduce((sum, obj) => {
+    return predicate(obj)
+      ? sum + obj.amt
+      : sum
+  }, 0)
+}
+
+export function amtGtZero(obj) {
+  return obj.amt > 0
+}
+
+export function amtLteZero(obj) {
+  return obj.amt < 0
 }

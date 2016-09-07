@@ -5,6 +5,7 @@ import Alerts from '../alerts'
 import Debug from '../debug'
 import List from './list'
 import renderWithState from '../common/store/render'
+import Summary from './summary'
 
 function mapStateToProps(state) {
   return {
@@ -21,6 +22,8 @@ function Budget(props) {
     <div>
       <Debug />
       <h1>Budget</h1>
+      <Summary expecteds={props.expecteds}
+               transs={props.transs} />
       <List cats={props.cats}
             expecteds={props.expecteds}
             transs={props.transs} />
