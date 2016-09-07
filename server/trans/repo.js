@@ -17,7 +17,7 @@ function deserialize(doc) {
     id: doc.id,
     date: doc.trans_date,
     desc: doc.description,
-    amt: doc.amt,
+    amt: parseFloat(doc.amt),
     acctId: doc.acct,
     catId: doc.cat
   }

@@ -67,6 +67,20 @@ export const findInYearMonth = {
   deserializeError
 }
 
+export const findInYearMonthBudget = {
+  formatUrl({ month, year }) {
+    return `/api/v1/trans/year/${year}/month/${month}/budget`
+  },
+  request(args) {
+    const { api } = args
+    return axios.get(api.formatUrl(args))
+  },
+  deserializeSuccess(res) {
+    return res.data.data
+  },
+  deserializeError
+}
+
 export const find = {
   formatUrl({ id }) {
     return `/api/v1/trans/${id}`

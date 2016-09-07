@@ -1,6 +1,8 @@
 const koa = require('koa')
 const route = require('koa-route')
 
+const catRepo = require('../cat/repo')
+const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
 
 const app = koa()
@@ -41,10 +43,24 @@ function* yearMonth(year, month) {
   }
 }
 
+function* budget(year, month) {
+  const cats = yield catRepo.findAll(this.db)
+  const transs = yield repo.findInYearMonth(this.db, year, month)
+  const expecteds = yield expectedRepo.findInYearMonth(this.db, year, month)
+  this.body = {
+    data: {
+      cats,
+      expecteds,
+      transs
+    }
+  }
+}
+
 app.use(route.post('/', create))
 app.use(route.get('/', list))
 app.use(route.get('/year/:year', year))
 app.use(route.get('/year/:year/month/:month', yearMonth))
+app.use(route.get('/year/:year/month/:month/budget', budget))
 app.use(route.get('/:id', show))
 
 module.exports = app
