@@ -2,13 +2,10 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './list.css'
-import { formatBudgetLines } from './utils'
+import ExpectedInput from './expected-input'
+import { formatBudgetLines, formatUsd } from './utils'
 
-const { arrayOf, bool, number, object, shape, string } = React.PropTypes
-
-function formatUsd(amt) {
-  return amt.toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
-}
+const { arrayOf, bool, func, number, object, shape, string } = React.PropTypes
 
 function Row(props) {
   return (
@@ -17,7 +14,8 @@ function Row(props) {
         {props.line.catName}
       </td>
       <td className={props.css.cell}>
-        {formatUsd(props.line.expectedAmt)}
+        <ExpectedInput catId={props.line.catId}
+                       onSubmit={props.onExpectedSubmit} />
       </td>
       <td className={props.css.cell}>
         {formatUsd(props.line.transsAmtSum)}
@@ -30,20 +28,22 @@ function Row(props) {
 }
 
 Row.PropTypes = {
+  onExpectedSubmit: func.isRequired,
   line: shape({
-    id: number,
+    catId: number,
     catName: string,
     expectedAmt: number,
     transsAmtSum: number,
     diff: number
-  })
+  }).isRequired
 }
 
 function renderRows(props, lines) {
   return lines.map(l =>
     <Row css={props.css}
-         key={l.id}
-         line={l} />
+         key={l.catId}
+         line={l}
+         onExpectedSubmit={props.onExpectedSubmit}/>
   )
 }
 
@@ -81,6 +81,7 @@ function List(props) {
 List.PropTypes = {
   cats: arrayOf(object),
   expecteds: arrayOf(object),
+  onExpectedSubmit: func.isRequired,
   transs: arrayOf(object)
 }
 

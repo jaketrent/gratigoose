@@ -13,8 +13,6 @@ export const TYPES = types('trans',
   'FIND_IN_YEAR_SUCCESS',
   'FIND_IN_YEAR_MONTH',
   'FIND_IN_YEAR_MONTH_SUCCESS',
-  'FIND_IN_YEAR_MONTH_BUDGET',
-  'FIND_IN_YEAR_MONTH_BUDGET_SUCCESS',
   'SET_CREATE_TRANS_FIELD'
 )
 
@@ -88,25 +86,6 @@ export function findInYearMonthSuccess({ month, transs, year }) {
     month,
     year,
     transs
-  }
-}
-
-export function findInYearMonthBudget({ month, year }) {
-  return {
-    type: TYPES.FIND_IN_YEAR_MONTH_BUDGET,
-    month,
-    year
-  }
-}
-
-export function findInYearMonthBudgetSuccess({ cats, expecteds, month, transs, year }) {
-  return {
-    type: TYPES.FIND_IN_YEAR_MONTH_BUDGET_SUCCESS,
-    cats,
-    expecteds,
-    month,
-    transs,
-    year
   }
 }
 

@@ -11,8 +11,7 @@ class Link extends React.Component {
   render() {
     const { href, basePath, ...props } = this.props
     return (
-      <a {...props}
-         className={props.css.isActive ? props.css.rootActive : props.css.root}
+      <a className={props.css.isActive ? props.css.rootActive : props.css.root}
          href={urlUtil.formatUrl(href, basePath)}
          ref="link">{this.props.children}</a>
     )

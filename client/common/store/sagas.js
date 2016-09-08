@@ -3,6 +3,8 @@ import { fork } from 'redux-saga/effects'
 
 import * as acctActions from '../../acct/actions'
 import * as acctSagas from '../../acct/sagas'
+import * as budgetActions from '../../budget/actions'
+import * as budgetSagas from '../../budget/sagas'
 import * as catActions from '../../cat/actions'
 import * as catSagas from '../../cat/sagas'
 import * as transActions from '../../trans/actions'
@@ -17,6 +19,6 @@ export default function* root() {
     fork(takeEvery, transActions.TYPES.FIND_ALL, transSagas.findAll),
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR, transSagas.findInYear),
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR_MONTH, transSagas.findInYearMonth),
-    fork(takeEvery, transActions.TYPES.FIND_IN_YEAR_MONTH_BUDGET, transSagas.findInYearMonthBudget)
+    fork(takeEvery, budgetActions.TYPES.FIND_IN_YEAR_MONTH, budgetSagas.findInYearMonth)
   ]
 }

@@ -1,5 +1,7 @@
 export function formatUsd(amt) {
-  return amt.toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
+  return typeof amt != 'undefined'
+    ? amt.toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
+    : formatUsd(0)
 }
 
 function findExpectedForCat(catId, expecteds) {
@@ -15,15 +17,18 @@ function sumTranssAmtForCat(catId, transs) {
 }
 
 export function formatBudgetLines({ cats, expecteds, transs }) {
-  if (!Array.isArray(cats)) return []
+  if (!Array.isArray(cats) || !Array.isArray(expecteds)) return []
 
   return cats.map(cat => {
-    const expectedAmt = findExpectedForCat(cat.id, expecteds).amt
+    const expectedForCat = findExpectedForCat(cat.id, expecteds)
+    const expectedAmt = expectedForCat ? expectedForCat.amt : 0
+    const expectedId = expectedForCat ? expectedForCat.id : null
     const transsAmtSum = sumTranssAmtForCat(cat.id, transs)
     const diff = expectedAmt - transsAmtSum
     return {
-      id: cat.id,
+      catId: cat.id,
       catName: cat.name,
+      expectedId,
       expectedAmt,
       transsAmtSum,
       diff

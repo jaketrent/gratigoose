@@ -39,10 +39,3 @@ export function* findInYearMonth({ month, year }) {
   yield put(actions.findInYearMonthSuccess({ month, transs, year }))
   // TODO: impl and error check 
 }
-
-export function* findInYearMonthBudget({ month, year }) {
-  const { cats, expecteds, transs } = yield call(request, { api: api.findInYearMonthBudget, month, year })
-
-  yield put(actions.findInYearMonthBudgetSuccess({ cats, expecteds, month, transs, year }))
-  // TODO: impl and error check 
-}
