@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
 
-import Alerts from '../alerts'
-import Debug from '../debug'
+import Chrome from '../common/layouts/chrome'
 import List from './list'
 import renderWithState from '../common/store/render'
 import Summary from './summary'
@@ -19,16 +18,14 @@ function mapStateToProps(state) {
 
 function Budget(props) {
   return (
-    <div>
-      <Debug />
+    <Chrome>
       <h1>Budget</h1>
       <Summary expecteds={props.expecteds}
                transs={props.transs} />
       <List cats={props.cats}
             expecteds={props.expecteds}
             transs={props.transs} />
-      <Alerts />
-    </div>
+    </Chrome>
   )
 }
 

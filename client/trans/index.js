@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import React from 'react'
 
-import Alerts from '../alerts'
+import Chrome from '../common/layouts/chrome'
 import CreateForm from './create-form'
-import Debug from '../debug'
 import List from './list'
 import renderWithState from '../common/store/render'
 
@@ -15,13 +14,11 @@ function mapStateToProps(state) {
 
 function Trans(props) {
   return (
-    <div>
-      <Debug />
+    <Chrome>
       <h1>Transactions</h1>
       <CreateForm />
       <List transs={props.transs} />
-      <Alerts />
-    </div>
+    </Chrome>
   )
 }
 

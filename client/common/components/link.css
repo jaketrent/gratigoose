@@ -1,0 +1,11 @@
+.root {
+  color: green;
+}
+.root:hover {
+  color: lightgreen;
+  text-decoration: underline;
+}
+.rootActive {
+  composes: root;
+  color: darkgreen;
+}

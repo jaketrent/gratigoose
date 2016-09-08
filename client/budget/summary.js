@@ -51,6 +51,10 @@ function Summary(props) {
   const expectedDebits = sumWhereAmt(props.expecteds, amtLteZero)
   const expectedSavings = sumForCatType(catTypes.savings, props.expecteds)
   const expectedNet = expectedIncome - expectedDebits - expectedSavings
+  const transIncome = sumWhereAmt(props.transs, amtGtZero)
+  const transDebits = sumWhereAmt(props.transs, amtLteZero)
+  const transSavings = sumForCatType(catTypes.savings, props.transs)
+  const transNet = transIncome - transDebits - transSavings
   return (
     <table className={props.css.root}>
       <thead className={props.css.head}>
@@ -61,6 +65,10 @@ function Summary(props) {
       {renderRow(props, 'Expected debits', expectedDebits)}
       {renderRow(props, 'Expected savings', expectedSavings)}
       {renderRow(props, 'Net expectations', expectedNet)}
+      {renderRow(props, 'Sum income', transIncome)}
+      {renderRow(props, 'Sum debits', transDebits)}
+      {renderRow(props, 'Sum savings', transSavings)}
+      {renderRow(props, 'Net income', transNet)}
       </tbody>
     </table>
   )

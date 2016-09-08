@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+.title {
+  flex: 1;
+  margin: 0;
+}
+.nav {
+  flex: 3;
+  display: flex;
+  justify-content: flex-end;
+}
+.navLink {
+  composes: root from "./link.css";
+}
