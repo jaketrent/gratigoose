@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 import deserializeError from '../common/api/deserialize-error'
+import * as expectedUtils from '../expected/utils'
+import * as transUtils from '../trans/utils'
 
 export const findInYearMonth = {
   formatUrl({ month, year }) {
@@ -10,8 +12,12 @@ export const findInYearMonth = {
     const { api } = args
     return axios.get(api.formatUrl(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data
+  deserializeSuccess(res, args) {
+    return {
+      ...res.data.data,
+      expecteds: expectedUtils.combineRelations(res.data.data.expecteds, args),
+      transs: transUtils.combineRelations(res.data.data.transs, args)
+    }
   },
   deserializeError
 }

@@ -18,7 +18,7 @@ function createSuccess(state, action) {
   return {
     ...state,
     isCreateSuccess: true,
-    transs: [action.trans].concat(state.transs)
+    transs: action.transs.concat(state.transs)
   }
 }
 
@@ -29,6 +29,7 @@ function findSuccess(state, action) {
   }
 }
 
+// TODO: is this used?
 function setCreateTransField(state, action) {
   return {
     ...state,

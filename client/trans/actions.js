@@ -23,10 +23,10 @@ export function create(trans) {
   }
 }
 
-export function createSuccess(trans) {
+export function createSuccess(transs) {
   return {
     type: TYPES.CREATE_SUCCESS,
-    trans,
+    transs,
     alerts: alertsUtils.createSuccess('Transaction created')
   }
 }

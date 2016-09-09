@@ -11,7 +11,7 @@ function* create() {
   const trans = yield repo.create(this.db, this.request.body)
   // TODO: generalize serialize
   this.body = {
-    data: trans
+    data: [trans]
   }
 }
 
@@ -43,13 +43,12 @@ function* yearMonth(year, month) {
   }
 }
 
+// TODO: mv to budget ctrl
 function* budget(year, month) {
-  const cats = yield catRepo.findAll(this.db)
   const transs = yield repo.findInYearMonth(this.db, year, month)
   const expecteds = yield expectedRepo.findInYearMonth(this.db, year, month)
   this.body = {
     data: {
-      cats,
       expecteds,
       transs
     }

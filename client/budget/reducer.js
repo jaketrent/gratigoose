@@ -3,7 +3,6 @@ import { TYPES } from './actions'
 import { createWithHandlers } from '../common/reducer'
 
 const initialState = {
-  cats: [],
   expecteds: [],
   transs: []
 }
@@ -18,7 +17,6 @@ function createExpectedSuccess(state, action) {
 function findYearMonthSuccess(state, action) {
   return {
     ...state,
-    cats: action.cats,
     expecteds: action.expecteds,
     transs: action.transs
   }

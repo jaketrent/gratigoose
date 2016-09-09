@@ -12,7 +12,9 @@ import * as transSagas from '../../trans/sagas'
 
 export default function* root() {
   yield* [
+    fork(takeEvery, acctActions.TYPES.FIND_ALL, acctSagas.findAll),
     fork(takeEvery, acctActions.TYPES.SEARCH, acctSagas.search),
+    fork(takeEvery, catActions.TYPES.FIND_ALL, catSagas.findAll),
     fork(takeEvery, catActions.TYPES.SEARCH, catSagas.search),
     fork(takeEvery, transActions.TYPES.CREATE, transSagas.create),
     fork(takeEvery, transActions.TYPES.CREATE_SUCCESS, transSagas.createSuccess),

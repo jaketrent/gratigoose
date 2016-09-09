@@ -9,7 +9,7 @@ import Summary from './summary'
 
 function mapStateToProps(state) {
   return {
-    cats: state.budget.cats,
+    cats: state.cat.cats,
     expecteds: state.budget.expecteds,
     month: state.routing.params.month,
     transs: state.budget.transs,

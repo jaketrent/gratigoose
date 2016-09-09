@@ -1,6 +1,11 @@
 import axios from 'axios'
 
 import deserializeError from '../common/api/deserialize-error'
+import * as utils from './utils'
+
+function deserializeSuccess(res, args) {
+  return utils.combineRelations(res.data.data, args)
+}
 
 export const create = {
   formatUrl() {
@@ -19,9 +24,7 @@ export const create = {
     const { api } = args
     return axios.post(api.formatUrl(), api.serialize(args))
   },
-  deserializeSuccess(res, { trans }) {
-    return { ...trans, id: res.data.data.id }
-  },
+  deserializeSuccess,
   deserializeError
 }
 
@@ -33,9 +36,7 @@ export const findAll = {
     const { api } = args
     return axios.get(api.formatUrl())
   },
-  deserializeSuccess(res) {
-    return res.data.data
-  },
+  deserializeSuccess,
   deserializeError
 }
 
@@ -47,9 +48,7 @@ export const findInYear = {
     const { api } = args
     return axios.get(api.formatUrl(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data
-  },
+  deserializeSuccess,
   deserializeError
 }
 
@@ -61,22 +60,6 @@ export const findInYearMonth = {
     const { api } = args
     return axios.get(api.formatUrl(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data
-  },
-  deserializeError
-}
-
-export const find = {
-  formatUrl({ id }) {
-    return `/api/v1/trans/${id}`
-  },
-  request(args) {
-    const { api } = args
-    return axios.get(api.formatUrl(args))
-  },
-  deserializeSuccess(res) {
-    return res.data.data[0]
-  },
+  deserializeSuccess,
   deserializeError
 }

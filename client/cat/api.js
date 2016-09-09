@@ -15,3 +15,17 @@ export const search = {
   },
   deserializeError
 }
+
+export const findAll = {
+  formatUrl() {
+    return '/api/v1/cat'
+  },
+  request(args) {
+    const { api } = args
+    return axios.get(api.formatUrl())
+  },
+  deserializeSuccess(res) {
+    return res.data.data
+  },
+  deserializeError
+}

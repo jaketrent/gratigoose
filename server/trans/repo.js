@@ -1,14 +1,10 @@
-const acctRepo = require('../acct/repo')
-const catRepo = require('../cat/repo')
-const { pickPrefix } = require('../common/repo')
-
 function serialize(trans) {
   return {
     trans_date: trans.date,
     description: trans.desc,
     amt: trans.amt,
-    acct: trans.acctId,
-    cat: trans.catId
+    acct_id: trans.acctId,
+    cat_id: trans.catId
   }
 }
 
@@ -18,17 +14,9 @@ function deserialize(doc) {
     date: doc.trans_date,
     desc: doc.description,
     amt: parseFloat(doc.amt),
-    acctId: doc.acct,
-    catId: doc.cat
+    acctId: doc.acct_id,
+    catId: doc.cat_id
   }
-}
-
-function deserializeFull(doc) {
-  return Object.assign(
-    deserialize(pickPrefix(doc, 'trans_')),
-    { acct: acctRepo.deserialize(pickPrefix(doc, 'acct_')) },
-    { cat: catRepo.deserialize(pickPrefix(doc, 'cat_')) }
-  )
 }
 
 function create(db, trans) {
@@ -43,40 +31,40 @@ function create(db, trans) {
 
 function find(db, id) {
   return new Promise((resolve, reject) => {
-    db.queries.transFullFind(id, (err, docs) => {
+    db.trans.find({ id }, (err, docs) => {
       if (err) return reject(err)
 
-      resolve(docs.map(deserializeFull))
+      resolve(docs.map(deserialize))
     })
   })
 }
 
 function findInYear(db, year) {
   return new Promise((resolve, reject) => {
-    db.queries.transFullFindInYear(year, (err, docs) => {
+    db.queries.transFindInYear(year, (err, docs) => {
       if (err) return reject(err)
 
-      resolve(docs.map(deserializeFull))
+      resolve(docs.map(deserialize))
     })
   })
 }
 
 function findInYearMonth(db, year, month) {
   return new Promise((resolve, reject) => {
-    db.queries.transFullFindInYearMonth(year, month, (err, docs) => {
+    db.queries.transFindInYearMonth(year, month, (err, docs) => {
       if (err) return reject(err)
 
-      resolve(docs.map(deserializeFull))
+      resolve(docs.map(deserialize))
     })
   })
 }
 
 function findAll(db) {
   return new Promise((resolve, reject) => {
-    db.queries.transFullFindAll((err, docs) => {
+    db.trans.find((err, docs) => {
       if (err) return reject(err)
 
-      resolve(docs.map(deserializeFull))
+      resolve(docs.map(deserialize))
     })
   })
 }

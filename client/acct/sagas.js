@@ -10,3 +10,11 @@ export function* search({ term }) {
   yield put(actions.searchSuccess(accts))
   // TODO: error check?
 }
+
+export function* findAll() {
+  const accts = yield call(request, { api: api.findAll })
+
+  yield put(actions.findAllSuccess(accts))
+  // TODO: impl and error check 
+  return accts
+}
