@@ -11,10 +11,10 @@ function Row(props) {
   return (
     <tr className={props.css.row}>
       <td className={props.css.cell}>
-        {props.line.catName}
+        {props.line.cat.name}
       </td>
       <td className={props.css.cell}>
-        <ExpectedInput catId={props.line.catId}
+        <ExpectedInput cat={props.line.cat}
                        onSubmit={props.onExpectedSubmit} />
       </td>
       <td className={props.css.cell}>
@@ -30,8 +30,7 @@ function Row(props) {
 Row.PropTypes = {
   onExpectedSubmit: func.isRequired,
   line: shape({
-    catId: number,
-    catName: string,
+    cat: object,
     expectedAmt: number,
     transsAmtSum: number,
     diff: number
@@ -41,7 +40,7 @@ Row.PropTypes = {
 function renderRows(props, lines) {
   return lines.map(l =>
     <Row css={props.css}
-         key={l.catId}
+         key={l.cat.id}
          line={l}
          onExpectedSubmit={props.onExpectedSubmit}/>
   )

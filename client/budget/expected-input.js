@@ -2,7 +2,7 @@ import React from 'react'
 
 import { formatUsd } from './utils'
 
-const { func, number } = React.PropTypes
+const { func, number, object } = React.PropTypes
 
 const ENTER = 13
 
@@ -21,7 +21,7 @@ export default class ExpectedInput extends React.Component {
   }
   handleWriteKeyUp(evt) {
     if (evt.which === ENTER) {
-      this.props.onSubmit(evt, this.props.catId, this.props.expectedId)
+      this.props.onSubmit(evt, this.props.cat, this.props.expectedId)
       this.setState({ isOpen: false })
     }
   }
@@ -55,7 +55,7 @@ export default class ExpectedInput extends React.Component {
 }
 ExpectedInput.propTypes = {
   amt: number,
-  catId: number.isRequired,
+  cat: object.isRequired,
   expectedId: number,
   onSubmit: func.isRequired
 }

@@ -20,10 +20,10 @@ export function createExpected(args) {
   }
 }
 
-export function createExpectedSuccess(args) {
+export function createExpectedSuccess(expected) {
   return {
-    ...args,
     type: TYPES.CREATE_EXPECTED_SUCCESS,
+    expected,
     alerts: alertsUtils.createSuccess('Expected created')
   }
 }

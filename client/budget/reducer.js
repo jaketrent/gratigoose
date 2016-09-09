@@ -8,6 +8,13 @@ const initialState = {
   transs: []
 }
 
+function createExpectedSuccess(state, action) {
+  return {
+    ...state,
+    expecteds: state.expecteds.concat([action.expected])
+  }
+}
+
 function findYearMonthSuccess(state, action) {
   return {
     ...state,
@@ -18,5 +25,6 @@ function findYearMonthSuccess(state, action) {
 }
 
 export default createWithHandlers({
+  [TYPES.CREATE_EXPECTED_SUCCESS]: createExpectedSuccess,
   [TYPES.FIND_IN_YEAR_MONTH_SUCCESS]: findYearMonthSuccess,
 }, initialState)

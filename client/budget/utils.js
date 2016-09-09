@@ -26,8 +26,7 @@ export function formatBudgetLines({ cats, expecteds, transs }) {
     const transsAmtSum = sumTranssAmtForCat(cat.id, transs)
     const diff = expectedAmt - transsAmtSum
     return {
-      catId: cat.id,
-      catName: cat.name,
+      cat,
       expectedId,
       expectedAmt,
       transsAmtSum,

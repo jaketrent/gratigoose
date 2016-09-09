@@ -10,3 +10,10 @@ export function* findInYearMonth({ month, year }) {
   yield put(actions.findInYearMonthSuccess({ cats, expecteds, month, transs, year }))
   // TODO: impl and error check 
 }
+
+export function* createExpected(args) {
+  const expected = yield call(request, { ...args, api: api.createExpected })
+
+  yield put(actions.createExpectedSuccess({ expected }))
+  // TODO: impl and error check 
+}

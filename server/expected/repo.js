@@ -1,11 +1,18 @@
 const catRepo = require('../cat/repo')
 const { pickPrefix } = require('../common/repo')
 
-function serialize(expected) {
+function serializeCreate(expected) {
   return {
     amt: expected.amt,
-    cat: expected.catId
+    cat: expected.cat.id,
+    date: expected.date
   }
+}
+
+function serialize(expected) {
+  return Object.assign({
+    id: expected.id,
+  }, serializeCreate(expected))
 }
 
 function deserialize(doc) {
@@ -27,10 +34,21 @@ function deserializeFull(doc) {
 
 function create(db, expected) {
   return new Promise((resolve, reject) => {
-    db.expected.save(serialize(expected), (err, newDoc) => {
+    db.expected.insert(serializeCreate(expected), (err, newDoc) => {
       if (err) return reject(err)
 
-      resolve(deserialize(newDoc))
+      // TODO: pickup how to deserializeFull or reassoc with full cat in the client
+      resolve(Object.assign(deserialize(newDoc), expected))
+    })
+  })
+}
+
+function update(db, expected) {
+  return new Promise((resolve, reject) => {
+    db.expected.update(serialize(expected), (err, updatedDoc) => {
+      if (err) return reject(err)
+
+      resolve(deserialize(updatedDoc))
     })
   })
 }
@@ -49,3 +67,4 @@ exports.create = create
 exports.deserialize = deserialize
 exports.findInYearMonth = findInYearMonth
 exports.serialize = serialize
+exports.update = update
