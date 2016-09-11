@@ -22,13 +22,11 @@ export function formatBudgetLines({ cats, expecteds, transs }) {
   return cats.map(cat => {
     const expectedForCat = findExpectedForCat(cat.id, expecteds)
     const expectedAmt = expectedForCat ? expectedForCat.amt : 0
-    const expectedId = expectedForCat ? expectedForCat.id : null
     const transsAmtSum = sumTranssAmtForCat(cat.id, transs)
     const diff = expectedAmt - transsAmtSum
     return {
       cat,
-      expectedId,
-      expectedAmt,
+      expected: expectedForCat,
       transsAmtSum,
       diff
     }

@@ -29,7 +29,7 @@ export const createExpected = {
   serialize({ amt, cat, month, year }) {
     return {
       amt,
-      cat,
+      catId: cat.id,
       date: `${year}-${month}-01`
     }
   },
@@ -37,28 +37,30 @@ export const createExpected = {
     const { api } = args
     return axios.post(api.formatUrl(), api.serialize(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data
+  deserializeSuccess(res, args) {
+    return expectedUtils.combineRelations(res.data.data, args)
   },
   deserializeError
 }
 
 export const updateExpected = {
-  formatUrl({ id }) {
-    return `/api/v1/expected/${id}`
+  formatUrl({ expected }) {
+    return `/api/v1/expected/${expected.id}`
   },
-  serialize({ id, amt }) {
+  serialize({ amt, expected }) {
     return {
-      id,
-      amt
+      amt,
+      catId: expected.cat.id,
+      date: expected.date,
+      id: expected.id,
     }
   },
   request(args) {
     const { api } = args
     return axios.put(api.formatUrl(args), api.serialize(args))
   },
-  deserializeSuccess(res) {
-    return res.data.data
+  deserializeSuccess(res, args) {
+    return expectedUtils.combineRelations(res.data.data, args)
   },
   deserializeError
 }

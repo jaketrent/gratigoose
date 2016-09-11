@@ -24,11 +24,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function handleExpectedSubmit(props, evt, cat, expectedId) {
+function handleExpectedSubmit(props, evt, cat, expected) {
   const amt = evt.target.value
   const { year, month } = props
-  if (expectedId)
-    props.updateExpected({ id: expectedId, amt })
+  if (expected)
+    props.updateExpected({ expected, amt })
   else
     props.createExpected({ amt, cat, year, month })
 }

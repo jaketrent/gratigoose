@@ -15,6 +15,7 @@ function Row(props) {
       </td>
       <td className={props.css.cell}>
         <ExpectedInput cat={props.line.cat}
+                       expected={props.line.expected}
                        onSubmit={props.onExpectedSubmit} />
       </td>
       <td className={props.css.cell}>
@@ -31,7 +32,7 @@ Row.PropTypes = {
   onExpectedSubmit: func.isRequired,
   line: shape({
     cat: object,
-    expectedAmt: number,
+    expected: object,
     transsAmtSum: number,
     diff: number
   }).isRequired

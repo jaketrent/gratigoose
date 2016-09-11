@@ -67,7 +67,7 @@ updated date default now()
 
 create table expected (
 id int primary key default nextval('expected_id_seq'),
-cat_id int references cat(id),
+cat_id int not null references cat(id),
 amt decimal not null default 0.00,
 date date default now(),
 created date default now(),

@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const bodyParser = require('koa-bodyparser')
 const debug = require('debug')('mm')
+const error = require('koa-json-error')
 const fs = require('fs')
 const logger = require('koa-logger')
 const koa = require('koa')
@@ -21,6 +22,20 @@ const port = process.env.PORT || 3000
 app.use(logger())
 app.use(mount('/static', static))
 app.use(bodyParser())
+app.use(function* catchErrors(next) {
+  try {
+    yield next
+  } catch(err) {
+    this.status = err.status || 500
+    this.body = {
+      errors: [{
+        stack: err.stack,
+        status: this.status,
+        title: err.message
+      }]
+    }
+  }
+})
 app.use(mount('/api/v1/acct', acct))
 app.use(mount('/api/v1/cat', cat))
 app.use(mount('/api/v1/expected', expected))

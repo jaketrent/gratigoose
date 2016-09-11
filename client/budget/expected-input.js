@@ -21,7 +21,7 @@ export default class ExpectedInput extends React.Component {
   }
   handleWriteKeyUp(evt) {
     if (evt.which === ENTER) {
-      this.props.onSubmit(evt, this.props.cat, this.props.expectedId)
+      this.props.onSubmit(evt, this.props.cat, this.props.expected)
       this.setState({ isOpen: false })
     }
   }
@@ -34,14 +34,15 @@ export default class ExpectedInput extends React.Component {
       <div>
         <input onKeyUp={this.handleWriteKeyUp}
                ref={el => el ? el.focus() : null}
-               type="text" />
+               type="text"
+               defaultValue={this.props.expected && this.props.expected.amt}/>
       </div>
     )
   }
   renderRead() {
     return (
       <div onKeyUp={this.handleReadKeyUp} onClick={this.handleOpen} tabIndex={0}>
-        {formatUsd(this.props.amt)}
+        {formatUsd(this.props.expected && this.props.expected.amt)}
       </div>
     )
   }
@@ -54,8 +55,7 @@ export default class ExpectedInput extends React.Component {
   }
 }
 ExpectedInput.propTypes = {
-  amt: number,
   cat: object.isRequired,
-  expectedId: number,
+  expected: object,
   onSubmit: func.isRequired
 }

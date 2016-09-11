@@ -14,8 +14,23 @@ export function* findInYearMonth({ month, year }) {
 }
 
 export function* createExpected(args) {
-  const expected = yield call(request, { ...args, api: api.createExpected })
+  try {
+    const { cats } = yield* transSagas.loadTransRelations()
+    const expecteds = yield call(request, { ...args, api: api.createExpected, cats })
+    yield put(actions.createExpectedSuccess(expecteds))
+  } catch (errors) {
+    yield put(actions.createExpectedError(errors))
+  }
+}
 
-  yield put(actions.createExpectedSuccess({ expected }))
-  // TODO: impl and error check 
+export function* updateExpected(args) {
+  try {
+    const { cats } = yield* transSagas.loadTransRelations()
+    const expecteds = yield call(request, { ...args, api: api.updateExpected, cats })
+    yield put(actions.updateExpectedSuccess(expecteds))
+  } catch (errors) {
+    debugger
+    console.log('errors', errors)
+    yield put(actions.updateExpectedError(errors))
+  }
 }

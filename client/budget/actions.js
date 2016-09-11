@@ -20,10 +20,10 @@ export function createExpected(args) {
   }
 }
 
-export function createExpectedSuccess(expected) {
+export function createExpectedSuccess(expecteds) {
   return {
     type: TYPES.CREATE_EXPECTED_SUCCESS,
-    expected,
+    expecteds,
     alerts: alertsUtils.createSuccess('Expected created')
   }
 }
@@ -51,5 +51,27 @@ export function findInYearMonthSuccess({ cats, expecteds, month, transs, year })
     month,
     transs,
     year
+  }
+}
+
+export function updateExpected(args) {
+  return {
+    ...args,
+    type: TYPES.UPDATE_EXPECTED
+  }
+}
+
+export function updateExpectedSuccess(expecteds) {
+  return {
+    type: TYPES.UPDATE_EXPECTED_SUCCESS,
+    expecteds,
+    alerts: alertsUtils.createSuccess('Expected updated')
+  }
+}
+
+export function updateExpectedError(errors) {
+  return {
+    type: TYPES.UPDATE_EXPECTED_ERROR,
+    alerts: alertsUtils.createFromErrors(errors)
   }
 }

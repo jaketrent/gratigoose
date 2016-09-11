@@ -6,7 +6,7 @@ export default function request(args) {
         resolve(api.deserializeSuccess(res, args))
       })
       .catch(err => {
-        reject(api.deserializeError(err.response, args))
+        reject(api.deserializeError(err.response || err, args))
       })
   })
 }

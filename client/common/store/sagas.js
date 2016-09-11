@@ -22,6 +22,7 @@ export default function* root() {
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR, transSagas.findInYear),
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR_MONTH, transSagas.findInYearMonth),
     fork(takeEvery, budgetActions.TYPES.CREATE_EXPECTED, budgetSagas.createExpected),
-    fork(takeEvery, budgetActions.TYPES.FIND_IN_YEAR_MONTH, budgetSagas.findInYearMonth)
+    fork(takeEvery, budgetActions.TYPES.FIND_IN_YEAR_MONTH, budgetSagas.findInYearMonth),
+    fork(takeEvery, budgetActions.TYPES.UPDATE_EXPECTED, budgetSagas.updateExpected)
   ]
 }
