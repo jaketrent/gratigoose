@@ -11,6 +11,7 @@ function Header(props) {
       <nav className={props.css.nav}>
         <Link css={{ root: props.css.navLink }} href="/">Transactions</Link>
         <Link css={{ root: props.css.navLink }} href="/budget">Budget</Link>
+        <Link css={{ root: props.css.navLink }} href="/tithing">Tithing</Link>
       </nav>
       {props.children}
     </div>
