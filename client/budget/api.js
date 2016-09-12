@@ -52,7 +52,7 @@ export const updateExpected = {
       amt,
       catId: expected.cat.id,
       date: expected.date,
-      id: expected.id,
+      id: expected.id
     }
   },
   request(args) {

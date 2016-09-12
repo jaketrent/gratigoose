@@ -1,11 +1,21 @@
-function serialize(trans) {
+function serializeCreate(trans) {
+  const dateParts = trans.date.split('-')
   return {
     trans_date: trans.date,
     description: trans.desc,
     amt: trans.amt,
     acct_id: trans.acctId,
-    cat_id: trans.catId
+    cat_id: trans.catId,
+    year: dateParts[0],
+    month: dateParts[1],
+    day: dateParts[2]
   }
+}
+
+function serialize(trans) {
+  return Object.assign({
+    id: trans.id,
+  }, serializeCreate(trans))
 }
 
 function deserialize(doc) {
@@ -21,7 +31,7 @@ function deserialize(doc) {
 
 function create(db, trans) {
   return new Promise((resolve, reject) => {
-    db.trans.save(serialize(trans), (err, newDoc) => {
+    db.trans.save(serializeCreate(trans), (err, newDoc) => {
       if (err) return reject(err)
 
       resolve(deserialize(newDoc))
@@ -41,7 +51,7 @@ function find(db, id) {
 
 function findInYear(db, year) {
   return new Promise((resolve, reject) => {
-    db.queries.transFindInYear(year, (err, docs) => {
+    db.trans.find({ year }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))
@@ -51,7 +61,7 @@ function findInYear(db, year) {
 
 function findInYearMonth(db, year, month) {
   return new Promise((resolve, reject) => {
-    db.queries.transFindInYearMonth(year, month, (err, docs) => {
+    db.trans.find({ year, month }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))

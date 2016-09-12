@@ -13,11 +13,11 @@ export const create = {
   },
   serialize({ trans }) {
     return {
-      date: trans.date,
-      desc: trans.desc,
-      amt: trans.amt,
       acctId: trans.acct.id,
-      catId: trans.cat.id
+      amt: trans.amt,
+      catId: trans.cat.id,
+      date: trans.date,
+      desc: trans.desc
     }
   },
   request(args) {

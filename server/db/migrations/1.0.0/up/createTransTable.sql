@@ -53,6 +53,9 @@ updated date default now()
 -- renamed desc -> description
 create table trans (
 id int primary key default nextval('trans_id_seq'),
+year int not null,
+month int not null,
+day int not null,
 trans_date date not null,
 description text,
 amt decimal not null default 0.00,
@@ -69,9 +72,13 @@ create table expected (
 id int primary key default nextval('expected_id_seq'),
 cat_id int not null references cat(id),
 amt decimal not null default 0.00,
-date date default now(),
+year int not null,
+month int not null,
+date date not null,
 created date default now(),
 updated date default now()
 );
+
+alter table expected add constraint one_expected_per_month unique(cat_id, year, month);
 
 end;

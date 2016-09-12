@@ -1,8 +1,11 @@
 function serializeCreate(expected) {
+  const dateParts = expected.date.split('-')
   return {
     amt: expected.amt,
     cat_id: expected.catId,
-    date: expected.date
+    date: expected.date,
+    year: dateParts[0],
+    month: dateParts[1]
   }
 }
 
@@ -44,7 +47,7 @@ function update(db, expected) {
 
 function findInYearMonth(db, year, month) {
   return new Promise((resolve, reject) => {
-    db.queries.expectedFindInYearMonth(year, month, (err, docs) => {
+    db.expected.find({ year, month }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))
