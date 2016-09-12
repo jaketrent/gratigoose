@@ -3,6 +3,7 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './list.css'
+import { formatUsd } from '../common/amt'
 import media from '../common/styles/media'
 
 const { arrayOf, bool, object } = React.PropTypes
@@ -25,7 +26,7 @@ function Row(props) {
         {props.trans.desc}
       </td>
       <td className={props.css.cell}>
-        {props.trans.amt}
+        {formatUsd(props.trans.amt)}
       </td>
       <MediaQuery query={media.smallWidth}>
         <td className={props.css.cell}>

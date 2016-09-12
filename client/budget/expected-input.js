@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { formatUsd } from './utils'
+import { formatUsd } from '../common/amt'
 
 const { func, number, object } = React.PropTypes
 

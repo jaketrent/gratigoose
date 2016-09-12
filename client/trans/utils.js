@@ -35,6 +35,10 @@ export function sinceDate(date, trans) {
   return transDate > date
 }
 
-export function isIncome(trans) {
-  return trans && trans.amt > 0
+export function sumTranssAmtForCat(catId, transs) {
+  return transs.reduce((sum, trans) => {
+    if (trans.cat.id === catId)
+      sum += trans.amt
+    return sum
+  }, 0)
 }

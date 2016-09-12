@@ -1,9 +1,11 @@
 import React from 'react'
 import styleable from 'react-styleable'
 
+import { amtGtZero, amtLteZero, sumForCatType, sumWhereAmt } from '../common/amt'
 import catTypes from '../cat/types'
 import css from './summary.css'
-import { amtGtZero, amtLteZero, formatBudgetLines, formatUsd, sumForCatType, sumWhereAmt } from './utils'
+import { formatBudgetLines } from './utils'
+import { formatUsd } from '../common/amt'
 
 const { arrayOf, bool, number, object, shape, string } = React.PropTypes
 

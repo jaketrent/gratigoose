@@ -3,7 +3,8 @@ import styleable from 'react-styleable'
 
 import css from './list.css'
 import ExpectedInput from './expected-input'
-import { formatBudgetLines, formatUsd } from './utils'
+import { formatUsd } from '../common/amt'
+import { formatBudgetLines } from './utils'
 
 const { arrayOf, bool, func, number, object, shape, string } = React.PropTypes
 
