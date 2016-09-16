@@ -11,22 +11,36 @@ class CsvAligner extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      columns: [
+        'amt',
+        'date',
+        'desc'
+      ],
       selectedColumns: Array.from(Array(this.props.rows[0].length))
     }
     this.handleColumnDrop = this.handleColumnDrop.bind(this)
   }
   handleColumnDrop(index, name) {
+    const columns = [...this.state.columns]
+    const indexInColumns = columns.indexOf(name)
+    if (indexInColumns > -1)
+      columns.splice(indexInColumns, 1)
+
     const selectedColumns = [...this.state.selectedColumns]
+    const indexInSelected = selectedColumns.indexOf(name)
+    if (indexInSelected > -1)
+      selectedColumns[indexInSelected] = undefined
     selectedColumns[index] = name
+
     this.setState({
+      columns,
       selectedColumns
     })
   }
   render() {
-    // TODO: remove used columns from options
     return (
       <div>
-        <CsvColumnOptions columns={this.props.columns} />
+        <CsvColumnOptions columns={this.state.columns} />
         <CsvTable columns={this.state.selectedColumns}
                   onColumnDrop={this.handleColumnDrop}
                   rows={this.props.rows} />
@@ -36,7 +50,6 @@ class CsvAligner extends React.Component {
 }
 
 CsvAligner.propTypes = {
-  columns: arrayOf(string),
   rows: arrayOf(arrayOf(node))
 }
 

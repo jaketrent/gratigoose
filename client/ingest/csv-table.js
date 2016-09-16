@@ -3,6 +3,7 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './csv-table.css'
+import CsvColumnOption from './csv-column-option'
 
 const { arrayOf, bool, func, node, number, string } = React.PropTypes
 
@@ -43,11 +44,10 @@ function collect(connect, monitor) {
   }
 }
 
-// TODO: if name, render draggable
 function Column(props) {
   return props.connectDropTarget(
     <td className={props.isOver ? props.css.colHover : props.css.col }>
-      {props.name}
+      {props.name ? <CsvColumnOption name={props.name} /> : null}
     </td>
   )
 }
