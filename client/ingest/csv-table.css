@@ -1,0 +1,8 @@
+.col {
+  height: 36px;
+  outline: 1px solid black;
+}
+.colHover {
+  composes: col;
+  outline: 1px solid red;
+}

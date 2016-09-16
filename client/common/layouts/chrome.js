@@ -6,6 +6,8 @@ import Debug from '../components/debug'
 import Header from '../components/header'
 import Loading from '../components/loading'
 
+const { bool } = React.PropTypes
+
 function mapStateToProps(state) {
   return {
     isLoaded: state.acct.accts.length > 0 && state.cat.cats.length > 0
@@ -28,7 +30,7 @@ function renderApp(props) {
 }
 
 function render(props) {
-  return props.isLoaded
+  return props.isLoaded || !props.loadTransMeta
     ? renderApp(props)
     : renderLoading(props)
 }
@@ -41,6 +43,14 @@ function Chrome(props) {
       <Alerts />
     </div>
   )
+}
+
+Chrome.propTypes = {
+  loadTransMeta: bool
+}
+
+Chrome.defaultProps = {
+  loadTransMeta: true
 }
 
 export default connect(mapStateToProps)(Chrome)
