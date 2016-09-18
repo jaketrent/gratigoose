@@ -26,6 +26,7 @@ app.use(function* catchErrors(next) {
   try {
     yield next
   } catch(err) {
+    console.error(err)
     this.status = err.status || 500
     this.body = {
       errors: [{

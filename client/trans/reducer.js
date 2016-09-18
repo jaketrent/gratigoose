@@ -1,6 +1,5 @@
-import { TYPES } from './actions'
-
 import { createWithHandlers } from '../common/reducer'
+import { TYPES } from './actions'
 
 const initialState = {
   transs: [],

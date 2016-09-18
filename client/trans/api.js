@@ -12,12 +12,16 @@ export const create = {
     return '/api/v1/trans'
   },
   serialize({ trans }) {
+    console.log('trans', trans)
     return {
       acctId: trans.acct.id,
-      amt: trans.amt,
+      // TODO: maybe move this into ingest/utils#formatTrans
+      amt: trans.amt.replace('\$', ''),
       catId: trans.cat.id,
       date: trans.date,
       desc: trans.desc
+      // TODO: add cols
+      // location, checkNum, clearedDate
     }
   },
   request(args) {

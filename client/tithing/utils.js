@@ -1,5 +1,3 @@
-import { findWhere } from '../common/array'
-
 export const TITHING_CAT_ABBREV = 'tt'
 // TODO: move to dynamic flag on cat
 export const NOT_INCOME_CAT_ABBREVS = [

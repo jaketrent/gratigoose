@@ -1,7 +1,4 @@
-import * as acctUtils from '../acct/utils'
-import * as catUtils from '../cat/utils'
 import * as dateUtils from '../common/date'
-import { findWhere } from '../common/array'
 import * as objectUtils from '../common/object'
 
 export function hasRequiredFields(trans) {
@@ -16,13 +13,13 @@ export function hasRequiredFields(trans) {
 export function combineRelations(transs, { accts, cats }) {
   return transs.map(trans => ({
     ...objectUtils.pick(trans, k => !/Id$/.test(k)),
-    acct: acctUtils.find(accts, { id: trans.acctId }),
-    cat: catUtils.find(cats, { id: trans.catId })
+    acct: accts.find(a => a.id === trans.acctId),
+    cat: cats.find(c => c.id === trans.catId)
   }))
 }
 
 export function findAll(transs, filter = x => x) {
-  return findWhere(transs, filter)
+  return transs.filter(filter)
 }
 
 export function sinceDate(date, trans) {

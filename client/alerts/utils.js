@@ -8,8 +8,8 @@ export const levels = Object.freeze({
 function convertStatusToLevel(status) {
   if (status >= 400)
     return levels.ERROR
-
-  return levels.SUCCESS
+  else if (status >= 200)
+    return levels.SUCCESS
 }
 
 export function create(title, level) {
@@ -29,9 +29,16 @@ export function createError(title) {
 }
 
 export function createFromErrors(errs) {
-  return errs.map(err => ({
-    id: err.id || uuid.v4(),
-    title: err.title,
-    level: convertStatusToLevel(err.status) || levels.SUCCESS
-  }))
+  if (errs && !Array.isArray(errs))
+    errs = [errs]
+
+  return errs.map(err => {
+    if (err instanceof Error) console.error(err)
+
+    return {
+      id: err.id || uuid.v4(),
+      title: err.title || err.message,
+      level: convertStatusToLevel(err.status) || levels.ERROR
+    }
+  })
 }

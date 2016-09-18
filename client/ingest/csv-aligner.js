@@ -2,23 +2,24 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import React from 'react'
 
+import { CHOOSABLE_COLUMNS } from './utils'
 import CsvColumnOptions from './csv-column-options'
+import CsvHeaderToggle from './csv-header-toggle'
 import CsvTable from './csv-table'
 
-const { arrayOf, node, string } = React.PropTypes
+const { arrayOf, func, node, string } = React.PropTypes
 
 class CsvAligner extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      columns: [
-        'amt',
-        'date',
-        'desc'
-      ],
+      columns: CHOOSABLE_COLUMNS,
+      includesHeader: true,
       selectedColumns: Array.from(Array(this.props.rows[0].length))
     }
     this.handleColumnDrop = this.handleColumnDrop.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleToggleIncludesHeader= this.handleToggleIncludesHeader.bind(this)
   }
   handleColumnDrop(index, name) {
     const columns = [...this.state.columns]
@@ -37,19 +38,29 @@ class CsvAligner extends React.Component {
       selectedColumns
     })
   }
+  handleSubmit(evt) {
+    this.props.onSubmit(evt, this.state.selectedColumns, this.state.includesHeader)
+  }
+  handleToggleIncludesHeader(evt) {
+    this.setState({ includesHeader: evt.target.checked })
+  }
   render() {
     return (
       <div>
         <CsvColumnOptions columns={this.state.columns} />
+        <CsvHeaderToggle checked={this.state.includesHeader}
+                         onChange={this.handleToggleIncludesHeader} />
         <CsvTable columns={this.state.selectedColumns}
                   onColumnDrop={this.handleColumnDrop}
                   rows={this.props.rows} />
+        <button onClick={this.handleSubmit}>Submit</button>
       </div>
     )
   }
 }
 
 CsvAligner.propTypes = {
+  onSubmit: func.isRequired,
   rows: arrayOf(arrayOf(node))
 }
 

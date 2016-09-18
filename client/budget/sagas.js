@@ -29,7 +29,6 @@ export function* updateExpected(args) {
     const expecteds = yield call(request, { ...args, api: api.updateExpected, cats })
     yield put(actions.updateExpectedSuccess(expecteds))
   } catch (errors) {
-    debugger
     console.log('errors', errors)
     yield put(actions.updateExpectedError(errors))
   }

@@ -24,7 +24,7 @@ export function createExpectedSuccess(expecteds) {
   return {
     type: TYPES.CREATE_EXPECTED_SUCCESS,
     expecteds,
-    alerts: alertsUtils.createSuccess('Expected created')
+    alerts: [alertsUtils.createSuccess('Expected created')]
   }
 }
 
@@ -65,7 +65,7 @@ export function updateExpectedSuccess(expecteds) {
   return {
     type: TYPES.UPDATE_EXPECTED_SUCCESS,
     expecteds,
-    alerts: alertsUtils.createSuccess('Expected updated')
+    alerts: [alertsUtils.createSuccess('Expected updated')]
   }
 }
 

@@ -27,7 +27,7 @@ export function createSuccess(transs) {
   return {
     type: TYPES.CREATE_SUCCESS,
     transs,
-    alerts: alertsUtils.createSuccess('Transaction created')
+    alerts: [alertsUtils.createSuccess('Transaction created')]
   }
 }
 
