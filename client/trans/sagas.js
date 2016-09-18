@@ -2,10 +2,9 @@ import { call, put, select } from 'redux-saga/effects'
 
 import * as acctSagas from '../acct/sagas'
 import * as actions from './actions'
-import * as alertsActions from '../alerts/actions'
+import * as alertsSagas from '../alerts/sagas'
 import * as api from './api'
 import * as catSagas from '../cat/sagas'
-import pause from '../common/pause'
 import request from '../common/api/request'
 
 export function* create({ trans }) {
@@ -21,11 +20,7 @@ export function* create({ trans }) {
 
 export function* createSuccess(successPayload) {
   yield put(actions.createReset())
-  yield call(pause, { millis: 500 })
-  const ids = successPayload.alerts.map(a => a.id)
-  for (let i = 0; i < ids.length; ++i) {
-    yield put(alertsActions.dismissAlert(ids[i]))
-  }
+  yield* alertsSagas.dismissAll(successPayload.alerts)
 }
 
 export function* findAll() {
