@@ -1,6 +1,6 @@
 export function formatUsd(amt) {
   return typeof amt != 'undefined'
-    ? amt.toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
+    ? parseFloat(amt).toLocaleString('en-US', { style: 'currency', currency: 'usd', minimumFractionDigits: 2 })
     : formatUsd(0)
 }
 

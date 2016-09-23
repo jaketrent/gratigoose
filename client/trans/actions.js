@@ -13,7 +13,10 @@ export const TYPES = types('trans',
   'FIND_IN_YEAR_SUCCESS',
   'FIND_IN_YEAR_MONTH',
   'FIND_IN_YEAR_MONTH_SUCCESS',
-  'SET_CREATE_TRANS_FIELD'
+  'SET_CREATE_TRANS_FIELD',
+  'UPDATE',
+  'UPDATE_SUCCESS',
+  'UPDATE_ERROR'
 )
 
 export function create(trans) {
@@ -89,9 +92,24 @@ export function findInYearMonthSuccess({ month, transs, year }) {
   }
 }
 
-export function setCreateTransField(args) {
+export function update(trans) {
   return {
-    type: TYPES.SET_CREATE_TRANS_FIELD,
-    ...args
+    type: TYPES.UPDATE,
+    trans
+  }
+}
+
+export function updateSuccess(transs) {
+  return {
+    type: TYPES.UPDATE_SUCCESS,
+    transs,
+    alerts: [alertsUtils.createSuccess('Transaction updated')]
+  }
+}
+
+export function updateError(errors) {
+  return {
+    type: TYPES.UPDATE_ERROR,
+    alerts: alertsUtils.createFromErrors(errors)
   }
 }

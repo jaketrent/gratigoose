@@ -79,6 +79,16 @@ function findAll(db) {
   })
 }
 
+function update(db, trans) {
+  return new Promise((resolve, reject) => {
+    db.trans.update(serialize(trans), (err, updatedDoc) => {
+      if (err) return reject(err)
+
+      resolve(deserialize(updatedDoc))
+    })
+  })
+}
+
 exports.create = create
 exports.deserialize = deserialize
 exports.find = find
@@ -86,3 +96,4 @@ exports.findInYear = findInYear
 exports.findInYearMonth = findInYearMonth
 exports.findAll = findAll
 exports.serialize = serialize
+exports.update = update

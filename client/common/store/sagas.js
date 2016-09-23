@@ -24,6 +24,7 @@ export default function* root() {
     fork(takeEvery, ingestActions.TYPES.UPLOAD, ingestSagas.upload),
     fork(takeEvery, transActions.TYPES.CREATE, transSagas.create),
     fork(takeEvery, transActions.TYPES.CREATE_SUCCESS, transSagas.createSuccess),
+    fork(takeEvery, transActions.TYPES.UPDATE, transSagas.update),
     fork(takeEvery, transActions.TYPES.FIND_ALL, transSagas.findAll),
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR, transSagas.findInYear),
     fork(takeEvery, transActions.TYPES.FIND_IN_YEAR_MONTH, transSagas.findInYearMonth)

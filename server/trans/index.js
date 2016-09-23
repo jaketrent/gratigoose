@@ -10,6 +10,15 @@ const app = koa()
 function* create() {
   const trans = yield repo.create(this.db, this.request.body)
   // TODO: generalize serialize
+  this.status = 201
+  this.body = {
+    data: [trans]
+  }
+}
+
+function* update() {
+  const trans = yield repo.update(this.db, this.request.body)
+  // TODO: generalize serialize
   this.body = {
     data: [trans]
   }
@@ -56,6 +65,7 @@ function* budget(year, month) {
 }
 
 app.use(route.post('/', create))
+app.use(route.put('/:id', update))
 app.use(route.get('/', list))
 app.use(route.get('/year/:year', year))
 app.use(route.get('/year/:year/month/:month', yearMonth))

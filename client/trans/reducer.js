@@ -28,14 +28,13 @@ function findSuccess(state, action) {
   }
 }
 
-// TODO: is this used?
-function setCreateTransField(state, action) {
+function updateSuccess(state, action) {
+  const transs = [...state.transs]
+  const i = transs.findIndex(t => t.id === action.transs[0].id)
+  transs[i] = action.transs[0]
   return {
     ...state,
-    createTrans: {
-      ...state.createTrans,
-      [action.name]: action.value
-    }
+    transs
   }
 }
 
@@ -45,5 +44,5 @@ export default createWithHandlers({
   [TYPES.FIND_ALL_SUCCESS]: findSuccess,
   [TYPES.FIND_IN_YEAR_SUCCESS]: findSuccess,
   [TYPES.FIND_IN_YEAR_MONTH_SUCCESS]: findSuccess,
-  [TYPES.SET_CREATE_TRANS_FIELD]: setCreateTransField
+  [TYPES.UPDATE_SUCCESS]: updateSuccess
 }, initialState)

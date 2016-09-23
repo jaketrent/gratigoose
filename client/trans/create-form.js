@@ -10,6 +10,8 @@ import css from './create-form.css'
 import Field from '../common/components/field'
 import * as utils from './utils'
 
+const { func, object, string } = React.PropTypes
+
 const initialState = {
   acctSearch: '',
   catSearch: '',
@@ -41,16 +43,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    create(trans) { dispatch(actions.create(trans)) },
+    submit(actionName, trans) { dispatch(actions[actionName](trans)) },
     searchAccts(term) { dispatch(acctActions.search(term)) },
     searchCats(term) { dispatch(catActions.search(term)) }
   }
 }
 
 class CreateForm extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = initialState
+    if (props.trans)
+      this.state.trans = props.trans
     this.handleAcctChange = this.handleAcctChange.bind(this)
     this.handleAcctSelect = this.handleAcctSelect.bind(this)
     this.handleCatChange = this.handleCatChange.bind(this)
@@ -74,7 +78,10 @@ class CreateForm extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault()
     if (utils.hasRequiredFields(this.state.trans)) {
-      this.props.create(this.state.trans)
+      this.props.submit(this.props.submitAction, this.state.trans)
+
+      if (typeof this.props.onSubmit === 'function')
+        this.props.onSubmit()
     }
   }
   handleAcctSelect(evt, id) {
@@ -173,6 +180,15 @@ class CreateForm extends React.Component {
       </form>
     )
   }
+}
+CreateForm.propTypes = {
+  onSubmit: func,
+  submitAction: string,
+  trans: object
+}
+
+CreateForm.defaultProps = {
+  submitAction: 'create'
 }
 
 export default styleable(css)(connect(mapStateToProps, mapDispatchToProps)(CreateForm))
