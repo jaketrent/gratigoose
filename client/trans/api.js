@@ -5,11 +5,9 @@ import deserializeError from '../common/api/deserialize-error'
 import * as utils from './utils'
 
 function serializeCreate({ trans }) {
-  console.log('trans', trans)
   return {
     acctId: trans.acct.id,
-    // TODO: maybe move this into ingest/utils#formatTrans
-    amt: trans.amt.replace('\$', ''),
+    amt: trans.amt,
     catId: trans.cat.id,
     date: dateUtils.format(trans.date),
     desc: trans.desc

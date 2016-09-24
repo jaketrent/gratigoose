@@ -1,6 +1,7 @@
 export const DATE_COLUMN_FIELD_KEY = 'date'
+export const AMT_COLUMN_FIELD_KEY = 'amt'
 export const CHOOSABLE_COLUMNS = [
-  'amt',
+  AMT_COLUMN_FIELD_KEY,
   DATE_COLUMN_FIELD_KEY,
   'desc'
 ]
@@ -21,6 +22,8 @@ export function formatTrans({ acct, cat, columns, row }) {
       let val = row[i]
       if (col === DATE_COLUMN_FIELD_KEY)
         val = formatDate(val)
+      else if (col === AMT_COLUMN_FIELD_KEY)
+        val = val.replace('\$', ''),
 
       trans[col] = val
     }
