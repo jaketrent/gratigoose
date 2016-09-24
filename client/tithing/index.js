@@ -3,9 +3,11 @@ import React from 'react'
 
 import * as amtUtils from '../common/amt'
 import Chrome from '../common/layouts/chrome'
-import List from './list'
+import List from '../trans/list'
 import renderWithState from '../common/store/render'
+import SectionTitle from '../common/components/section-title'
 import Total from '../common/components/total'
+import Title from '../common/components/title'
 import * as transUtils from '../trans/utils'
 import * as utils from './utils'
 
@@ -30,14 +32,15 @@ function Tithing(props) {
   const tithingOwed = incomeTotal / 10
 
   return (
-    <Chrome>
-      <h1>Tithing</h1>
-      <h2>Last Tithe</h2>
+    <Chrome title={<Title>Tithing</Title>}>
+      <SectionTitle>Last Tithe</SectionTitle>
       <List transs={lastTithe ? [lastTithe] : []} />
-      <h2>Excluded from tithing</h2>
+
+      <SectionTitle>Excluded from tithing</SectionTitle>
       <List transs={excludedSinceLastTithe} />
       <Total label="Total excluded" amt={excludedTotal} />
-      <h2>Income since last tithing</h2>
+
+      <SectionTitle>Income since last tithing</SectionTitle>
       <List transs={incomeSinceLastTithe} />
       <Total label="Total income" amt={incomeTotal} />
       <Total label="Tithing owed" amt={tithingOwed} />

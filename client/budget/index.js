@@ -6,6 +6,7 @@ import * as actions from './actions'
 import List from './list'
 import renderWithState from '../common/store/render'
 import Summary from './summary'
+import Title from '../common/components/title'
 
 function mapStateToProps(state) {
   return {
@@ -35,8 +36,7 @@ function handleExpectedSubmit(props, evt, cat, expected) {
 
 function Budget(props) {
   return (
-    <Chrome>
-      <h1>Budget</h1>
+    <Chrome title={<Title>Budget</Title>}>
       <Summary expecteds={props.expecteds}
                transs={props.transs} />
       <List cats={props.cats}

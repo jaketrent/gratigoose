@@ -1,7 +1,7 @@
 import React from 'react'
 import styleable from 'react-styleable'
 
-import css from './list.css'
+import css from '../common/components/list.css'
 import ExpectedInput from './expected-input'
 import { formatUsd } from '../common/amt'
 import { formatBudgetLines } from './utils'

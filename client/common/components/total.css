@@ -1,0 +1,14 @@
+@import "../styles/colors.css";
+@import "../styles/fonts.css";
+
+.root {
+  padding: 20px 0 10px 50px;
+}
+.label {
+  display: inline-block;
+  padding-right: 20px;
+  font-family: var(--fontSpecial);
+}
+.amt {
+  font-weight: 600;
+}

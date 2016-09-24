@@ -3,7 +3,7 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import CreateForm from './create-form'
-import css from './list.css'
+import css from '../common/components/list.css'
 import * as dateUtils from '../common/date'
 import { formatUsd } from '../common/amt'
 import media from '../common/styles/media'
@@ -73,6 +73,10 @@ Row.PropTypes = {
   trans: object
 }
 
+function hasRows(props) {
+  return Array.isArray(props.transs) && props.transs.length > 0
+}
+
 function renderRows(props) {
   return props.transs.map(t =>
     <Row css={props.css}
@@ -81,30 +85,42 @@ function renderRows(props) {
   )
 }
 
+function renderEmpty(props) {
+  if (!hasRows(props))
+    return (
+      <tr className={props.css.rowEmpty}>
+        <td className={props.css.cellEmpty}>
+          <div>Empty</div>
+        </td>
+      </tr>
+    )
+}
+
 function renderHeader(props) {
-  return (
-    <tr className={props.css.headRow}>
-      <th className={props.css.headCell}>
-        Date
-      </th>
-      <th className={props.css.headCell}>
-        Desc
-      </th>
-      <th className={props.css.headCell}>
-        Amt
-      </th>
-      <MediaQuery query={media.smallWidth}>
+  if (hasRows(props))
+    return (
+      <tr className={props.css.headRow}>
         <th className={props.css.headCell}>
-          Acct
+          Date
         </th>
-      </MediaQuery>
-      <MediaQuery query={media.smallWidth}>
         <th className={props.css.headCell}>
-          Cat
+          Desc
         </th>
-      </MediaQuery>
-    </tr>
-  )
+        <th className={props.css.headCell}>
+          Amt
+        </th>
+        <MediaQuery query={media.smallWidth}>
+          <th className={props.css.headCell}>
+            Acct
+          </th>
+        </MediaQuery>
+        <MediaQuery query={media.smallWidth}>
+          <th className={props.css.headCell}>
+            Cat
+          </th>
+        </MediaQuery>
+      </tr>
+    )
 }
 
 function List(props) {
@@ -114,6 +130,7 @@ function List(props) {
         {renderHeader(props)}
       </thead>
       <tbody className={props.css.body}>
+        {renderEmpty(props)}
         {renderRows(props)}
       </tbody>
     </table>

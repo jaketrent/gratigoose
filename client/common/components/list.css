@@ -1,8 +1,9 @@
-@import "../common/styles/colors.css";
-@import "../common/styles/fonts.css";
+@import "../styles/colors.css";
+@import "../styles/fonts.css";
 
 .root {
   width: 100%;
+  margin-bottom: 15px;
 }
 .body {
   
@@ -21,12 +22,28 @@
   composes: row;
   background: var(--colorSecondaryLightest);
 }
+.rowEmpty {
+  composes: row;
+  border: 1px dotted var(--colorSecondaryLight);
+}
+.rowEmpty:focus,
+.rowEmpty:hover {
+  background: inherit;
+}
 .cell {
   flex: 1;
   text-align: left;
 }
 .cell + .cell {
   margin-left: 10px;
+}
+.cellEmpty {
+  composes: cell;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  color: var(--colorSecondaryLight);
 }
 .head {
 }
