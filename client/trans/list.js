@@ -27,7 +27,7 @@ class Row extends React.Component {
   }
   renderWrite() {
     return (
-      <tr className={this.props.css.row}>
+      <tr className={this.props.css.rowWrite}>
         <td className={this.props.css.cell}>
         <CreateForm onSubmit={this.handleWriteModeSubmit}
                     submitAction="update"

@@ -4,10 +4,13 @@ import styleable from 'react-styleable'
 import css from './header.css'
 import Link from '../components/link'
 
+const { node } = React.PropTypes
+
 function Header(props) {
   return (
     <div className={props.css.root}>
-      <h1 className={props.css.title}>Gratigoose</h1>
+      <div className={props.css.img}>Gratigoose</div>
+      {props.title}
       <nav className={props.css.nav}>
         <Link css={{ root: props.css.navLink }} href="/">Transactions</Link>
         <Link css={{ root: props.css.navLink }} href="/budget">Budget</Link>
@@ -17,6 +20,9 @@ function Header(props) {
       {props.children}
     </div>
   )
+}
+Header.propTypes = {
+  title: node
 }
 
 export default styleable(css)(Header)

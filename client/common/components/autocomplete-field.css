@@ -1,5 +1,6 @@
 @import "../styles/colors.css";
 @import "./field-errors.css";
+@import "./field.css"; /* include all field classes */
 
 :root {
   --borderWidth: 1px;
@@ -7,31 +8,6 @@
   --inputMarginBottom: 7px;
 }
 
-.field {}
-.labelText {
-  composes: screenreader-only from "../styles/accessibility.css";
-}
-.input {
-  display: block;
-  width: 100%;
-  height: var(--inputHeight);
-  line-height: var(--inputHeight);
-  padding: 0 15px;
-  margin-bottom: var(--inputMarginBottom);
-  background: var(--colorBrandPrimaryLight);
-  border: none;
-  border-radius: 2px;
-  color: var(--colorLightest);
-  font-size: 14px;
-  font-weight: 200;
-  letter-spacing: 1px;
-}
-.input::-webkit-datetime-edit {
-  color: var(--colorLightest);
-}
-.input::placeholder {
-  color: var(--colorLightest);
-}
 .dropdownContainer {
   position: relative;
 }
@@ -57,6 +33,7 @@
   font-size: 14px;
 }
 .dropdownItem:focus {
-  background: blue;
+  background: var(--colorAccent);
   color: white;
+  outline: none;
 }

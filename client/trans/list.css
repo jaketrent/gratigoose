@@ -1,3 +1,6 @@
+@import "../common/styles/colors.css";
+@import "../common/styles/fonts.css";
+
 .root {
   width: 100%;
 }
@@ -6,6 +9,17 @@
 }
 .row {
   display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--colorSecondaryLight);
+  margin: 0;
+}
+.row:focus,
+.row:hover {
+  background: var(--colorSecondaryLightest);
+}
+.rowWrite {
+  composes: row;
+  background: var(--colorSecondaryLightest);
 }
 .cell {
   flex: 1;
@@ -15,11 +29,17 @@
   margin-left: 10px;
 }
 .head {
-
 }
 .headRow {
   composes: row;
+  padding-bottom: 25px;
+}
+.headRow:focus,
+.headRow:hover {
+  background: none;
 }
 .headCell {
   composes: cell;
+  font-family: var(--fontSpecial);
+  font-weight: 100;
 }

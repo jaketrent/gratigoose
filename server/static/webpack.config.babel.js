@@ -16,7 +16,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ },
-      { test: /\.css$/, loaders: ['style', 'css?modules&localIdentName=[local]---[hash:base64:5]', 'postcss'] }
+      { test: /\.css$/, loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[local]---[hash:base64:5]', 'postcss'] },
+      { test: /\.(jpg|png|gif)$/, loader: 'file?limit=1000&name=[name].[ext]' }
     ]
   },
   postcss: [

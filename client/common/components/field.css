@@ -18,19 +18,22 @@
   line-height: var(--inputHeight);
   padding: 0 15px;
   margin-bottom: var(--inputMarginBottom);
-  background: var(--colorBrandPrimaryLight);
-  border: none;
-  border-radius: 2px;
-  color: var(--colorLightest);
+  background: var(--colorPrimary);
+  border: 1px solid var(--colorSecondary);
+  color: var(--colorText);
   font-size: 14px;
   font-weight: 200;
   letter-spacing: 1px;
 }
 .input::-webkit-datetime-edit {
-  color: var(--colorLightest);
+  color: var(--colorTextLight);
 }
 .input::placeholder {
-  color: var(--colorLightest);
+  color: var(--colorTextLight);
+}
+.input:focus {
+  background: var(--colorAccentLighter);
+  outline: none;
 }
 .inputTextarea {
   composes: input;

@@ -1,4 +1,10 @@
+@import "./common/styles/fonts.css";
 * {
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: var(--fontRegular);
+}
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--fontSpecial);
+  font-weight: 100;
 }

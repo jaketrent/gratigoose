@@ -1,10 +1,16 @@
+@import "../styles/colors.css";
+
 .root {
   display: flex;
   align-items: center;
 }
-.title {
-  flex: 1;
-  margin: 0;
+.img {
+  composes: replace-img from "../styles/accessibility.css";
+  height: 50px;
+  width: 50px;
+  background: url(../imgs/logo.png);
+  background-size: cover;
+  margin: 0 20px 0 10px;
 }
 .nav {
   flex: 3;
@@ -13,4 +19,15 @@
 }
 .navLink {
   composes: root from "./link.css";
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.navLink:focus,
+.navLink:hover {
+  border: 1px solid var(--colorLinkHover);
+  text-decoration: none;
 }

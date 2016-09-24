@@ -6,7 +6,7 @@ import Debug from '../components/debug'
 import Header from '../components/header'
 import Loading from '../components/loading'
 
-const { bool } = React.PropTypes
+const { bool, node } = React.PropTypes
 
 function mapStateToProps(state) {
   return {
@@ -22,7 +22,7 @@ function renderApp(props) {
   return (
     <div>
       <Debug />
-      <Header />
+      <Header title={props.title} />
       {props.children}
       <Alerts />
     </div>
@@ -46,6 +46,7 @@ function Chrome(props) {
 }
 
 Chrome.propTypes = {
+  title: node,
   loadTransMeta: bool
 }
 

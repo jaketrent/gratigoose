@@ -1,4 +1,5 @@
 :root {
+  deprecated
   --colorBrandPrimaryLighter: #A9B8D9;
   --colorBrandPrimaryLight: #5E739F;
   --colorBrandPrimary: #2F4574;
@@ -29,4 +30,22 @@
   --colorError: #cb2810;
 
   --colorBland: grey;
+
+
+  --colorPrimary: #fff;
+  --colorSecondary: #000;
+  --colorSecondaryLight: #ababab;
+  --colorSecondaryLightest: #efefef;
+  
+  --colorAccentDark: #00962F;
+  --colorAccent: #00CA40;
+  --colorAccentLight: #06FF55;
+  --colorAccentLighter: #A7FFC3;
+
+  --colorText: #000;
+  --colorTextLight: #ababab;
+
+  --colorLink: #00962f;
+  --colorLinkHover: #000;
+  --colorLinkActive: #000;
 }

@@ -1,11 +1,16 @@
+@import "../styles/colors.css";
+
 .root {
-  color: green;
+  color: var(--colorLink);
+  outline: none;
 }
+.root:focus,
 .root:hover {
-  color: lightgreen;
+  color: var(--colorLinkHover);
   text-decoration: underline;
+  outline: none;
 }
 .rootActive {
   composes: root;
-  color: darkgreen;
+  color: var(--colorLinkActive);
 }

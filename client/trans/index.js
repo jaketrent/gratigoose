@@ -5,6 +5,7 @@ import Chrome from '../common/layouts/chrome'
 import CreateForm from './create-form'
 import List from './list'
 import renderWithState from '../common/store/render'
+import Title from '../common/components/title'
 
 function mapStateToProps(state) {
   return {
@@ -14,8 +15,7 @@ function mapStateToProps(state) {
 
 function Trans(props) {
   return (
-    <Chrome>
-      <h1>Transactions</h1>
+    <Chrome title={<Title>Transactions</Title>}>
       <CreateForm />
       <List transs={props.transs} />
     </Chrome>
