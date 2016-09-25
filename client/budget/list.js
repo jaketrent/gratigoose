@@ -1,89 +1,57 @@
 import React from 'react'
-import styleable from 'react-styleable'
 
-import css from '../common/components/list.css'
-import ExpectedInput from './expected-input'
-import { formatUsd } from '../common/amt'
+import * as dateUtils from '../common/date'
+import ExpectedInputForm from './expected-input-form'
 import { formatBudgetLines } from './utils'
+import { formatUsd } from '../common/amt'
+import List from '../common/components/list'
 
 const { arrayOf, bool, func, number, object, shape, string } = React.PropTypes
 
-function Row(props) {
+function renderEdit(props, row) {
   return (
-    <tr className={props.css.row}>
-      <td className={props.css.cell}>
-        {props.line.cat.name}
-      </td>
-      <td className={props.css.cell}>
-        <ExpectedInput cat={props.line.cat}
-                       expected={props.line.expected}
-                       onSubmit={props.onExpectedSubmit} />
-      </td>
-      <td className={props.css.cell}>
-        {formatUsd(props.line.transsAmtSum)}
-      </td>
-      <td className={props.css.cell}>
-        {formatUsd(props.line.diff)}
-      </td>
-    </tr>
+    <ExpectedInputForm cat={row.cat}
+                       expected={row.expected}
+                       month={props.month}
+                       onSubmit={props.onEditSubmit.bind(null, row.cat)}
+                       year={props.year} />
   )
 }
 
-Row.PropTypes = {
-  onExpectedSubmit: func.isRequired,
-  line: shape({
-    cat: object,
-    expected: object,
-    transsAmtSum: number,
-    diff: number
-  }).isRequired
+function renderHeaderData(props) {
+  return ['Category', 'Expected', 'Actual', 'Difference']
 }
 
-function renderRows(props, lines) {
-  return lines.map(l =>
-    <Row css={props.css}
-         key={l.cat.id}
-         line={l}
-         onExpectedSubmit={props.onExpectedSubmit}/>
-  )
+function renderRowData(props, row) {
+  return [
+    row.cat.name,
+    row.expected
+      ? formatUsd(row.expected.amt)
+      : formatUsd(0),
+    formatUsd(row.transsAmtSum),
+    row.diff
+  ]
 }
 
-function renderHeader(props) {
+function BudgetCatList(props) {
+  console.log('budget list props', props)
   return (
-    <tr className={props.css.headRow}>
-      <th className={props.css.headCell}>
-        Cat
-      </th>
-      <th className={props.css.headCell}>
-        Expected
-      </th>
-      <th className={props.css.headCell}>
-        Actual
-      </th>
-      <th className={props.css.headCell}>
-        Difference
-      </th>
-    </tr>
+    <List month={props.month}
+          onEditSubmit={props.onEditSubmit}
+          renderEdit={renderEdit}
+          renderHeaderData={renderHeaderData}
+          renderRowData={renderRowData}
+          rows={formatBudgetLines(props)}
+          year={props.year} />
   )
 }
-
-function List(props) {
-  return (
-    <table className={props.css.root}>
-      <thead className={props.css.head}>
-        {renderHeader(props)}
-      </thead>
-      <tbody className={props.css.body}>
-        {renderRows(props, formatBudgetLines(props))}
-      </tbody>
-    </table>
-  )
-}
-List.PropTypes = {
-  cats: arrayOf(object),
-  expecteds: arrayOf(object),
-  onExpectedSubmit: func.isRequired,
-  transs: arrayOf(object)
+BudgetCatList.PropTypes = {
+  cats: arrayOf(object).isRequired,
+  expecteds: arrayOf(object).isRequired,
+  month: string.isRequired,
+  onEditSubmit: func,
+  transs: arrayOf(object).isRequired,
+  year: string.isRequired
 }
 
-export default styleable(css)(List)
+export default BudgetCatList 

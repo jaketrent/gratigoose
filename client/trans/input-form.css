@@ -1,0 +1,24 @@
+/* TODO: rm in favor of common/input-form.css */
+@import "../common/styles/media.css";
+
+.root {
+}
+.fields {
+  display: flex;
+  justify-content: space-between;
+}
+.field {
+  flex: 1;
+}
+.field + .field {
+  margin-left: 10px;
+}
+.btn {
+  composes: screenreader-only from "../common/styles/accessibility.css";
+}
+
+@media (--small) {
+  .fields {
+    display: block;
+  }
+}

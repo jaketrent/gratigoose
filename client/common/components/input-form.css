@@ -1,4 +1,4 @@
-@import "../common/styles/media.css";
+@import "../styles/media.css";
 
 .root {
 }
@@ -13,7 +13,7 @@
   margin-left: 10px;
 }
 .btn {
-  composes: screenreader-only from "../common/styles/accessibility.css";
+  composes: screenreader-only from "../styles/accessibility.css";
 }
 
 @media (--small) {

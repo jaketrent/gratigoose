@@ -6,7 +6,7 @@ import * as acctActions from '../acct/actions'
 import * as actions from './actions'
 import AutocompleteField from '../common/components/autocomplete-field'
 import * as catActions from '../cat/actions'
-import css from './create-form.css'
+import css from './input-form.css'
 import Field from '../common/components/field'
 import * as utils from './utils'
 
@@ -49,7 +49,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-class CreateForm extends React.Component {
+class Inputform extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
@@ -77,11 +77,12 @@ class CreateForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
+    console.log('has req?', utils.hasRequiredFields(this.state.trans), this.state.trans)
     if (utils.hasRequiredFields(this.state.trans)) {
       this.props.submit(this.props.submitAction, this.state.trans)
 
       if (typeof this.props.onSubmit === 'function')
-        this.props.onSubmit()
+        this.props.onSubmit(evt, this.state.trans)
     }
   }
   handleAcctSelect(evt, id) {
@@ -181,14 +182,14 @@ class CreateForm extends React.Component {
     )
   }
 }
-CreateForm.propTypes = {
+Inputform.propTypes = {
   onSubmit: func,
   submitAction: string,
   trans: object
 }
 
-CreateForm.defaultProps = {
+Inputform.defaultProps = {
   submitAction: 'create'
 }
 
-export default styleable(css)(connect(mapStateToProps, mapDispatchToProps)(CreateForm))
+export default styleable(css)(connect(mapStateToProps, mapDispatchToProps)(Inputform))

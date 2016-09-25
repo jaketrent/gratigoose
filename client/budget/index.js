@@ -18,22 +18,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    createExpected(args) { dispatch(actions.createExpected(args)) },
-    updateExpected(args) { dispatch(actions.updateExpected(args)) }
-  }
-}
-
-function handleExpectedSubmit(props, evt, cat, expected) {
-  const amt = evt.target.value
-  const { year, month } = props
-  if (expected)
-    props.updateExpected({ expected, amt })
-  else
-    props.createExpected({ amt, cat, year, month })
-}
-
 function Budget(props) {
   return (
     <Chrome title={<Title>Budget</Title>}>
@@ -41,12 +25,13 @@ function Budget(props) {
                transs={props.transs} />
       <List cats={props.cats}
             expecteds={props.expecteds}
-            onExpectedSubmit={handleExpectedSubmit.bind(null, props)}
-            transs={props.transs} />
+            month={props.month}
+            transs={props.transs}
+            year={props.year} />
     </Chrome>
   )
 }
 
 export default function render(store, el) {
-  renderWithState(connect(mapStateToProps, mapDispatchToProps)(Budget), el)
+  renderWithState(connect(mapStateToProps)(Budget), el)
 }

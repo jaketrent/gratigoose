@@ -13,6 +13,7 @@ export function formatBudgetLines({ cats, expecteds, transs }) {
     const transsAmtSum = transUtils.sumTranssAmtForCat(cat.id, transs)
     const diff = expectedAmt - transsAmtSum
     return {
+      id: cat.id,
       cat,
       expected: expectedForCat,
       transsAmtSum,

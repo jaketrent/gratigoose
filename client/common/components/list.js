@@ -22,12 +22,15 @@ class Row extends React.Component {
   }
   handleWriteModeSubmit() {
     this.setState({ isEditing: false })
+
+    if (typeof this.props.onEditSubmit === 'function')
+      this.props.onEditSubmit.apply(this, arguments)
   }
   renderWrite() {
     return (
       <tr className={this.props.css.rowWrite}>
         <td className={this.props.css.cell}>
-          {this.props.renderEdit({ ...this.props, onSubmit: this.handleWriteModeSubmit }, this.props.row)}
+          {this.props.renderEdit({ ...this.props, onEditSubmit: this.handleWriteModeSubmit }, this.props.row)}
         </td>
       </tr>
     )
@@ -74,7 +77,8 @@ function hasRows(props) {
 
 function renderRows(props) {
   return props.rows.map(r =>
-    <Row css={props.css}
+    <Row {...props}
+         css={props.css}
          key={r.id}
          renderEdit={props.renderEdit}
          renderData={props.renderRowData}
@@ -113,6 +117,7 @@ function renderHeaderCols(props) {
 }
 
 function List(props) {
+  console.log('list props', props)
   return (
     <table className={props.css.root}>
       <thead className={props.css.head}>
@@ -126,7 +131,8 @@ function List(props) {
   )
 }
 List.PropTypes = {
-  renderEdit: func,
+  onEditSubmit: func.isRequired,
+  renderEdit: func.isRequired,
   renderHeaderData: func.isRequired,
   renderRowData: func.isRequired,
   rows: arrayOf(object)

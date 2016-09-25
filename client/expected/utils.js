@@ -6,3 +6,9 @@ export function combineRelations(expecteds, { cats }) {
     cat: cats.find(e => e.id === ex.catId)
   }))
 }
+
+export function hasRequiredFields(expected) {
+  return expected
+    && expected.cat.id
+    && !isNaN(parseFloat(expected.amt))
+}

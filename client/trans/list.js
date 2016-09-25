@@ -1,17 +1,17 @@
 import React from 'react'
 
-import CreateForm from './create-form'
+import InputForm from './input-form'
 import * as dateUtils from '../common/date'
 import { formatUsd } from '../common/amt'
 import List from '../common/components/list'
 
-const { arrayOf, object } = React.PropTypes
+const { arrayOf, func, object } = React.PropTypes
 
 function renderEdit(props, row) {
   return (
-      <CreateForm onSubmit={props.onSubmit}
-                  submitAction="update"
-                  trans={row} />
+    <InputForm onSubmit={props.onEditSubmit}
+               submitAction="update"
+               trans={row} />
   )
 }
 
@@ -31,14 +31,17 @@ function renderRowData(props, row) {
 
 function TransList(props) {
   return (
-    <List renderEdit={renderEdit}
+    <List onEditSubmit={props.onEditSubmit}
+          renderEdit={renderEdit}
           renderHeaderData={renderHeaderData}
           renderRowData={renderRowData}
           rows={props.transs} />
   )
 }
+
 TransList.PropTypes = {
-  transs: arrayOf(object)
+  onEditSubmit: func,
+  transs: arrayOf(object).isRequired
 }
 
 export default TransList 
