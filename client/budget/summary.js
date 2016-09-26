@@ -7,6 +7,7 @@ import css from './summary.css'
 import Diff from './diff'
 import { formatBudgetLines } from './utils'
 import { formatUsd } from '../common/amt'
+import Net0 from './net-0'
 import SectionTitle from '../common/components/section-title'
 
 const { arrayOf, bool, number, object, shape, string } = React.PropTypes
@@ -66,6 +67,11 @@ function Summary(props) {
     <div className={props.css.root}>
       <SectionTitle>Plan</SectionTitle>
       <div className={props.css.row}></div>
+      <div className={props.css.row}>
+        <Net0 income={expectedIncome}
+              debits={expectedDebits}
+              savings={expectedSavings} />
+      </div>
 
       <SectionTitle>Activity</SectionTitle>
       <div className={props.css.row}></div>

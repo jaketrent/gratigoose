@@ -1,0 +1,20 @@
+@import "../common/styles/fonts.css";
+
+.root {
+  display: flex;
+  width: 100%;
+}
+.part {
+  flex: 1;
+}
+.label {
+  font-family: var(--fontSpecial);
+  margin-bottom: 5px;
+}
+.value {
+  
+}
+.valueNet {
+  composes: value;
+  font-weight: 600;
+}
