@@ -1,0 +1,31 @@
+@import "../common/styles/colors.css";
+
+.root {
+  
+}
+.title {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.row {
+  display: flex;
+}
+.actual {
+  composes: row;
+}
+.expected {
+  composes: row;
+}
+.diff {
+  composes: row;
+  border-top: 1px solid var(--colorSecondary);
+  padding-top: 10px;
+}
+.label {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.val {
+  flex: 1;
+  text-align: right;
+}

@@ -5,6 +5,7 @@ import Chrome from '../common/layouts/chrome'
 import * as actions from './actions'
 import List from './list'
 import renderWithState from '../common/store/render'
+import SectionTitle from '../common/components/section-title'
 import Summary from './summary'
 import Title from '../common/components/title'
 
@@ -23,6 +24,7 @@ function Budget(props) {
     <Chrome title={<Title>Budget</Title>}>
       <Summary expecteds={props.expecteds}
                transs={props.transs} />
+      <SectionTitle>Categories</SectionTitle>
       <List cats={props.cats}
             expecteds={props.expecteds}
             month={props.month}

@@ -23,7 +23,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function handleExpectedSubmit(props, cat, evt, expected) {
-  console.log('args', cat, evt, expected)
   const { year, month } = props
   const { amt } = expected
   if (expected.id)
@@ -35,7 +34,6 @@ function handleExpectedSubmit(props, cat, evt, expected) {
 class ExpectedInputForm extends React.Component {
   constructor(props) {
     super(props)
-    console.log('exp input props', props)
     this.state = initialState
     if (props.expected)
       this.state.expected = props.expected
@@ -44,7 +42,6 @@ class ExpectedInputForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleFieldChange(evt) {
-    console.log('evt.target', evt.target.name, evt.target.value)
     this.setState({
       expected: {
         ...this.state.expected,

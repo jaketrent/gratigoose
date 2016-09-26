@@ -111,13 +111,12 @@ function renderHeaderCol(props, label, i) {
 
 function renderHeaderCols(props) {
   if (hasRows(props))
-    <tr className={props.css.headRow}>
+    return <tr className={props.css.headRow}>
       {props.renderHeaderData(props).map(renderHeaderCol.bind(this, props))}
     </tr>
 }
 
 function List(props) {
-  console.log('list props', props)
   return (
     <table className={props.css.root}>
       <thead className={props.css.head}>

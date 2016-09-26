@@ -77,7 +77,6 @@ class Inputform extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    console.log('has req?', utils.hasRequiredFields(this.state.trans), this.state.trans)
     if (utils.hasRequiredFields(this.state.trans)) {
       this.props.submit(this.props.submitAction, this.state.trans)
 

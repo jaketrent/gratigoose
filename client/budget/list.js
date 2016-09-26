@@ -29,12 +29,11 @@ function renderRowData(props, row) {
       ? formatUsd(row.expected.amt)
       : formatUsd(0),
     formatUsd(row.transsAmtSum),
-    row.diff
+    formatUsd(row.diff)
   ]
 }
 
 function BudgetCatList(props) {
-  console.log('budget list props', props)
   return (
     <List month={props.month}
           onEditSubmit={props.onEditSubmit}

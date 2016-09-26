@@ -4,8 +4,10 @@ import styleable from 'react-styleable'
 import { amtGtZero, amtLteZero, sumForCatType, sumWhereAmt } from '../common/amt'
 import catTypes from '../cat/types'
 import css from './summary.css'
+import Diff from './diff'
 import { formatBudgetLines } from './utils'
 import { formatUsd } from '../common/amt'
+import SectionTitle from '../common/components/section-title'
 
 const { arrayOf, bool, number, object, shape, string } = React.PropTypes
 
@@ -57,22 +59,31 @@ function Summary(props) {
   const transDebits = sumWhereAmt(props.transs, amtLteZero)
   const transSavings = sumForCatType(catTypes.savings, props.transs)
   const transNet = transIncome - transDebits - transSavings
+
+  const diffCss = { root: props.css.diffRoot }
+  // TODO: include nets in some sort of balance viz
   return (
-    <table className={props.css.root}>
-      <thead className={props.css.head}>
-        {renderHeader(props)}
-      </thead>
-      <tbody className={props.css.body}>
-      {renderRow(props, 'Expected income', expectedIncome)}
-      {renderRow(props, 'Expected debits', expectedDebits)}
-      {renderRow(props, 'Expected savings', expectedSavings)}
-      {renderRow(props, 'Net expectations', expectedNet)}
-      {renderRow(props, 'Sum income', transIncome)}
-      {renderRow(props, 'Sum debits', transDebits)}
-      {renderRow(props, 'Sum savings', transSavings)}
-      {renderRow(props, 'Net income', transNet)}
-      </tbody>
-    </table>
+    <div className={props.css.root}>
+      <SectionTitle>Plan</SectionTitle>
+      <div className={props.css.row}></div>
+
+      <SectionTitle>Activity</SectionTitle>
+      <div className={props.css.row}></div>
+      <div className={props.css.row}>
+        <Diff actual={transIncome}
+              css={diffCss}
+              expected={expectedIncome}
+              title="Income" />
+        <Diff actual={transDebits}
+              css={diffCss}
+              expected={expectedDebits}
+              title="Debits"/>
+        <Diff actual={transSavings}
+              css={diffCss}
+              expected={expectedSavings}
+              title="Savings" />
+      </div>
+    </div>
   )
 }
 Summary.PropTypes = {

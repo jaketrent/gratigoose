@@ -1,5 +1,6 @@
 .root {
   width: 100%;
+  margin: 20px 0 30px;
 }
 .body {
   
@@ -22,4 +23,13 @@
 }
 .headCell {
   composes: cell;
+}
+
+.diffRoot {
+  composes: root from "./diff.css";
+  flex: 1;
+  padding: 0 10px 0 0;
+}
+.diffRoot:last-child {
+  padding-right: 0;
 }
