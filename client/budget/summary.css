@@ -1,3 +1,5 @@
+@import "../common/styles/colors.css";
+
 .root {
   width: 100%;
   margin: 20px 0 30px;
@@ -7,6 +9,12 @@
 }
 .row {
   display: flex;
+}
+.rowActivityViz {
+  composes: row;
+  height: 200px;
+  border-bottom: 1px solid var(--colorSecondary);
+  margin-bottom: 10px;
 }
 .cell {
   flex: 1;

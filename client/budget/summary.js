@@ -8,6 +8,7 @@ import Diff from './diff'
 import { formatBudgetLines } from './utils'
 import { formatUsd } from '../common/amt'
 import Net0 from './net-0'
+import PlanVsActivityViz from './plan-vs-activity-viz'
 import SectionTitle from '../common/components/section-title'
 
 const { arrayOf, bool, number, object, shape, string } = React.PropTypes
@@ -61,6 +62,12 @@ function Summary(props) {
   const transSavings = sumForCatType(catTypes.savings, props.transs)
   const transNet = transIncome - transDebits - transSavings
 
+  const planVsActivityVizData = [
+    { x: 'Income', ys: [expectedIncome, transIncome] },
+    { x: 'Debits', ys: [expectedDebits, transDebits] },
+    { x: 'Savings', ys: [expectedSavings, transSavings] }
+  ]
+
   const diffCss = { root: props.css.diffRoot }
   // TODO: include nets in some sort of balance viz
   return (
@@ -74,7 +81,9 @@ function Summary(props) {
       </div>
 
       <SectionTitle>Activity</SectionTitle>
-      <div className={props.css.row}></div>
+      <div className={props.css.rowActivityViz}>
+        <PlanVsActivityViz data={planVsActivityVizData} />
+      </div>
       <div className={props.css.row}>
         <Diff actual={transIncome}
               css={diffCss}
