@@ -44,10 +44,10 @@ class PlanVsActivityVizD3 {
     return this.data
   }
   getChartWidth() {
-    return getNum(d3.select(this.el).style('width')) - this.config.margin.left - this.config.margin.right
+    return this.config.width - this.config.margin.left - this.config.margin.right
   }
   getChartHeight() {
-    return getNum(d3.select(this.el).style('height')) - this.config.margin.top - this.config.margin.bottom
+    return this.config.height - this.config.margin.top - this.config.margin.bottom
   }
   setData(data) {
     this.data = data

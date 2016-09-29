@@ -1,3 +1,4 @@
+import Dimensions from 'react-dimensions'
 import React from 'react'
 import styleable from 'react-styleable'
 
@@ -22,32 +23,44 @@ function formatData(data) {
 }
 
 class PlanVsActivityViz extends React.Component {
-  getChartConfig(config) {
+  getChartConfig(props) {
     return omit({
-      ...this.props,
-      ...config
-    }, key => key === 'data')
+      ...props,
+      height: props.containerHeight,
+      width: props.containerWidth
+    }, key => ['data', 'containerHeight', 'containerWidth'].includes(key))
   }
   componentDidMount() {
-    this.chart = new PlanVsActivityVizD3(this.svg, this.getChartConfig())
+    const config = this.getChartConfig(this.props)
+    this.chart = new PlanVsActivityVizD3(this.svg, config)
 
-    this.chart.draw(formatData(this.props.data), this.props)
+    this.chart.draw(formatData(this.props.data), config)
   }
   shouldComponentUpdate(nextProps) {
     return !isEqual(this.props, nextProps)
   }
   componentWillReceiveProps(nextProps) {
-    if (this.isDataChange(this.props, nextProps))
-      this.chart.draw(formatData(nextProps.data), nextProps)
+    const config = this.getChartConfig(nextProps)
+    if (this.isDimensionChange(this.props, nextProps)) 
+      this.chart.init(config)
+
+    if (this.isDimensionChange(this.props, nextProps)
+        || this.isDataChange(this.props, nextProps))
+      this.chart.draw(formatData(nextProps.data), config)
   }
   isDataChange(props, nextProps) {
     return !isEqual(props.data, nextProps.data)
   }
+  isDimensionChange(props, nextProps) {
+    return props.containerHeight !== nextProps.containerHeight
+        || props.containerWidth !== nextProps.containerWidth
+  }
   render() {
     return (
       <svg className={this.props.css.root}
-           ref={el => this.svg = el}
-           viewBox="0 0 350 200"></svg>
+           height={this.props.containerHeight}
+           width={this.props.containerWidth}
+           ref={el => this.svg = el}></svg>
     )
   }
 }
@@ -57,6 +70,8 @@ PlanVsActivityViz.propTypes = {
     ys: arrayOf(number),
     x: string
   })).isRequired,
+  height: number,
+  width: number
 }
 
-export default styleable(css)(PlanVsActivityViz)
+export default styleable(css)(Dimensions({ elementResize: true })(PlanVsActivityViz))
