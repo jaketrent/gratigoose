@@ -88,6 +88,10 @@ class PlanVsActivityVizD3 {
         .attr('transform', d => 'translate(' + x0(d.x) + ')')
         .attr('width', x0.bandwidth())
 
+    areas.transition()
+      .attr('transform', d => 'translate(' + x0(d.x) + ')')
+      .attr('width', x0.bandwidth())
+
     const bars = areas.selectAll('.' + css.bar)
         .data((d, ix) => d.ys.map(yval => ({ y: yval, i: ix })))
 
@@ -103,17 +107,16 @@ class PlanVsActivityVizD3 {
     bars.transition()
       .duration(animationDuration)
       .delay((d, i) => d.i * 400 + i * 70)
+      .attr('x', (_, i) => x1(i))
       .attr('y', d => y(d.y))
+      .attr('width', x1.bandwidth())
       .attr('height', d => this.getChartHeight() - y(d.y))
   }
   draw(data, config) {
-    this.setData(data)
-    this.setConfig(config)
-    this.setDomain()
-
     this.clear()
     this.drawSvg()
-    this.drawBars()
+
+    this.redraw(data, config)
   }
   redraw(data, config) {
     this.setData(data)

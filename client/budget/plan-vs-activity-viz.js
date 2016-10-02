@@ -41,11 +41,12 @@ class PlanVsActivityViz extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     const config = this.getChartConfig(nextProps)
-    if (this.isDimensionChange(this.props, nextProps)) 
+    if (this.isDimensionChange(this.props, nextProps)) {
       this.chart.init(config)
+      this.chart.redraw(formatData(nextProps.data), config)
+    }
 
-    if (this.isDimensionChange(this.props, nextProps)
-        || this.isDataChange(this.props, nextProps))
+    if (this.isDataChange(this.props, nextProps))
       this.chart.redraw(formatData(nextProps.data), config)
   }
   isDataChange(props, nextProps) {
