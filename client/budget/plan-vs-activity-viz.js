@@ -46,7 +46,7 @@ class PlanVsActivityViz extends React.Component {
 
     if (this.isDimensionChange(this.props, nextProps)
         || this.isDataChange(this.props, nextProps))
-      this.chart.draw(formatData(nextProps.data), config)
+      this.chart.redraw(formatData(nextProps.data), config)
   }
   isDataChange(props, nextProps) {
     return !isEqual(props.data, nextProps.data)

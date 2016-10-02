@@ -81,6 +81,8 @@ class PlanVsActivityVizD3 {
 
     const areas = this.svg.selectAll('.' + this.config.css.area)
         .data(this.getData())
+
+    areas
       .enter().append('g')
         .attr('class', css.area)
         .attr('transform', d => 'translate(' + x0(d.x) + ')')
@@ -88,6 +90,8 @@ class PlanVsActivityVizD3 {
 
     const bars = areas.selectAll('.' + css.bar)
         .data((d, ix) => d.ys.map(yval => ({ y: yval, i: ix })))
+
+    bars
       .enter().append('rect')
         .attr('class', css.bar)
         .attr('x', (_, i) => x1(i))
@@ -109,6 +113,13 @@ class PlanVsActivityVizD3 {
 
     this.clear()
     this.drawSvg()
+    this.drawBars()
+  }
+  redraw(data, config) {
+    this.setData(data)
+    this.setConfig(config)
+    this.setDomain()
+
     this.drawBars()
   }
 }
