@@ -1,4 +1,5 @@
 import { TYPES } from './actions'
+import * as utils from './utils'
 
 export const initialState = {
   alerts: [],
@@ -22,7 +23,7 @@ function dismissAlert(state, action) {
 }
 
 export default function reduce(state = initialState, action = {}) {
-  if (Array.isArray(action.alerts) && action.alerts.length > 0)
+  if (utils.hasAlerts(action))
     return appendAlerts(state, action)
 
   const handlers = {

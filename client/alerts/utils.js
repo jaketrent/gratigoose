@@ -1,5 +1,7 @@
 const uuid = require('node-uuid')
 
+export const AUTO_DISMISS_DELAY = 1000
+
 export const levels = Object.freeze({
   SUCCESS: 'SUCCESS',
   ERROR: 'ERROR'
@@ -41,4 +43,15 @@ export function createFromErrors(errs) {
       level: convertStatusToLevel(err.status) || levels.ERROR
     }
   })
+}
+
+export function hasAlerts(action) {
+  return action
+    && Array.isArray(action.alerts)
+    && action.alerts.length > 0
+}
+
+export function isSuccess(alert) {
+  return alert
+      && alert.level === levels.SUCCESS
 }
