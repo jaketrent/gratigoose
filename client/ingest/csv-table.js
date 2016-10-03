@@ -40,7 +40,6 @@ const colTarget = {
 function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
-    didDrop: monitor.didDrop(),
     isOver: monitor.isOver()
   }
 }

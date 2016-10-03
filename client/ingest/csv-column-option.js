@@ -15,11 +15,9 @@ const colSource = {
 }
 
 function collect(connect, monitor) {
-  console.log('monitor.didDrop', monitor.didDrop())
   return {
     connectDragSource: connect.dragSource(),
     connectDragPreview: connect.dragPreview(),
-    didDrop: monitor.didDrop(),
     isDragging: monitor.isDragging()
   }
 }
@@ -27,9 +25,7 @@ function collect(connect, monitor) {
 function CsvColumnOption(props) {
   const className = props.isDragging
     ? props.css.rootDragging
-    : props.didDrop
-      ? props.css.rootDropped
-      : props.css.root
+    : props.css.root
   return props.connectDragSource(
     <div className={className}>{props.name}</div>
   )
