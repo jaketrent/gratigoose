@@ -22,15 +22,6 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function handleExpectedSubmit(props, cat, evt, expected) {
-  const { year, month } = props
-  const { amt } = expected
-  if (expected.id)
-    props.updateExpected({ expected, amt })
-  else
-    props.createExpected({ amt, cat, year, month })
-}
-
 class ExpectedInputForm extends React.Component {
   constructor(props) {
     super(props)
@@ -51,7 +42,7 @@ class ExpectedInputForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (utils.hasRequiredFields(this.state.expected)) {
+    if (this.state.expected.amt) {
       const { cat, month, year } = this.props
       const { expected } = this.state
       const { amt, id } = expected
@@ -84,7 +75,7 @@ class ExpectedInputForm extends React.Component {
 }
 ExpectedInputForm.propTypes = {
   cat: object.isRequired,
-  expected: object.isRequired,
+  expected: object,
   month: string.isRequired,
   onSubmit: func,
   year: string.isRequired

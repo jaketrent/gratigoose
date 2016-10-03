@@ -9,6 +9,7 @@ export function combineRelations(expecteds, { cats }) {
 
 export function hasRequiredFields(expected) {
   return expected
+    && expected.cat
     && expected.cat.id
     && !isNaN(parseFloat(expected.amt))
 }
