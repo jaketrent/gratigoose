@@ -71,6 +71,7 @@ PlanVsActivityViz.propTypes = {
     ys: arrayOf(number),
     x: string
   })).isRequired,
+  formatLabel: func,
   height: number,
   width: number
 }

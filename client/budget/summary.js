@@ -82,7 +82,8 @@ function Summary(props) {
 
       <SectionTitle>Activity</SectionTitle>
       <div className={props.css.rowActivityViz}>
-        <PlanVsActivityViz data={planVsActivityVizData} />
+        <PlanVsActivityViz data={planVsActivityVizData}
+                          formatLabel={formatUsd} />
       </div>
       <div className={props.css.row}>
         <Diff actual={transIncome}
