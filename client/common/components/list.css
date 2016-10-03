@@ -17,6 +17,7 @@
 .row:focus,
 .row:hover {
   background: var(--colorSecondaryLightest);
+  outline: none;
 }
 .rowWrite {
   composes: row;

@@ -3,6 +3,7 @@ import React from 'react'
 import styleable from 'react-styleable'
 
 import css from './list.css'
+import { keyCodes } from '../events'
 import media from '../styles/media'
 
 const { arrayOf, bool, element, func, object } = React.PropTypes
@@ -14,14 +15,21 @@ class Row extends React.Component {
       isEditing: false
     }
     this.handleReadModeClick = this.handleReadModeClick.bind(this)
+    this.handleReadKeyUp = this.handleReadKeyUp.bind(this)
     this.handleWriteModeSubmit = this.handleWriteModeSubmit.bind(this)
     this.renderReadCol = this.renderReadCol.bind(this)
   }
   handleReadModeClick() {
     this.setState({ isEditing: true })
   }
+  handleReadKeyUp(evt) {
+    if (evt.which === keyCodes.ENTER)
+      this.setState({ isEditing: true })
+  }
   handleWriteModeSubmit() {
-    this.setState({ isEditing: false })
+    this.setState({ isEditing: false }, _ => {
+      this.readRow.focus()
+    })
 
     if (typeof this.props.onEditSubmit === 'function')
       this.props.onEditSubmit.apply(this, arguments)
@@ -53,7 +61,10 @@ class Row extends React.Component {
   renderRead() {
     return (
       <tr className={this.props.css.row}
-          onClick={this.handleReadModeClick}>
+          onClick={this.handleReadModeClick}
+          onKeyUp={this.handleReadKeyUp}
+          ref={el => this.readRow = el}
+          tabIndex="0">
         {this.renderReadCols()}
       </tr>
     )

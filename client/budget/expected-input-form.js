@@ -6,6 +6,7 @@ import * as actions from './actions'
 import css from '../common/components/input-form.css'
 import Field from '../common/components/field'
 import { formatUsd } from '../common/amt'
+import { keyCodes } from '../common/events'
 import * as utils from '../expected/utils'
 
 const { func, number, object, shape, string } = React.PropTypes
@@ -38,24 +39,31 @@ class ExpectedInputForm extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (this.state.amt) {
-      const { line, month, year } = this.props
-      const { amt } = this.state
-      const { cat, expected } = line
-      const { id } = expected
+    if (evt.which === keyCodes.ENTER) {
+      if (this.state.amt) {
+        const { line, month, year } = this.props
+        const { amt } = this.state
+        const { cat, expected } = line
+        const { id } = expected
 
-      if (id)
-        this.props.updateExpected({ expected, amt })
-      else
-        this.props.createExpected({ amt, cat, year, month })
+        if (id)
+          this.props.updateExpected({ expected, amt })
+        else
+          this.props.createExpected({ amt, cat, year, month })
 
+        if (typeof this.props.onSubmit === 'function')
+          this.props.onSubmit(evt, expected)
+      }
+    } else if (evt.which === keyCodes.TAB || evt.which === keyCodes.ESC) {
       if (typeof this.props.onSubmit === 'function')
-        this.props.onSubmit(evt, expected)
+        this.props.onSubmit(evt, this.props.line.expected)
     }
   }
   render() {
     return (
-      <form className={this.props.css.root} onSubmit={this.handleSubmit}>
+      <form className={this.props.css.root}
+            onKeyUp={this.handleSubmit}
+            onSubmit={evt => evt.preventDefault()}>
         <div className={this.props.css.fields}>
           <div className={this.props.css.fieldReadOnly}>{this.props.line.cat.name}</div>
           <Field css={{ field: this.props.css.field }}
