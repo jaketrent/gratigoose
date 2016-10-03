@@ -5,12 +5,16 @@
 .fields {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .field {
   flex: 1;
 }
 .field + .field {
   margin-left: 10px;
+}
+.fieldReadOnly {
+  composes: field;
 }
 .btn {
   composes: screenreader-only from "../styles/accessibility.css";

@@ -10,8 +10,7 @@ const { arrayOf, bool, func, number, object, shape, string } = React.PropTypes
 
 function renderEdit(props, row) {
   return (
-    <ExpectedInputForm cat={row.cat}
-                       expected={row.expected}
+    <ExpectedInputForm line={row}
                        month={props.month}
                        onSubmit={props.onEditSubmit.bind(null, row.cat)}
                        year={props.year} />

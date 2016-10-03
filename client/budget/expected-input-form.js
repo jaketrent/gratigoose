@@ -5,14 +5,13 @@ import styleable from 'react-styleable'
 import * as actions from './actions'
 import css from '../common/components/input-form.css'
 import Field from '../common/components/field'
+import { formatUsd } from '../common/amt'
 import * as utils from '../expected/utils'
 
-const { func, number, object, string } = React.PropTypes
+const { func, number, object, shape, string } = React.PropTypes
 
 const initialState = {
-  expected: {
-    amt: ''
-  }
+  amt: '' 
 }
 
 function mapDispatchToProps(dispatch) {
@@ -26,26 +25,24 @@ class ExpectedInputForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = initialState
-    if (props.expected)
-      this.state.expected = props.expected
+    if (props.line.expected)
+      this.state.amt = props.line.expected.amt
 
-    this.handleFieldChange = this.handleFieldChange.bind(this)
+    this.handleAmtChange = this.handleAmtChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleFieldChange(evt) {
+  handleAmtChange(evt) {
     this.setState({
-      expected: {
-        ...this.state.expected,
-        [evt.target.name]: evt.target.value
-      }
+      amt: evt.target.value
     })
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (this.state.expected.amt) {
-      const { cat, month, year } = this.props
-      const { expected } = this.state
-      const { amt, id } = expected
+    if (this.state.amt) {
+      const { line, month, year } = this.props
+      const { amt } = this.state
+      const { cat, expected } = line
+      const { id } = expected
 
       if (id)
         this.props.updateExpected({ expected, amt })
@@ -60,13 +57,16 @@ class ExpectedInputForm extends React.Component {
     return (
       <form className={this.props.css.root} onSubmit={this.handleSubmit}>
         <div className={this.props.css.fields}>
+          <div className={this.props.css.fieldReadOnly}>{this.props.line.cat.name}</div>
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}
                  isFocused={true}
                  label="Amt"
                  name="amt"
-                 onFieldChange={this.handleFieldChange}
-                 value={this.state.expected.amt} />
+                 onFieldChange={this.handleAmtChange}
+                 value={this.state.amt} />
+          <div className={this.props.css.fieldReadOnly}>{formatUsd(this.props.line.transsAmtSum)}</div>
+          <div className={this.props.css.fieldReadOnly}>{formatUsd(this.props.line.diff)}</div>
         </div>
         <input className={this.props.css.btn} type="submit" value="Submit" />
       </form>
@@ -74,8 +74,13 @@ class ExpectedInputForm extends React.Component {
   }
 }
 ExpectedInputForm.propTypes = {
-  cat: object.isRequired,
-  expected: object,
+  line: shape({
+    id: number,
+    cat: object,
+    expected: object,
+    transsAmtSum: number,
+    diff: number
+  }).isRequired,
   month: string.isRequired,
   onSubmit: func,
   year: string.isRequired
