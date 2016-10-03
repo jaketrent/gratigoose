@@ -1,10 +1,15 @@
 import React from 'react'
+import styleable from 'react-styleable'
+
+import css from './acct-input.css'
 
 const { arrayOf, func, object } = React.PropTypes
 
 function renderOption(props, acct, i) {
   return (
-    <li key={i} onClick={e => props.onSelect(e, acct)}>
+    <li className={props.css.item}
+        key={i}
+        onClick={e => props.onSelect(e, acct)}>
       {acct.name}
     </li>
   )
@@ -16,7 +21,7 @@ function renderOptions(props) {
 
 function AcctInput(props) {
   return (
-    <ul>
+    <ul className={props.css.root}>
       {renderOptions(props)}
     </ul>
   )
@@ -27,4 +32,4 @@ AcctInput.propTypes = {
   onSelect: func.isRequired
 }
 
-export default AcctInput
+export default styleable(css)(AcctInput)

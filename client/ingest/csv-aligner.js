@@ -1,8 +1,10 @@
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import React from 'react'
+import styleable from 'react-styleable'
 
 import { CHOOSABLE_COLUMNS } from './utils'
+import css from './csv-aligner.css'
 import CsvColumnOptions from './csv-column-options'
 import CsvHeaderToggle from './csv-header-toggle'
 import CsvTable from './csv-table'
@@ -46,14 +48,21 @@ class CsvAligner extends React.Component {
   }
   render() {
     return (
-      <div>
-        <CsvColumnOptions columns={this.state.columns} />
-        <CsvHeaderToggle checked={this.state.includesHeader}
-                         onChange={this.handleToggleIncludesHeader} />
+      <div className={this.props.css.root}>
+        <div className={this.props.css.controls}>
+          <div className={this.props.css.options}>
+            <CsvColumnOptions columns={this.state.columns} />
+            <CsvHeaderToggle checked={this.state.includesHeader}
+                            onChange={this.handleToggleIncludesHeader} />
+          </div>
+          <div className={this.props.css.submit}>
+            <button className={this.props.css.btn}
+                    onClick={this.handleSubmit}>Submit</button>
+          </div>
+        </div>
         <CsvTable columns={this.state.selectedColumns}
                   onColumnDrop={this.handleColumnDrop}
                   rows={this.props.rows} />
-        <button onClick={this.handleSubmit}>Submit</button>
       </div>
     )
   }
@@ -64,4 +73,4 @@ CsvAligner.propTypes = {
   rows: arrayOf(arrayOf(node))
 }
 
-export default DragDropContext(HTML5Backend)(CsvAligner)
+export default DragDropContext(HTML5Backend)(styleable(css)(CsvAligner))

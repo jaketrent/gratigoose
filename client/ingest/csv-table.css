@@ -1,8 +1,19 @@
+@import "../common/styles/colors.css";
+
+.root {
+  border-collapse: separate;
+  border-spacing: 10px 5px;
+}
 .col {
-  height: 36px;
-  outline: 1px solid black;
+  height: 40px;
+  padding: 5px;
+  outline: 1px dashed var(--colorSecondary);
 }
 .colHover {
   composes: col;
-  outline: 1px solid red;
+  outline: 1px solid var(--colorSecondary);
+  background: var(--colorSecondaryLightest);
+}
+.optionRootDropped {
+  composes: rootDropped from "./csv-column-option.css";
 }

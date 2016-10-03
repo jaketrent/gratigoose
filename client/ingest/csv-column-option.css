@@ -1,0 +1,26 @@
+@import "../common/styles/colors.css";
+@import "../common/styles/fonts.css";
+
+.root {
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+  background: var(--colorSecondaryLight);
+  cursor: pointer;
+  font-family: var(--fontSpecial);
+  border-radius: 15px;
+}
+.rootDragging {
+  composes: root;
+  background: var(--colorSecondary);
+  color: var(--colorSecondaryInvert);
+  margin: 0;
+}
+.rootDropped {
+  composes: rootDragging;
+  background: var(--colorAccent);
+  color: var(--colorAccentInvert);
+}

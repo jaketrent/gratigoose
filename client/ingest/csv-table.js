@@ -40,14 +40,22 @@ const colTarget = {
 function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
+    didDrop: monitor.didDrop(),
     isOver: monitor.isOver()
   }
 }
 
 function Column(props) {
+  const className = props.isOver
+    ? props.css.colHover
+    : props.css.col
   return props.connectDropTarget(
-    <td className={props.isOver ? props.css.colHover : props.css.col }>
-      {props.name ? <CsvColumnOption name={props.name} /> : null}
+    <td className={className}>
+      {props.name
+        ? <CsvColumnOption css={{ root: props.css.optionRootDropped }}
+                           name={props.name} />
+        : null
+      }
     </td>
   )
 }
@@ -76,7 +84,7 @@ function renderColumns(props) {
 
 function CsvTable(props) {
   return (
-    <table>
+    <table className={props.css.root}>
       <thead>
         <tr>
           {renderColumns(props)}

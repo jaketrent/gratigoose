@@ -8,6 +8,8 @@ import CsvAligner from './csv-aligner'
 import CsvInput from './csv-input'
 import renderWithState from '../common/store/render'
 import * as router from '../common/router'
+import SectionTitle from '../common/components/section-title'
+import Title from '../common/components/title'
 import * as utils from './utils'
 
 function formatRows(content) {
@@ -69,23 +71,32 @@ class Ingest extends React.Component {
   }
   renderAcctInput() {
     return this.props.accts.length > 0 && !this.state.acct
-      ? <AcctInput accts={this.props.accts} onSelect={this.handleAcctSelect} />
+      ? <div>
+          <SectionTitle>Select source account</SectionTitle>
+          <AcctInput accts={this.props.accts} onSelect={this.handleAcctSelect} />
+        </div>
       : null
   }
   renderFileInput() {
     return this.state.acct && this.state.rows.length === 0
-      ? <CsvInput onLoad={this.handleFileLoad} onSelect={this.handleFileSelect} />
+      ? <div>
+          <SectionTitle>Find transactions CSV</SectionTitle>
+          <CsvInput onLoad={this.handleFileLoad} onSelect={this.handleFileSelect} />
+        </div>
       : null
   }
   renderTable() {
     return this.state.rows.length > 0 && this.state.columns.length === 0
-      ? <CsvAligner onSubmit={this.handleAlignSubmit} rows={this.state.rows}/>
+      ? <div>
+          <SectionTitle>Identify transaction fields</SectionTitle>
+          <CsvAligner onSubmit={this.handleAlignSubmit} rows={this.state.rows}/>
+        </div>
       : null
   }
   render() {
     return (
-      <Chrome loadTransMeta={false}>
-        <h1>Ingest</h1>
+      <Chrome loadTransMeta={false}
+              title={<Title>Ingest</Title>}>
         {this.renderAcctInput()}
         {this.renderFileInput()}
         {this.renderTable()}

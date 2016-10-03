@@ -36,11 +36,13 @@
   --colorSecondary: #000;
   --colorSecondaryLight: #ababab;
   --colorSecondaryLightest: #efefef;
+  --colorSecondaryInvert: #fff;
   
   --colorAccentDark: #00962F;
   --colorAccent: #00CA40;
   --colorAccentLight: #06FF55;
   --colorAccentLighter: #A7FFC3;
+  --colorAccentInvert: #fff;
 
   --colorText: #000;
   --colorTextLight: #ababab;

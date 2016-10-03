@@ -1,0 +1,19 @@
+@import "../common/styles/colors.css";
+
+.root {
+  list-style: none;
+  padding: 0;
+}
+.item {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px 25px;
+  color: var(--colorSecondary);
+  border: 1px solid var(--colorSecondary);
+}
+.item:hover {
+  background: var(--colorAccent);
+  color: #fff;
+  cursor: pointer;
+}

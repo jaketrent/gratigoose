@@ -1,0 +1,15 @@
+.root {
+}
+.controls {
+  display: flex;
+  margin-bottom: 20px;
+}
+.options {
+  flex: 1;
+}
+.submit {
+  align-self: flex-end;
+}
+.btn {
+  composes: button from "../common/styles/buttons.css";
+}
