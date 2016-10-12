@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
 class ExpectedInputForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = initialState
+    this.state = { ...initialState }
     if (props.line.expected)
       this.state.amt = props.line.expected.amt
 

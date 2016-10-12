@@ -52,7 +52,7 @@ function mapDispatchToProps(dispatch) {
 class Inputform extends React.Component {
   constructor(props) {
     super(props)
-    this.state = initialState
+    this.state = { ...initialState }
     if (props.trans)
       this.state.trans = props.trans
     this.handleAcctChange = this.handleAcctChange.bind(this)
