@@ -5,6 +5,7 @@
   width: 300px;
 }
 .alert {
+  position: relative;
   display: block;
   margin-bottom: 10px;
   height: 40px;
