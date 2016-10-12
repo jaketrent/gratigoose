@@ -12,6 +12,7 @@ class Field extends React.Component {
     css: object,
     errors: arrayOf(object),
     isFocused: bool,
+    isSelected: bool,
     isWithErrors: bool,
     label: string.isRequired,
     name: string.isRequired,
@@ -22,12 +23,17 @@ class Field extends React.Component {
   }
   static defaultProps = {
     isFocused: false,
+    isSelected: false,
     type: 'text',
     isWithErrors: true
   }
   componentDidMount() {
+    const input = findDOMNode(this.refs.input)
     if (this.props.isFocused)
-      findDOMNode(this.refs.input).focus()
+      input.focus()
+
+    if (this.props.isSelected)
+      input.setSelectionRange(0, input.value.length)
   }
   renderField() {
     return this.props.type === 'textarea'

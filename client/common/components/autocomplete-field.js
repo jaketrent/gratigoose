@@ -18,6 +18,7 @@ class AutocompleteField extends React.Component {
     css: object,
     errors: arrayOf(object),
     isFocused: bool,
+    isSelected: bool,
     isWithErrors: bool,
     label: string.isRequired,
     name: string.isRequired,
@@ -28,6 +29,7 @@ class AutocompleteField extends React.Component {
   };
   static defaultProps = {
     isFocused: false,
+    isSelected: false,
     isWithErrors: true
   };
   constructor() {
@@ -38,6 +40,13 @@ class AutocompleteField extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.renderCompletion = this.renderCompletion.bind(this)
   }
+  componentDidMount() {
+    if (this.shouldFocusInput(this.input))
+      this.input.focus()
+
+    if (this.props.isSelected)
+      this.input.setSelectionRange(0, this.input.value.length)
+  }
   handleFieldChange(evt) {
     this.setState({ isOpen: true })
     this.props.onFieldChange(evt)
@@ -47,7 +56,7 @@ class AutocompleteField extends React.Component {
       isOpen: false
     })
     this.props.onSelect(evt, val)
-    this.inputEl.focus()
+    this.input.focus()
   }
   handleArrows(evt) {
     if (!(Array.isArray(this.props.completions) && this.props.completions.length > 0))
@@ -68,7 +77,6 @@ class AutocompleteField extends React.Component {
     this.setState({ focusIndex: index })
   }
   shouldFocusInput(el) {
-    this.inputEl = el
     return el && (
       (this.state.isOpen
        && Array.isArray(this.props.completions)
@@ -89,7 +97,7 @@ class AutocompleteField extends React.Component {
       <button className={this.props.css.dropdownItem}
               key={completion.value}
               onClick={evt => this.handleSelect(evt, completion.value)}
-              ref={el => el && i === this.state.focusIndex && el.focus()}>
+              ref={el => this.input = el}>
         {completion.label}
       </button>
     )
@@ -105,7 +113,7 @@ class AutocompleteField extends React.Component {
              value={this.props.value}
              onChange={this.handleFieldChange}
              onKeyUp={this.props.onKeyUp}
-      ref={el => this.shouldFocusInput(el) && el.focus()} />
+             ref={el => this.input = el} />
     )
   }
   renderErrors() {

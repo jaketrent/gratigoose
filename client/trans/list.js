@@ -9,7 +9,8 @@ const { arrayOf, func, object } = React.PropTypes
 
 function renderEdit(props, row) {
   return (
-    <InputForm onSubmit={props.onEditSubmit}
+    <InputForm focusFieldName="cat"
+               onSubmit={props.onEditSubmit}
                submitAction="update"
                trans={row} />
   )

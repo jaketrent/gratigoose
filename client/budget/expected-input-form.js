@@ -44,9 +44,8 @@ class ExpectedInputForm extends React.Component {
         const { line, month, year } = this.props
         const { amt } = this.state
         const { cat, expected } = line
-        const { id } = expected
 
-        if (id)
+        if (expected && expected.id)
           this.props.updateExpected({ expected, amt })
         else
           this.props.createExpected({ amt, cat, year, month })

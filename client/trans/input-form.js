@@ -8,6 +8,7 @@ import AutocompleteField from '../common/components/autocomplete-field'
 import * as catActions from '../cat/actions'
 import css from './input-form.css'
 import Field from '../common/components/field'
+import { keyCodes } from '../common/events'
 import * as utils from './utils'
 
 const { func, object, string } = React.PropTypes
@@ -77,9 +78,14 @@ class Inputform extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (utils.hasRequiredFields(this.state.trans)) {
-      this.props.submit(this.props.submitAction, this.state.trans)
+    if (evt.which === keyCodes.ENTER) {
+      if (utils.hasRequiredFields(this.state.trans)) {
+        this.props.submit(this.props.submitAction, this.state.trans)
 
+        if (typeof this.props.onSubmit === 'function')
+          this.props.onSubmit(evt, this.state.trans)
+      }
+    } else if (evt.which === keyCodes.ESC) {
       if (typeof this.props.onSubmit === 'function')
         this.props.onSubmit(evt, this.state.trans)
     }
@@ -138,23 +144,27 @@ class Inputform extends React.Component {
   }
   render() {
     return (
-      <form className={this.props.css.root} onSubmit={this.handleSubmit}>
+      <form className={this.props.css.root}
+            onKeyUp={this.handleSubmit}
+            onSubmit={evt => evt.preventDefault()}>
         <div className={this.props.css.fields}>
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}
-                 isFocused={true}
+                 isFocused={this.props.focusFieldName === 'date'}
                  label="Date"
                  name="date"
                  onFieldChange={this.handleFieldChange}
                  value={this.state.trans.date} />
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}
+                 isFocused={this.props.focusFieldName === 'desc'}
                  label="Description"
                  name="desc"
                  onFieldChange={this.handleFieldChange}
                  value={this.state.trans.desc} />
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}
+                 isFocused={this.props.focusFieldName === 'amt'}
                  label="Amount"
                  name="amt"
                  onFieldChange={this.handleFieldChange}
@@ -162,19 +172,22 @@ class Inputform extends React.Component {
           <AutocompleteField completions={this.props.acctCompletions}
                              css={{ field: this.props.css.field }}
                              errors={this.props.errors}
+                             isFocused={this.props.focusFieldName === 'acct'}
                              label="Account"
                              name="acct"
                              onFieldChange={this.handleAcctChange}
                              onSelect={this.handleAcctSelect}
                              value={this.renderAcctValue()} />
-        <AutocompleteField completions={this.props.catCompletions}
-                           css={{ field: this.props.css.field }}
-                           errors={this.props.errors}
-                           label="Category"
-                           name="cat"
-                           onFieldChange={this.handleCatChange}
-                           onSelect={this.handleCatSelect}
-                           value={this.renderCatValue()} />
+          <AutocompleteField completions={this.props.catCompletions}
+                            css={{ field: this.props.css.field }}
+                            errors={this.props.errors}
+                            isFocused={this.props.focusFieldName === 'cat'}
+                            isSelected={true}
+                            label="Category"
+                            name="cat"
+                            onFieldChange={this.handleCatChange}
+                            onSelect={this.handleCatSelect}
+                            value={this.renderCatValue()} />
         </div>
         <input className={this.props.css.btn} type="submit" value="Create" />
       </form>
@@ -182,12 +195,14 @@ class Inputform extends React.Component {
   }
 }
 Inputform.propTypes = {
+  focusFieldName: string,
   onSubmit: func,
   submitAction: string,
   trans: object
 }
 
 Inputform.defaultProps = {
+  focusFieldName: 'date',
   submitAction: 'create'
 }
 

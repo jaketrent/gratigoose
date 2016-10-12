@@ -14,7 +14,10 @@
   border-bottom: 1px solid var(--colorSecondaryLight);
   margin: 0;
 }
-.row:focus,
+.row:focus {
+  background: var(--colorSecondaryLighter);
+  outline: none;
+}
 .row:hover {
   background: var(--colorSecondaryLightest);
   outline: none;
