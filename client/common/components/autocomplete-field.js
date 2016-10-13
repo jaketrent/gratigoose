@@ -53,6 +53,7 @@ class AutocompleteField extends React.Component {
   }
   handleSelect(evt, val) {
     this.setState({
+      focusIndex: -1,
       isOpen: false
     })
     this.props.onSelect(evt, val)
@@ -69,10 +70,10 @@ class AutocompleteField extends React.Component {
   }
   moveFocusIndex(delta) {
     let index = this.state.focusIndex + delta
-    if (index > 0 && index >= this.props.completions.length)
-      index = this.props.completions.length
+    if (index >= this.props.completions.length)
+      index = this.props.completions.length - 1
     else if (index < 0)
-      index = -1
+      index = 0
 
     this.setState({ focusIndex: index })
   }
@@ -97,7 +98,7 @@ class AutocompleteField extends React.Component {
       <button className={this.props.css.dropdownItem}
               key={completion.value}
               onClick={evt => this.handleSelect(evt, completion.value)}
-              ref={el => this.input = el}>
+              ref={el => i === this.state.focusIndex && el ? el.focus() : null}>
         {completion.label}
       </button>
     )
