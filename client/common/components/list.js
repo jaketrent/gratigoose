@@ -1,3 +1,4 @@
+import FocusTrap from 'focus-trap-react'
 import MediaQuery from 'react-responsive'
 import React from 'react'
 import styleable from 'react-styleable'
@@ -17,6 +18,7 @@ class Row extends React.Component {
   constructor() {
     super()
     this.state = {
+      // activeTrap: false,
       isEditing: false
     }
     this.handleOptionClick = this.handleOptionClick.bind(this)
@@ -29,6 +31,12 @@ class Row extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.mouseDownTimer)
   }
+  // mountTrap() {
+  //   this.setState({ activeTrap: true })
+  // }
+  // unmountTrap() {
+  //   this.setState({ activeTrap: false })
+  // }
   handleOptionClick(optionName, evt) {
     if (optionName === 'close')
       this.setState({ isOptioning: false })
@@ -49,7 +57,6 @@ class Row extends React.Component {
   handleReadModeMouseUp() {
     if (this.state.isOptioning) return
 
-
     const mouseUpTime = new Date().getTime()
     const isMouseHold = (mouseUpTime - mouseDownTimeStart) >= MOUSE_DOWN_TIME_ELAPSED_TRIGGER
     if (!isMouseHold) {
@@ -58,6 +65,7 @@ class Row extends React.Component {
     }
   }
   handleReadKeyUp(evt) {
+    console.log('key up', evt.which)
     if (this.state.isOptioning) return
 
     if (evt.which === keyCodes.ENTER)
@@ -73,11 +81,16 @@ class Row extends React.Component {
   }
   renderWrite() {
     return (
-      <div className={this.props.css.rowWrite}>
-        <div className={this.props.css.cell}>
-          {this.props.renderEdit({ ...this.props, onEditSubmit: this.handleWriteModeSubmit }, this.props.row)}
+      <FocusTrap focusTrapOptions={{
+        escapeDeactivates: false,
+        onDeactivate: this.unmountTrap
+      }}>
+        <div className={this.props.css.rowWrite}>
+          <div className={this.props.css.cell}>
+            {this.props.renderEdit({ ...this.props, onEditSubmit: this.handleWriteModeSubmit }, this.props.row)}
+          </div>
         </div>
-      </div>
+      </FocusTrap>
     )
   }
   renderReadCol(data, i) {
