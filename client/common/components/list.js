@@ -33,9 +33,12 @@ class Row extends React.Component {
     if (optionName === 'close')
       this.setState({ isOptioning: false })
 
-    this.props.onOptionClick(optionName, this.props.row)
+    if (typeof this.props.onOptionClick === 'function')
+      this.props.onOptionClick(optionName, this.props.row)
   }
   handleReadModeMouseDown() {
+    if (this.state.isOptioning) return
+
     clearTimeout(this.mouseDownTimer)
     this.mouseDownTimer = setTimeout(_ => {
       this.setState({
@@ -44,6 +47,9 @@ class Row extends React.Component {
     }, MOUSE_DOWN_TIME_ELAPSED_TRIGGER)
   }
   handleReadModeMouseUp() {
+    if (this.state.isOptioning) return
+
+
     const mouseUpTime = new Date().getTime()
     const isMouseHold = (mouseUpTime - mouseDownTimeStart) >= MOUSE_DOWN_TIME_ELAPSED_TRIGGER
     if (!isMouseHold) {
@@ -52,6 +58,8 @@ class Row extends React.Component {
     }
   }
   handleReadKeyUp(evt) {
+    if (this.state.isOptioning) return
+
     if (evt.which === keyCodes.ENTER)
       this.setState({ isEditing: true })
   }
@@ -115,7 +123,7 @@ class Row extends React.Component {
 }
 
 Row.PropTypes = {
-  onOptionClick: func.isRequired,
+  onOptionClick: func,
   renderEdit: func.isRequired,
   renderData: func.isRequired,
   row: object
