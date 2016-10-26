@@ -36,23 +36,23 @@ class Row extends React.Component {
   }
   renderWrite() {
     return (
-      <tr className={this.props.css.rowWrite}>
-        <td className={this.props.css.cell}>
+      <div className={this.props.css.rowWrite}>
+        <div className={this.props.css.cell}>
           {this.props.renderEdit({ ...this.props, onEditSubmit: this.handleWriteModeSubmit }, this.props.row)}
-        </td>
-      </tr>
+        </div>
+      </div>
     )
   }
   renderReadCol(data, i) {
     return i > 2
       ? <MediaQuery key={i} query={media.smallWidth}>
-          <td className={this.props.css.cell}>
+          <div className={this.props.css.cell}>
             {data}
-          </td>
+          </div>
         </MediaQuery>
-      : <td className={this.props.css.cell} key={i}>
+      : <div className={this.props.css.cell} key={i}>
           {data}
-        </td>
+        </div>
   }
   renderReadCols() {
     return this.props.renderData(this.props, this.props.row)
@@ -60,13 +60,13 @@ class Row extends React.Component {
   }
   renderRead() {
     return (
-      <tr className={this.props.css.row}
+      <div className={this.props.css.row}
           onClick={this.handleReadModeClick}
           onKeyUp={this.handleReadKeyUp}
           ref={el => this.readRow = el}
           tabIndex="0">
         {this.renderReadCols()}
-      </tr>
+      </div>
     )
   }
   render() {
@@ -100,44 +100,44 @@ function renderRows(props) {
 function renderEmpty(props) {
   if (!hasRows(props))
     return (
-      <tr className={props.css.rowEmpty}>
-        <td className={props.css.cellEmpty}>
+      <div className={props.css.rowEmpty}>
+        <div className={props.css.cellEmpty}>
           <div>Empty</div>
-        </td>
-      </tr>
+        </div>
+      </div>
     )
 }
 
 function renderHeaderCol(props, label, i) {
   return i > 2
     ? <MediaQuery key={i} query={media.smallWidth}>
-        <th className={props.css.headCell}>
+        <div className={props.css.headCell}>
           {label}
-        </th>
+        </div>
       </MediaQuery>
-    : <th className={props.css.headCell} key={i}>
+    : <div className={props.css.headCell} key={i}>
         {label}
-      </th>
+      </div>
 }
 
 function renderHeaderCols(props) {
   if (hasRows(props))
-    return <tr className={props.css.headRow}>
+    return <div className={props.css.headRow}>
       {props.renderHeaderData(props).map(renderHeaderCol.bind(this, props))}
-    </tr>
+    </div>
 }
 
 function List(props) {
   return (
-    <table className={props.css.root}>
-      <thead className={props.css.head}>
+    <div className={props.css.root}>
+      <div className={props.css.head}>
         {renderHeaderCols(props)}
-      </thead>
-      <tbody className={props.css.body}>
+      </div>
+      <div className={props.css.body}>
         {renderEmpty(props)}
         {renderRows(props)}
-      </tbody>
-    </table>
+      </div>
+    </div>
   )
 }
 List.PropTypes = {
