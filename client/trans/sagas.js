@@ -69,3 +69,13 @@ export function* update({ trans }) {
     yield put(actions.updateError(errors))
   }
 }
+
+export function* destroy({ trans }) {
+  try {
+    yield call(request, { api: api.destroy, trans })
+
+    yield put(actions.destroySuccess(trans))
+  } catch (errors) {
+    yield put(actions.destroyError(errors))
+  }
+}

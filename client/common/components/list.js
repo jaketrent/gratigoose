@@ -5,8 +5,13 @@ import styleable from 'react-styleable'
 import css from './list.css'
 import { keyCodes } from '../events'
 import media from '../styles/media'
+import RowOptions from './row-options'
 
 const { arrayOf, bool, element, func, object } = React.PropTypes
+
+const MOUSE_DOWN_TIME_ELAPSED_TRIGGER = 500
+
+let mouseDownTimeStart = 0
 
 class Row extends React.Component {
   constructor() {
@@ -14,13 +19,37 @@ class Row extends React.Component {
     this.state = {
       isEditing: false
     }
-    this.handleReadModeClick = this.handleReadModeClick.bind(this)
+    this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleReadKeyUp = this.handleReadKeyUp.bind(this)
+    this.handleReadModeMouseDown = this.handleReadModeMouseDown.bind(this)
+    this.handleReadModeMouseUp = this.handleReadModeMouseUp.bind(this)
     this.handleWriteModeSubmit = this.handleWriteModeSubmit.bind(this)
     this.renderReadCol = this.renderReadCol.bind(this)
   }
-  handleReadModeClick() {
-    this.setState({ isEditing: true })
+  componentWillUnmount() {
+    clearTimeout(this.mouseDownTimer)
+  }
+  handleOptionClick(optionName, evt) {
+    if (optionName === 'close')
+      this.setState({ isOptioning: false })
+
+    this.props.onOptionClick(optionName, this.props.row)
+  }
+  handleReadModeMouseDown() {
+    clearTimeout(this.mouseDownTimer)
+    this.mouseDownTimer = setTimeout(_ => {
+      this.setState({
+        isOptioning: true
+      })
+    }, MOUSE_DOWN_TIME_ELAPSED_TRIGGER)
+  }
+  handleReadModeMouseUp() {
+    const mouseUpTime = new Date().getTime()
+    const isMouseHold = (mouseUpTime - mouseDownTimeStart) >= MOUSE_DOWN_TIME_ELAPSED_TRIGGER
+    if (!isMouseHold) {
+      clearTimeout(this.mouseDownTimer)
+      this.setState({ isEditing: true })
+    }
   }
   handleReadKeyUp(evt) {
     if (evt.which === keyCodes.ENTER)
@@ -58,27 +87,37 @@ class Row extends React.Component {
     return this.props.renderData(this.props, this.props.row)
       .map(this.renderReadCol)
   }
-  renderRead() {
+  renderRead(options) {
     return (
       <div className={this.props.css.row}
-          onClick={this.handleReadModeClick}
-          onKeyUp={this.handleReadKeyUp}
-          ref={el => this.readRow = el}
-          tabIndex="0">
-        {this.renderReadCols()}
+           onKeyUp={this.handleReadKeyUp}
+           onMouseDown={this.handleReadModeMouseDown}
+           onMouseUp={this.handleReadModeMouseUp} 
+           ref={el => this.readRow = el}
+           tabIndex="0">
+        <div className={this.props.css.cols}>
+          {this.renderReadCols()}
+        </div>
+        {options}
       </div>
+    )
+  }
+  renderOptions() {
+    return (
+      <RowOptions onClick={this.handleOptionClick} />
     )
   }
   render() {
     return this.state.isEditing
       ? this.renderWrite()
-      : this.renderRead()
+      : this.renderRead(this.state.isOptioning ? this.renderOptions() : null)
   }
 }
 
 Row.PropTypes = {
-  renderEdit: func,
-  renderData: func,
+  onOptionClick: func.isRequired,
+  renderEdit: func.isRequired,
+  renderData: func.isRequired,
   row: object
 }
 
@@ -123,7 +162,9 @@ function renderHeaderCol(props, label, i) {
 function renderHeaderCols(props) {
   if (hasRows(props))
     return <div className={props.css.headRow}>
-      {props.renderHeaderData(props).map(renderHeaderCol.bind(this, props))}
+      <div className={props.css.cols}>
+        {props.renderHeaderData(props).map(renderHeaderCol.bind(this, props))}
+      </div>
     </div>
 }
 
@@ -142,6 +183,7 @@ function List(props) {
 }
 List.PropTypes = {
   onEditSubmit: func.isRequired,
+  onOptionClick: func.isRequired,
   renderEdit: func.isRequired,
   renderHeaderData: func.isRequired,
   renderRowData: func.isRequired,

@@ -16,7 +16,10 @@ export const TYPES = types('trans',
   'SET_CREATE_TRANS_FIELD',
   'UPDATE',
   'UPDATE_SUCCESS',
-  'UPDATE_ERROR'
+  'UPDATE_ERROR',
+  'DESTROY',
+  'DESTROY_SUCCESS',
+  'DESTROY_ERROR'
 )
 
 export function create(trans) {
@@ -110,6 +113,28 @@ export function updateSuccess(transs) {
 export function updateError(errors) {
   return {
     type: TYPES.UPDATE_ERROR,
+    alerts: alertsUtils.createFromErrors(errors)
+  }
+}
+
+export function destroy(trans) {
+  return {
+    type: TYPES.DESTROY,
+    trans
+  }
+}
+
+export function destroySuccess(trans) {
+  return {
+    type: TYPES.DESTROY_SUCCESS,
+    trans,
+    alerts: [alertsUtils.createSuccess('Transaction destroyed')]
+  }
+}
+
+export function destroyError(errors) {
+  return {
+    type: TYPES.DESTROY_ERROR,
     alerts: alertsUtils.createFromErrors(errors)
   }
 }

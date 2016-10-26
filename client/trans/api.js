@@ -89,3 +89,15 @@ export const update = {
   deserializeSuccess,
   deserializeError
 }
+
+export const destroy = {
+  formatUrl({ trans }) {
+    return `/api/v1/trans/${trans.id}`
+  },
+  request(args) {
+    const { api } = args
+    return axios.delete(api.formatUrl(args))
+  },
+  deserializeSuccess() {}, // unused
+  deserializeError
+}

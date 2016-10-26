@@ -32,7 +32,8 @@ function renderRowData(props, row) {
 
 function TransList(props) {
   return (
-    <List onEditSubmit={props.onEditSubmit}
+    <List onOptionClick={props.onOptionClick}
+          onEditSubmit={props.onEditSubmit}
           renderEdit={renderEdit}
           renderHeaderData={renderHeaderData}
           renderRowData={renderRowData}
@@ -41,6 +42,7 @@ function TransList(props) {
 }
 
 TransList.PropTypes = {
+  onOptionClick: func,
   onEditSubmit: func,
   transs: arrayOf(object).isRequired
 }

@@ -38,9 +38,20 @@ function updateSuccess(state, action) {
   }
 }
 
+function destroySuccess(state, action) {
+  const transs = [...state.transs]
+  const i = transs.findIndex(t => t.id === action.trans.id)
+  transs.splice(i, 1)
+  return {
+    ...state,
+    transs
+  }
+}
+
 export default createWithHandlers({
   [TYPES.CREATE_RESET]: createReset,
   [TYPES.CREATE_SUCCESS]: createSuccess,
+  [TYPES.DESTROY_SUCCESS]: destroySuccess,
   [TYPES.FIND_ALL_SUCCESS]: findSuccess,
   [TYPES.FIND_IN_YEAR_SUCCESS]: findSuccess,
   [TYPES.FIND_IN_YEAR_MONTH_SUCCESS]: findSuccess,

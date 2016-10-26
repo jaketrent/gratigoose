@@ -9,7 +9,7 @@
   
 }
 .row {
-  display: flex;
+  position: relative;
   padding: 15px 0;
   border-bottom: 1px solid var(--colorSecondaryLight);
   margin: 0;
@@ -33,6 +33,9 @@
 .rowEmpty:focus,
 .rowEmpty:hover {
   background: inherit;
+}
+.cols {
+  display: flex;
 }
 .cell {
   flex: 1;

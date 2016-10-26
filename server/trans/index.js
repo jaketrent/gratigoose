@@ -24,6 +24,11 @@ function* update() {
   }
 }
 
+function* destroy(id) {
+  yield repo.destroy(this.db, id)
+  this.status = 204
+}
+
 function* list() {
   const transs = yield repo.findAll(this.db)
   this.body = {
@@ -66,6 +71,7 @@ function* budget(year, month) {
 
 app.use(route.post('/', create))
 app.use(route.put('/:id', update))
+app.use(route.delete('/:id', destroy))
 app.use(route.get('/', list))
 app.use(route.get('/year/:year', year))
 app.use(route.get('/year/:year/month/:month', yearMonth))

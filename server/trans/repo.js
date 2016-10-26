@@ -89,8 +89,19 @@ function update(db, trans) {
   })
 }
 
+function destroy(db, id) {
+  return new Promise((resolve, reject) => {
+    db.trans.destroy({ id }, err => {
+      if (err) return reject(err)
+
+      resolve()
+    })
+  })
+}
+
 exports.create = create
 exports.deserialize = deserialize
+exports.destroy = destroy
 exports.find = find
 exports.findInYear = findInYear
 exports.findInYearMonth = findInYearMonth
