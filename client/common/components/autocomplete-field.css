@@ -1,6 +1,7 @@
 @import "../styles/colors.css";
 @import "./field-errors.css";
 @import "./field.css"; /* include all field classes */
+@import "../styles/layers.css";
 
 :root {
   --borderWidth: 1px;
@@ -20,17 +21,19 @@
   border: 1px solid #ababab;
   overflow: hidden;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, .3);
+  z-index: var(--layerDropdown);
 }
 .dropdownItem {
   display: block;
   width: 100%;
   height: var(--inputHeight);
   line-height: var(--inputHeight);
-  background: white;
   border: 0;
   padding: 0 15px;
   text-align: left;
   font-size: 14px;
+  white-space: nowrap;
+  background: white;
 }
 .dropdownItem:focus {
   background: var(--colorAccent);
