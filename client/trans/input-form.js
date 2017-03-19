@@ -17,7 +17,7 @@ const initialState = {
   acctSearch: '',
   catSearch: '',
   trans: {
-    date: '2016-',
+    date: '2017-',
     desc: '',
     amt: '',
     acct: {},
