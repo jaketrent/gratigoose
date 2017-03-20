@@ -51,7 +51,9 @@ function find(db, id) {
 
 function findInYear(db, year) {
   return new Promise((resolve, reject) => {
-    db.trans.find({ year }, (err, docs) => {
+    db.trans.find({ year }, {
+      order: 'trans_date desc'
+    }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))
@@ -61,7 +63,9 @@ function findInYear(db, year) {
 
 function findInYearMonth(db, year, month) {
   return new Promise((resolve, reject) => {
-    db.trans.find({ year, month }, (err, docs) => {
+    db.trans.find({ year, month }, {
+      order: 'trans_date desc'
+    }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))
@@ -71,7 +75,9 @@ function findInYearMonth(db, year, month) {
 
 function findAll(db) {
   return new Promise((resolve, reject) => {
-    db.trans.find((err, docs) => {
+    db.trans.find({
+      order: 'trans_date desc'
+    }, (err, docs) => {
       if (err) return reject(err)
 
       resolve(docs.map(deserialize))
