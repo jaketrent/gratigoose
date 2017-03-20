@@ -9,7 +9,7 @@ const { node } = React.PropTypes
 function Header(props) {
   return (
     <div className={props.css.root}>
-      <div className={props.css.img}>Gratigoose</div>
+      <Link href="/" css={{ root: props.css.img }}>Gratigoose</Link>
       {props.title}
       <nav className={props.css.nav}>
         <Link css={{ root: props.css.navLink }} href="/">Transactions</Link>
