@@ -10,6 +10,9 @@
     "test": "ava",
     "test:watch": "npm run test -- --watch"
   },
+  "engines": {
+    "node": "7.7.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaketrent/gratigoose.git"
