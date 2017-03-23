@@ -3,22 +3,22 @@ const route = require('koa-route')
 
 const repo = require('./repo')
 
-const app = koa()
+const app = new koa()
 
-function* list() {
+async function list(ctx) {
   const term = this.query.term
   const accts = term
-    ? yield repo.search(this.db, term)
-    : yield repo.findAll(this.db)
+    ? await repo.search(this.db, term)
+    : await repo.findAll(this.db)
 
-  this.body = {
+  ctx.body = {
     data: accts
   }
 }
 
-function* show(id) {
-  const accts = yield repo.find(this.db, id)
-  this.body = {
+async function show(ctx, id) {
+  const accts = await repo.find(this.db, id)
+  ctx.body = {
     data: accts
   }
 }

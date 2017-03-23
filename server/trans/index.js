@@ -5,63 +5,63 @@ const catRepo = require('../cat/repo')
 const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
 
-const app = koa()
+const app = new koa()
 
-function* create() {
-  const trans = yield repo.create(this.db, this.request.body)
+async function create(ctx) {
+  const trans = await repo.create(this.db, this.request.body)
   // TODO: generalize serialize
-  this.status = 201
-  this.body = {
+  ctx.status = 201
+  ctx.body = {
     data: [trans]
   }
 }
 
-function* update() {
-  const trans = yield repo.update(this.db, this.request.body)
+async function update(ctx) {
+  const trans = await repo.update(this.db, this.request.body)
   // TODO: generalize serialize
-  this.body = {
+  ctx.body = {
     data: [trans]
   }
 }
 
-function* destroy(id) {
-  yield repo.destroy(this.db, id)
-  this.status = 204
+async function destroy(ctx, id) {
+  await repo.destroy(this.db, id)
+  ctx.status = 204
 }
 
-function* list() {
-  const transs = yield repo.findAll(this.db)
-  this.body = {
+async function list(ctx) {
+  const transs = await repo.findAll(this.db)
+  ctx.body = {
     data: transs
   }
 }
 
-function* show(id) {
-  const transs = yield repo.find(this.db, id)
-  this.body = {
+async function show(ctx, id) {
+  const transs = await repo.find(this.db, id)
+  ctx.body = {
     data: transs
   }
 }
 
-function* year(year) {
-  const transs = yield repo.findInYear(this.db, year)
-  this.body = {
+async function year(ctx, year) {
+  const transs = await repo.findInYear(this.db, year)
+  ctx.body = {
     data: transs
   }
 }
 
-function* yearMonth(year, month) {
-  const transs = yield repo.findInYearMonth(this.db, year, month)
-  this.body = {
+async function yearMonth(ctx, year, month) {
+  const transs = await repo.findInYearMonth(this.db, year, month)
+  ctx.body = {
     data: transs
   }
 }
 
 // TODO: mv to budget ctrl
-function* budget(year, month) {
-  const transs = yield repo.findInYearMonth(this.db, year, month)
-  const expecteds = yield expectedRepo.findInYearMonth(this.db, year, month)
-  this.body = {
+async function budget(ctx, year, month) {
+  const transs = await repo.findInYearMonth(this.db, year, month)
+  const expecteds = await expectedRepo.findInYearMonth(this.db, year, month)
+  ctx.body = {
     data: {
       expecteds,
       transs

@@ -5,21 +5,21 @@ const catRepo = require('../cat/repo')
 const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
 
-const app = koa()
+const app = new koa()
 
-function* create() {
-  const expected = yield repo.create(this.db, this.request.body)
+async function create(ctx) {
+  const expected = await repo.create(this.db, this.request.body)
   // TODO: generalize serialize
-  this.status = 201
-  this.body = {
+  ctx.status = 201
+  ctx.body = {
     data: [expected]
   }
 }
 
-function* update(id) {
-  const expected = yield repo.update(this.db, this.request.body)
+async function update(ctx, id) {
+  const expected = await repo.update(this.db, this.request.body)
   // TODO: generalize serialize
-  this.body = {
+  ctx.body = {
     data: [expected]
   }
 }

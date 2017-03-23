@@ -16,22 +16,22 @@ const db = require('./db')
 const static = require('./static')
 const trans = require('./trans')
 
-const app = koa()
+const app = new koa()
 const port = process.env.PORT || 3000
 
 app.use(logger())
 app.use(mount('/static', static))
 app.use(bodyParser())
-app.use(function* catchErrors(next) {
+app.use(async function catchErrors(ctx, next) {
   try {
-    yield next
+    await next()
   } catch(err) {
     console.error(err)
-    this.status = err.status || 500
-    this.body = {
+    ctx.status = err.status || 500
+    ctx.body = {
       errors: [{
         stack: err.stack,
-        status: this.status,
+        status: ctx.status,
         title: err.message
       }]
     }
@@ -43,8 +43,8 @@ app.use(mount('/api/v1/expected', expected))
 app.use(mount('/api/v1/trans', trans))
 app.use(route.get('*', index))
 
-function* index() {
-  this.body = fs.readFileSync('./client/index.html', 'utf8')
+function index(ctx) {
+  ctx.body = fs.readFileSync('./client/index.html', 'utf8')
 }
 
 db.connect((err, db) => {
