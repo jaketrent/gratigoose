@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import * as currencyUtils from '../common/currency'
 import * as dateUtils from '../common/date'
 import deserializeError from '../common/api/deserialize-error'
 import * as utils from './utils'
@@ -7,7 +8,7 @@ import * as utils from './utils'
 function serializeCreate({ trans }) {
   return {
     acctId: trans.acct.id,
-    amt: trans.amt,
+    amt: currencyUtils.stripDollarSign(trans.amt),
     catId: trans.cat.id,
     date: dateUtils.format(trans.date),
     desc: trans.desc

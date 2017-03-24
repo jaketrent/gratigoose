@@ -7,6 +7,7 @@ import * as actions from './actions'
 import AutocompleteField from '../common/components/autocomplete-field'
 import * as catActions from '../cat/actions'
 import css from './input-form.css'
+import * as dateUtils from '../common/date'
 import Field from '../common/components/field'
 import { keyCodes } from '../common/events'
 import * as utils from './utils'
@@ -154,7 +155,7 @@ class Inputform extends React.Component {
                  label="Date"
                  name="date"
                  onFieldChange={this.handleFieldChange}
-                 value={this.state.trans.date} />
+                 value={dateUtils.stripTz(this.state.trans.date)} />
           <Field css={{ field: this.props.css.field }}
                  errors={this.props.errors}
                  isFocused={this.props.focusFieldName === 'desc'}

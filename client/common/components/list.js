@@ -65,7 +65,6 @@ class Row extends React.Component {
     }
   }
   handleReadKeyUp(evt) {
-    console.log('key up', evt.which)
     if (this.state.isOptioning) return
 
     if (evt.which === keyCodes.ENTER)
