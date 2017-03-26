@@ -13,14 +13,8 @@ function loginSuccess(state, action) {
   }
 }
 
-function getSessionSuccess(state, action) {
-  return {
-    ...state,
-    session: action.session
-  }
-}
-
-function logoutSuccess(state, action) {
+function logout(state, action) {
+  console.log('set session null on logout', action)
   return {
     ...state,
     session: null
@@ -29,7 +23,6 @@ function logoutSuccess(state, action) {
 
 export default createWithHandlers({
   [TYPES.LOGIN_SUCCESS]: loginSuccess,
-  [TYPES.GET_SESSION_SUCCESS]: getSessionSuccess,
-  [TYPES.LOGOUT_SUCCESS]: logoutSuccess
+  [TYPES.LOGOUT]: logout
 }, initialState)
 

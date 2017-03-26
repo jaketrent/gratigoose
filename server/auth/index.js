@@ -23,7 +23,7 @@ function serialize(user) {
   }
 }
 
-async function create(ctx, next) {
+async function create(ctx) {
   const { username, password } = ctx.request.body
   try {
     const user = await repo.find(this.db, username)
@@ -46,18 +46,15 @@ async function create(ctx, next) {
   }
 }
 
+async function show(ctx) {
+  ctx.body = ctx.isAuthenticated()
+    ? serialize(ctx.state.user)
+    : { data: null}
+}
+
 async function destroy(ctx) {
   ctx.logout()
   ctx.status = 204
-}
-
-async function show(ctx) {
-  ctx.status = ctx.isAuthenticated() ? 200 : 401
-  ctx.body = ctx.isAuthenticated()
-    ? serialize(ctx.state.user)
-    : {
-      errors: [{ title: 'User not logged in', status: 401 }]
-    }
 }
 
 app.use(route.post('/', create))

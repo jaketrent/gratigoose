@@ -14,16 +14,6 @@ export function* login({ username, password }) {
   }
 }
 
-export function* getSession() {
-  try {
-    const session = yield call(request, { api: api.show })
-
-    yield put(actions.getSessionSuccess(session))
-  } catch (errors) {
-    yield put(actions.getSessionError(errors))
-  }
-}
-
 export function* logout() {
   try {
     yield call(request, { api: api.destroy })

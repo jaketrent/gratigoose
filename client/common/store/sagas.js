@@ -19,7 +19,6 @@ export default function* root() {
     fork(takeEvery, acctActions.TYPES.FIND_ALL, acctSagas.findAll),
     fork(takeEvery, acctActions.TYPES.SEARCH, acctSagas.search),
     fork(takeEvery, authActions.TYPES.LOGIN, authSagas.login),
-    fork(takeEvery, authActions.TYPES.GET_SESSION, authSagas.getSession),
     fork(takeEvery, authActions.TYPES.LOGOUT, authSagas.logout),
     fork(takeEvery, catActions.TYPES.FIND_ALL, catSagas.findAll),
     fork(takeEvery, catActions.TYPES.SEARCH, catSagas.search),

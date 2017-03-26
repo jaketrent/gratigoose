@@ -26,18 +26,6 @@ export const create = {
   deserializeError
 }
 
-export const show = {
-  formatUrl() {
-    return '/api/v1/auth'
-  },
-  request(args) {
-    const { api } = args
-    return axios.get(api.formatUrl())
-  },
-  deserializeSuccess,
-  deserializeError
-}
-
 export const destroy = {
   formatUrl({ trans }) {
     return `/api/v1/auth`

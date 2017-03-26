@@ -1,15 +1,12 @@
 import types from 'redux-types'
 
 import * as alertsUtils from '../alerts/utils'
+import * as cookie from '../common/cookie'
 
 export const TYPES = types('auth',
-  'CREATE',
   'LOGIN',
   'LOGIN_SUCCESS',
   'LOGIN_ERROR',
-  'GET_SESSION',
-  'GET_SESSION_SUCCESS',
-  'GET_SESSION_ERROR',
   'LOGOUT',
   'LOGOUT_SUCCESS',
   'LOGOUT_ERROR'
@@ -38,26 +35,13 @@ export function loginError(errors) {
   }
 }
 
-export function getSession() {
+export function logout() {
+  cookie.destroy('gratigooseSessionId')
   return {
-    type: TYPES.GET_SESSION
+    type: TYPES.LOGOUT
   }
 }
 
-export function getSessionSuccess(session) {
-  return {
-    type: TYPES.GET_SESSION_SUCCESS,
-    session,
-    alerts: [alertsUtils.createSuccess('Logged in')]
-  }
-}
-
-export function getSessionError(errors) {
-  return {
-    type: TYPES.GET_SESSION_ERROR,
-    alerts: alertsUtils.createFromErrors(errors)
-  }
-}
 export function logoutSuccess() {
   return {
     type: TYPES.LOGOUT_SUCCESS,
