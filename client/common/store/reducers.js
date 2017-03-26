@@ -1,4 +1,5 @@
 export acct from '../../acct/reducer'
+export auth from '../../auth/reducer'
 export alerts from '../../alerts/reducer'
 export budget from '../../budget/reducer'
 export cat from '../../cat/reducer'

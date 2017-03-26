@@ -3,6 +3,8 @@ import { fork } from 'redux-saga/effects'
 
 import * as acctActions from '../../acct/actions'
 import * as acctSagas from '../../acct/sagas'
+import * as authActions from '../../auth/actions'
+import * as authSagas from '../../auth/sagas'
 import * as budgetActions from '../../budget/actions'
 import * as budgetSagas from '../../budget/sagas'
 import * as catActions from '../../cat/actions'
@@ -16,6 +18,9 @@ export default function* root() {
   yield* [
     fork(takeEvery, acctActions.TYPES.FIND_ALL, acctSagas.findAll),
     fork(takeEvery, acctActions.TYPES.SEARCH, acctSagas.search),
+    fork(takeEvery, authActions.TYPES.LOGIN, authSagas.login),
+    fork(takeEvery, authActions.TYPES.GET_SESSION, authSagas.getSession),
+    fork(takeEvery, authActions.TYPES.LOGOUT, authSagas.logout),
     fork(takeEvery, catActions.TYPES.FIND_ALL, catSagas.findAll),
     fork(takeEvery, catActions.TYPES.SEARCH, catSagas.search),
     fork(takeEvery, budgetActions.TYPES.CREATE_EXPECTED, budgetSagas.createExpected),

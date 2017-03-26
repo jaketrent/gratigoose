@@ -1,0 +1,16 @@
+.root {
+  max-width: 100%;
+  width: 300px;
+  text-align: center;
+}
+.img {
+  composes: replace-img from "../common/styles/accessibility.css";
+  height: 70px;
+  width: 70px;
+  background: url(../common/imgs/logo.png);
+  background-size: cover;
+  margin: 0 auto;
+}
+.btn {
+  composes: screenreader-only from "../common/styles/accessibility.css";
+}
