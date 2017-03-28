@@ -2,6 +2,7 @@ const koa = require('koa')
 const route = require('koa-route')
 
 const repo = require('./repo')
+const requireLogin = require('../auth/login')
 
 const app = new koa()
 
@@ -23,6 +24,7 @@ async function show(ctx, id) {
   }
 }
 
+app.use(requireLogin)
 app.use(route.get('/', list))
 app.use(route.get('/:id', show))
 

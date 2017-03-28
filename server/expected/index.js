@@ -4,6 +4,7 @@ const route = require('koa-route')
 const catRepo = require('../cat/repo')
 const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
+const requireLogin = require('../auth/login')
 
 const app = new koa()
 
@@ -24,6 +25,7 @@ async function update(ctx, id) {
   }
 }
 
+app.use(requireLogin)
 app.use(route.post('/', create))
 app.use(route.put('/:id', update))
 

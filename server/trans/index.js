@@ -4,6 +4,7 @@ const route = require('koa-route')
 const catRepo = require('../cat/repo')
 const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
+const requireLogin = require('../auth/login')
 
 const app = new koa()
 
@@ -69,6 +70,7 @@ async function budget(ctx, year, month) {
   }
 }
 
+app.use(requireLogin)
 app.use(route.post('/', create))
 app.use(route.put('/:id', update))
 app.use(route.delete('/:id', destroy))
