@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({ silent: true })
 
 const convert = require('koa-convert')
 const bodyParser = require('koa-bodyparser')
