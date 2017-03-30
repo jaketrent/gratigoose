@@ -3,7 +3,7 @@ const path = require('path')
 
 exports.connect = function connect(done) {
   massive.connect({
-    connectionString: process.env.DB_CONN_URL,
+    connectionString: process.env.DATABASE_URL,
     scripts: path.join(__dirname, 'queries')
   }, (err, db) => {
     if (err) {
