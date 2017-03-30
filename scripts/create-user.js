@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const program = require('commander')
+const prompt = require('prompt')
 
 const db = require('../server/db')
 const package = require('../package.json')
@@ -14,20 +14,22 @@ function create(username, password) {
     try {
       const user = await repo.create(db, { username, password })
       console.log('User created.')
+      process.exit(0)
     } catch (err) {
       console.log('Error creating user', err)
+      process.exit(1)
     }
   })
 }
 
-program
-  .version(package.version)
-  .option('-u, --username <username>', 'Username')
-  .option('-p, --password <password>', 'Plaintext password')
-  .parse(process.argv)
+prompt.start()
 
-console.log('input', program.username, program.password)
-if (program.username && program.password)
-  create(program.username, program.password)
-else
-  console.log('Error: -u username and -p password required.')
+prompt.get(['username', 'password'], (err, result) => {
+  if (result.username && result.password) {
+    create(result.username, result.password)
+  } else {
+    console.log('Error: username and password required.')
+    process.exit(1)
+  }
+})
+
