@@ -18,6 +18,7 @@ const expected = require('./expected')
 const db = require('./db')
 const passport = require('koa-passport')
 const static = require('./static')
+const { store } = require('./auth/session')
 const trans = require('./trans')
 
 const app = new koa()
@@ -34,7 +35,8 @@ app.use(convert(session({
     rewrite: true,
     signed: true
   },
-  key: 'gratigooseSessionId'
+  key: 'gratigooseSessionId',
+  store
 })))
 app.use(bodyParser())
 app.use(passport.initialize())

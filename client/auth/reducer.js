@@ -14,7 +14,6 @@ function loginSuccess(state, action) {
 }
 
 function logout(state, action) {
-  console.log('set session null on logout', action)
   return {
     ...state,
     session: null

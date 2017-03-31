@@ -37,6 +37,7 @@ async function create(ctx) {
       ctx.body = serialize(user)
       return ctx.login(user)
     } else {
+      console.log('u, p', username, password)
       ctx.status = 401
       return ctx.body = { errors: [{ title: 'Password does not match', status: 401 }]}
     }

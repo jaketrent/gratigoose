@@ -1,7 +1,10 @@
 const massive = require('massive')
 const path = require('path')
 
-exports.connect = function connect(done) {
+const session = require('../auth/session')
+
+exports.connect = async function connect(done) {
+  await session.init()
   massive.connect({
     connectionString: process.env.DATABASE_URL,
     scripts: path.join(__dirname, 'queries')
