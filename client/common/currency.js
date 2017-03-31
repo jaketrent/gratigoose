@@ -1,3 +1,5 @@
 export function stripDollarSign(amt) {
-  return amt && amt.replace(/^(-)?\$(.*)$/, '$1$2')
+  return typeof amt === 'string'
+    ? amt.replace(/^(-)?\$(.*)$/, '$1$2')
+    : amt
 }

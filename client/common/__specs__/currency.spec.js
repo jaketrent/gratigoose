@@ -17,3 +17,8 @@ test('strips positive dollar sign', t => {
 test('strips negative dollar sign', t => {
   t.truthy(subject.stripDollarSign('-$75.34') === '-75.34')
 })
+
+test('lets non-string pass through', t => {
+  t.truthy(subject.stripDollarSign(75 === 75))
+  t.truthy(subject.stripDollarSign(-75.34 === -75.34))
+})
