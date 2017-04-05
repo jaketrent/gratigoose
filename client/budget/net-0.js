@@ -7,7 +7,6 @@ import { formatUsd } from '../common/amt'
 const { number } = React.PropTypes
 
 function Net0(props) {
-  const net0 = props.income + props.debits + props.savings
   return (
     <div className={props.css.root}>
       <div className={props.css.part}>
@@ -31,7 +30,7 @@ function Net0(props) {
       <div className={props.css.part}>
         <div className={props.css.label}>&nbsp;</div>
         <div className={props.css.valueNet}>
-          = {formatUsd(net0)}
+          = {formatUsd(props.net)}
         </div>
       </div>
     </div>
@@ -41,7 +40,8 @@ function Net0(props) {
 Net0.propTypes = {
   income: number.isRequired,
   debits: number.isRequired,
-  savings: number.isRequired
+  savings: number.isRequired,
+  net: number.isRequired
 }
 
 export default styleable(css)(Net0)

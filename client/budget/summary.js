@@ -1,7 +1,6 @@
 import React from 'react'
 import styleable from 'react-styleable'
 
-import { amtGtZero, amtLteZero, sumForCatType, sumWhereAmt } from '../common/amt'
 import catTypes from '../cat/types'
 import css from './summary.css'
 import Diff from './diff'
@@ -53,14 +52,32 @@ function renderHeader(props) {
 }
 
 function Summary(props) {
-  const expectedIncome = sumWhereAmt(props.expecteds, amtGtZero)
-  const expectedDebits = sumWhereAmt(props.expecteds, amtLteZero)
-  const expectedSavings = sumForCatType(catTypes.savings, props.expecteds)
-  const expectedNet = expectedIncome - expectedDebits - expectedSavings
-  const transIncome = sumWhereAmt(props.transs, amtGtZero)
-  const transDebits = sumWhereAmt(props.transs, amtLteZero)
-  const transSavings = sumForCatType(catTypes.savings, props.transs)
-  const transNet = transIncome - transDebits - transSavings
+  const expectedIncome = props.expecteds
+    .filter(e => e.amt > 0)
+    .filter(e => e.cat && e.cat.type !== catTypes.savings)
+    .reduce((sum, e) => sum + e.amt, 0)
+  const expectedDebits = props.expecteds
+    .filter(e => e.amt <= 0)
+    .filter(e => e.cat && e.cat.type !== catTypes.savings)
+    .reduce((sum, e) => sum + e.amt, 0)
+  const expectedSavings = props.expecteds
+    .filter(e => e.cat && e.cat.type === catTypes.savings)
+    .reduce((sum, e) => sum + e.amt, 0)
+  const expectedNet = expectedIncome + expectedDebits - expectedSavings
+
+
+  const transIncome = props.transs
+          .filter(e => e.amt > 0)
+          .filter(e => e.cat && e.cat.type !== catTypes.savings)
+          .reduce((sum, e) => sum + e.amt, 0)
+  const transDebits = props.transs
+          .filter(e => e.amt <= 0)
+          .filter(e => e.cat && e.cat.type !== catTypes.savings)
+          .reduce((sum, e) => sum + e.amt, 0)
+  const transSavings = props.transs
+          .filter(e => e.cat && e.cat.type === catTypes.savings)
+          .reduce((sum, e) => sum + e.amt, 0)
+  const transNet = transIncome + transDebits - transSavings
 
   const planVsActivityVizData = [
     { x: 'Income', ys: [expectedIncome, transIncome] },
@@ -77,7 +94,8 @@ function Summary(props) {
       <div className={props.css.row}>
         <Net0 income={expectedIncome}
               debits={expectedDebits}
-              savings={expectedSavings} />
+              savings={expectedSavings}
+              net={expectedNet} />
       </div>
 
       <SectionTitle>Activity</SectionTitle>
