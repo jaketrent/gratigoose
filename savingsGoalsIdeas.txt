@@ -1,0 +1,53 @@
+debits,
+one trans, subtract a value
+
+
+budget
+this is what we want to spend on what
+
+savings
+we have a goal
+we have an end amt
+we have an end date
+we want to save so much a month
+we have money come into our checking
+or direct deposit into savings acct
+
+
+i want to fully fund all savings goals for the month, expected
+when I get money at the end of the month, I want to transfer to savings what I can actually save
+when I 
+
+could treat savings like a transfer
+
+savings could be an account
+
+the bank accounts don't really matter as much as the things we're saving for
+
+convert accounts to goals
+
+savings expected go negative
+checking is general use / spending
+transfer out of mach into savings goal
+can monitor amts around a goal
+can create milestones around a goal
+can map a goal to a bank account, hopefully
+
+
+start a new account means start a new goal
+
+retire - job 1
+retire - 
+
+
+FLOW
+make savings acct
+make goal date, amt
+derive monthly amt to meet goal
+graph is a line graph that has solid lines for months with actuals, dotted for future expecteds
+monthly budget - expected is derived monthly amt or other
+when save, transfer the amt from general/checking
+shows up as an actual in savings goal acct
+buy a thing - actual against saving acct??
+
+
