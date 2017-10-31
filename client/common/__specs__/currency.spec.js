@@ -1,24 +1,22 @@
-import test from 'ava'
-
 import * as subject from '../currency'
 
-test('handles nulls', t => {
-  t.truthy(subject.stripDollarSign() === undefined)
+test('handles nulls', () => {
+  expect(subject.stripDollarSign() === undefined).toBeTruthy()
 })
 
-test('handles no dollar sign', t => {
-  t.truthy(subject.stripDollarSign('75.34') === '75.34')
+test('handles no dollar sign', () => {
+  expect(subject.stripDollarSign('75.34') === '75.34').toBeTruthy()
 })
 
-test('strips positive dollar sign', t => {
-  t.truthy(subject.stripDollarSign('$75.34') === '75.34')
+test('strips positive dollar sign', () => {
+  expect(subject.stripDollarSign('$75.34') === '75.34').toBeTruthy()
 })
 
-test('strips negative dollar sign', t => {
-  t.truthy(subject.stripDollarSign('-$75.34') === '-75.34')
+test('strips negative dollar sign', () => {
+  expect(subject.stripDollarSign('-$75.34') === '-75.34').toBeTruthy()
 })
 
-test('lets non-string pass through', t => {
-  t.truthy(subject.stripDollarSign(75 === 75))
-  t.truthy(subject.stripDollarSign(-75.34 === -75.34))
+test('lets non-string pass through', () => {
+  expect(subject.stripDollarSign(75 === 75)).toBeTruthy()
+  expect(subject.stripDollarSign(-75.34 === -75.34)).toBeTruthy()
 })
