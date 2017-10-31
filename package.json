@@ -3,6 +3,7 @@
   "version": "1.5.0",
   "description": "",
   "main": "index.js",
+  "private": true, 
   "scripts": {
     "db:migrate": "node server/db/migrate",
     "start": "cross-env DEBUG=gg node server/index",
