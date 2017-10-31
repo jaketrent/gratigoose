@@ -50,7 +50,7 @@ module.exports = {
   },
   externals: [
     {
-      xmlhttprequest: '{XMLHttpRequest:XMLHttpRequest}'
+      xmlhttprequest: 'XMLHttpRequest'
     }
   ]
 }
