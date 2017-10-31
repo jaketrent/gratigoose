@@ -1,4 +1,4 @@
-const uuid = require('node-uuid')
+const uuid = require('uuid')
 
 export const AUTO_DISMISS_DELAY = 1000
 
@@ -8,10 +8,8 @@ export const levels = Object.freeze({
 })
 
 function convertStatusToLevel(status) {
-  if (status >= 400)
-    return levels.ERROR
-  else if (status >= 200)
-    return levels.SUCCESS
+  if (status >= 400) return levels.ERROR
+  else if (status >= 200) return levels.SUCCESS
 }
 
 export function create(title, level) {
@@ -31,8 +29,7 @@ export function createError(title) {
 }
 
 export function createFromErrors(errs) {
-  if (errs && !Array.isArray(errs))
-    errs = [errs]
+  if (errs && !Array.isArray(errs)) errs = [errs]
 
   return errs.map(err => {
     if (err instanceof Error) console.error(err)
@@ -46,12 +43,9 @@ export function createFromErrors(errs) {
 }
 
 export function hasAlerts(action) {
-  return action
-    && Array.isArray(action.alerts)
-    && action.alerts.length > 0
+  return action && Array.isArray(action.alerts) && action.alerts.length > 0
 }
 
 export function isSuccess(alert) {
-  return alert
-      && alert.level === levels.SUCCESS
+  return alert && alert.level === levels.SUCCESS
 }
