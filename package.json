@@ -3,7 +3,7 @@
   "version": "1.5.0",
   "description": "",
   "main": "index.js",
-  "private": true, 
+  "private": true,
   "scripts": {
     "db:migrate": "node server/db/migrate",
     "start": "cross-env DEBUG=gg node server/index",
@@ -26,24 +26,23 @@
   "homepage": "https://github.com/jaketrent/gratigoose#readme",
   "devDependencies": {
     "jest": "^21.2.1",
-    "nodemon": "^1.10.0",
-    "webpack-dashboard": "0.0.1-alpha.1"
+    "nodemon": "^1.10.0"
   },
   "dependencies": {
     "axios": "^0.13.1",
     "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
+    "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.13.0",
     "bcrypt": "^1.0.2",
     "cross-env": "^2.0.0",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.28.7",
     "d3": "^4.2.6",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
-    "file-loader": "^0.9.0",
+    "file-loader": "^1.1.5",
     "focus-trap-react": "^3.0.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
@@ -55,15 +54,15 @@
     "koa-passport": "^3.0.0",
     "koa-pg-session": "^2.0.1",
     "koa-route": "^3.2.0",
-    "koa-webpack-dev-middleware": "^1.2.1",
+    "koa-webpack-dev-middleware": "^2.0.2",
     "koa-webpack-hot-middleware": "^1.0.3",
     "massive": "^2.5.0",
     "massive-migrate": "^0.10.0",
     "node-uuid": "^1.4.7",
     "page": "^1.7.1",
-    "postcss-cssnext": "^2.7.0",
-    "postcss-import": "^8.1.2",
-    "postcss-loader": "^0.10.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.0.8",
     "prompt": "^1.0.0",
     "qs": "^6.2.1",
     "react": "^15.3.0",
@@ -80,8 +79,7 @@
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.11.0",
     "redux-types": "^1.0.0",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dashboard": "0.0.1-alpha.1"
+    "style-loader": "^0.19.0",
+    "webpack": "^3.8.1"
   }
 }
