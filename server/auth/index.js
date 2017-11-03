@@ -1,11 +1,14 @@
 const bcrypt = require('bcrypt')
-const koa = require('koa')
+// const koa = require('koa')
+const express = require('express')
+// TODO: replace
 const passport = require('koa-passport')
-const route = require('koa-route')
+// const route = require('koa-route')
 
 const repo = require('./repo')
 
-const app = new koa()
+// const app = new koa()
+const app = express()
 
 passport.serializeUser((user, done) => {
   done(null, user)
@@ -13,7 +16,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
   done(null, { username: user })
-});
+})
 
 function serialize(user) {
   return {
@@ -23,43 +26,49 @@ function serialize(user) {
   }
 }
 
-async function create(ctx) {
-  const { username, password } = ctx.request.body
+async function create(req, res) {
+  const { username, password } = req.body
   try {
-    const user = await repo.find(this.db, username)
+    const user = await repo.find(req.app.get('db'), username)
     if (!user) {
-      ctx.status = 401
-      return ctx.body = { errors: [{ title: 'User not found', status: 401 }]}
+      return res
+        .status(401)
+        .json({ errors: [{ title: 'User not found', status: 401 }] })
     }
 
     const matches = await bcrypt.compare(password, user.passwordHash)
     if (matches) {
+      // TODO: come back for auth
       ctx.body = serialize(user)
       return ctx.login(user)
     } else {
       console.log('u, p', username, password)
-      ctx.status = 401
-      return ctx.body = { errors: [{ title: 'Password does not match', status: 401 }]}
+      return res
+        .status(401)
+        .json({ errors: [{ title: 'Password does not match', status: 401 }] })
     }
   } catch (err) {
-    ctx.status = 500
-    return ctx.body = { errors: [{ title: err.message, status: 500, stack: err.stack }]}
+    return res
+      .json(500)
+      .json({ errors: [{ title: err.message, status: 500, stack: err.stack }] })
   }
 }
 
-async function show(ctx) {
-  ctx.body = ctx.isAuthenticated()
-    ? serialize(ctx.state.user)
-    : { data: null}
+// TODO: come back auth
+async function show(req, res) {
+  return res.json(
+    req.isAuthenticated() ? serialize(ctx.state.user) : { data: null }
+  )
 }
 
-async function destroy(ctx) {
-  ctx.logout()
-  ctx.status = 204
+async function destroy(req, res) {
+  req.logout()
+  // ctx.status = 204
+  return res.status(204)
 }
 
-app.use(route.post('/', create))
-app.use(route.get('/', show))
-app.use(route.delete('/', destroy))
+app.post('/', create)
+app.get('/', show)
+app.delete('/', destroy)
 
 module.exports = app

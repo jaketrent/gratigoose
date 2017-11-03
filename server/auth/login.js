@@ -1,10 +1,10 @@
-module.exports = async function requireLogin(ctx, next) {
-  if (ctx.isAuthenticated()) {
-    await next()
+module.exports = async function requireLogin(req, res, next) {
+  // TODO: come back to verify
+  if (req.isAuthenticated()) {
+    next()
   } else {
-    ctx.status = 401
-    ctx.body = {
+    res.status(401).json({
       errors: [{ title: 'Login required', status: 401 }]
-    }
+    })
   }
 }

@@ -1,31 +1,32 @@
-const koa = require('koa')
-const route = require('koa-route')
+// const koa = require('koa')
+const express = require('express')
+// const route = require('koa-route')
 
 const repo = require('./repo')
 const requireLogin = require('../auth/login')
 
-const app = new koa()
+// const app = new koa()
+const app = express()
 
-async function list(ctx) {
-  const term = this.query.term
-  const cats = term
-    ? await repo.search(this.db, term)
-    : await repo.findAll(this.db)
+async function list(req, res) {
+  const db = req.app.get('db')
+  const term = req.query.term
+  const cats = term ? await repo.search(db, term) : await repo.findAll(db)
 
-  ctx.body = {
+  return res.json({
     data: cats
-  }
+  })
 }
 
-async function show(ctx, id) {
-  const cats = await repo.find(this.db, id)
-  ctx.body = {
+async function show(req, res) {
+  const cats = await repo.find(req.app.get('db'), req.params.id)
+  return res.json({
     data: cats
-  }
+  })
 }
 
 app.use(requireLogin)
-app.use(route.get('/', list))
-app.use(route.get('/:id', show))
+app.get('/', list)
+app.get('/:id', show)
 
 module.exports = app

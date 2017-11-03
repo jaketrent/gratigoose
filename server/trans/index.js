@@ -1,83 +1,97 @@
-const koa = require('koa')
-const route = require('koa-route')
+// const koa = require('koa')
+const express = require('express')
+// const route = require('koa-route')
 
 const catRepo = require('../cat/repo')
 const expectedRepo = require('../expected/repo')
 const repo = require('./repo')
 const requireLogin = require('../auth/login')
 
-const app = new koa()
+// const app = new koa()
+const app = express()
 
-async function create(ctx) {
-  const trans = await repo.create(this.db, this.request.body)
+async function create(req, res) {
+  const trans = await repo.create(req.app.get('db'), req.body)
   // TODO: generalize serialize
-  ctx.status = 201
-  ctx.body = {
+  return res.status(201).json({
     data: [trans]
-  }
+  })
 }
 
-async function update(ctx) {
-  const trans = await repo.update(this.db, this.request.body)
+async function update(req, res) {
+  const trans = await repo.update(req.app.get('db'), res.body)
   // TODO: generalize serialize
-  ctx.body = {
+  return res.json({
     data: [trans]
-  }
+  })
 }
 
-async function destroy(ctx, id) {
-  await repo.destroy(this.db, id)
-  ctx.status = 204
+async function destroy(req, res) {
+  await repo.destroy(req.app.get('db'), req.paramsid)
+  return res.status(204)
 }
 
-async function list(ctx) {
-  const transs = await repo.findAll(this.db)
-  ctx.body = {
+async function list(req, res) {
+  const transs = await repo.findAll(req.app.get('db'))
+  return res.json({
     data: transs
-  }
+  })
 }
 
-async function show(ctx, id) {
-  const transs = await repo.find(this.db, id)
-  ctx.body = {
+async function show(req, res) {
+  const transs = await repo.find(req.app.get('db'), req.paramsid)
+  return res.json({
     data: transs
-  }
+  })
 }
 
-async function year(ctx, year) {
-  const transs = await repo.findInYear(this.db, year)
-  ctx.body = {
+async function year(req, res) {
+  const transs = await repo.findInYear(req.app.get('db'), req.params.year)
+  return res.json({
     data: transs
-  }
+  })
 }
 
-async function yearMonth(ctx, year, month) {
-  const transs = await repo.findInYearMonth(this.db, year, month)
-  ctx.body = {
+async function yearMonth(req, res) {
+  const transs = await repo.findInYearMonth(
+    req.app.get('db'),
+    req.params.year,
+    req.params.month
+  )
+  return res.json({
     data: transs
-  }
+  })
 }
 
 // TODO: mv to budget ctrl
-async function budget(ctx, year, month) {
-  const transs = await repo.findInYearMonth(this.db, year, month)
-  const expecteds = await expectedRepo.findInYearMonth(this.db, year, month)
-  ctx.body = {
+async function budget(req, res) {
+  const db = req.app.get('db')
+  const transs = await repo.findInYearMonth(
+    db,
+    req.params.year,
+    req.params.month
+  )
+  const expecteds = await expectedRepo.findInYearMonth(
+    db,
+    req.params.year,
+    req.params.month
+  )
+  return res.json({
     data: {
       expecteds,
       transs
     }
-  }
+  })
 }
 
 app.use(requireLogin)
-app.use(route.post('/', create))
-app.use(route.put('/:id', update))
-app.use(route.delete('/:id', destroy))
-app.use(route.get('/', list))
-app.use(route.get('/year/:year', year))
-app.use(route.get('/year/:year/month/:month', yearMonth))
-app.use(route.get('/year/:year/month/:month/budget', budget))
-app.use(route.get('/:id', show))
+app.post('/', create)
+app.put('/:id', update)
+app.delete('/:id', destroy)
+app.get('/', list)
+app.get('/year/:year', year)
+app.get('/year/:year/month/:month', yearMonth)
+app.get('/year/:year/month/:month/budget', budget)
+app.get('/:id', show)
 
 module.exports = app
